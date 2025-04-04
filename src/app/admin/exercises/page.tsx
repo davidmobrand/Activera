@@ -115,7 +115,9 @@ export default function AdminExercises() {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{exercise.order}</div>
+                  <div className="text-sm text-gray-900">
+                    {(exercise as any).order || '-'}
+                  </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">

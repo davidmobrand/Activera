@@ -6,16 +6,28 @@ export default withAuth(
     const token = req.nextauth.token
     const path = req.nextUrl.pathname
 
+    console.log('[Middleware] Path:', path)
+    console.log('[Middleware] Token:', token)
+
     // Admin routes protection
-    if (path.startsWith('/admin') && token?.role !== 'ADMIN') {
-      return NextResponse.redirect(new URL('/dashboard', req.url))
+    if (path.startsWith('/admin')) {
+      console.log('[Middleware] Checking admin access')
+      if (token?.role !== 'ADMIN') {
+        console.log('[Middleware] Non-admin user attempting to access admin route')
+        return NextResponse.redirect(new URL('/dashboard', req.url))
+      }
+      console.log('[Middleware] Admin access granted')
     }
 
+    console.log('[Middleware] Access granted')
     return NextResponse.next()
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token,
+      authorized: ({ token }) => {
+        console.log('[Middleware] Checking authorization:', !!token)
+        return !!token
+      },
     },
     pages: {
       signIn: '/login',

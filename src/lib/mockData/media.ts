@@ -36,7 +36,15 @@ export const findMediaByExerciseId = (exerciseId: string | string[]): Media[] =>
     .map(media => MediaSchema.parse(media));
 };
 
-export const createMedia = (data: CreateMedia): Media => {
+// Define the input type explicitly
+type CreateMediaInput = {
+  exerciseId: string;
+  type: MediaType;
+  url: string;
+  name: string;
+};
+
+export const createMedia = (data: CreateMediaInput): Media => {
   // First validate the input data
   const validatedInput = CreateMediaSchema.parse(data);
   

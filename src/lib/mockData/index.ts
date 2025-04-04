@@ -1,58 +1,47 @@
+import type { Media, MediaType, MediaInput } from '../types';
 import {
   findUserById,
   findUserByEmail,
-  findUsers,
   createUser,
+  updateUser,
   deleteUser
 } from './users';
-
 import {
   findMediaByExerciseId,
   createMedia,
+  updateMedia,
   deleteMedia,
   getExerciseMedia
 } from './media';
-
 import {
   findExerciseById,
-  findExercises,
-  findExercisesByCategory,
   createExercise,
   updateExercise,
   deleteExercise
 } from './exercises';
-
 import {
   findExerciseProgress,
   createExerciseProgress,
   updateExerciseProgress
 } from './exerciseProgress';
 
-import type { Media, CreateMediaInput } from '../types';
-
-export * from './users';
-export * from './media';
-export * from './exercises';
-export * from './exerciseProgress';
-
-interface MockDb {
+export interface MockDb {
   // User functions
   findUserById: typeof findUserById;
   findUserByEmail: typeof findUserByEmail;
-  findUsers: typeof findUsers;
   createUser: typeof createUser;
+  updateUser: typeof updateUser;
   deleteUser: typeof deleteUser;
 
   // Media functions
   findMediaByExerciseId: typeof findMediaByExerciseId;
-  createMedia: (data: CreateMediaInput) => Media;
+  createMedia: typeof createMedia;
+  updateMedia: typeof updateMedia;
   deleteMedia: typeof deleteMedia;
   getExerciseMedia: typeof getExerciseMedia;
 
   // Exercise functions
   findExerciseById: typeof findExerciseById;
-  findExercises: typeof findExercises;
-  findExercisesByCategory: typeof findExercisesByCategory;
   createExercise: typeof createExercise;
   updateExercise: typeof updateExercise;
   deleteExercise: typeof deleteExercise;
@@ -63,30 +52,24 @@ interface MockDb {
   updateExerciseProgress: typeof updateExerciseProgress;
 }
 
-// Export mockDb object with all functions
 export const mockDb: MockDb = {
-  // User functions
   findUserById,
   findUserByEmail,
-  findUsers,
   createUser,
+  updateUser,
   deleteUser,
 
-  // Media functions
   findMediaByExerciseId,
   createMedia,
+  updateMedia,
   deleteMedia,
   getExerciseMedia,
 
-  // Exercise functions
   findExerciseById,
-  findExercises,
-  findExercisesByCategory,
   createExercise,
   updateExercise,
   deleteExercise,
 
-  // Exercise Progress functions
   findExerciseProgress,
   createExerciseProgress,
   updateExerciseProgress

@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { UserRole, ExerciseCategory, MediaType } from './types';
-import type { CreateMediaInput } from './types';
 
 // User Validation
 export const UserSchema = z.object({
@@ -27,12 +26,15 @@ export const ExerciseSchema = z.object({
 });
 
 // Media Validation
-export const MediaSchema = z.object({
-  id: z.string(),
+export const MediaInputSchema = z.object({
   exerciseId: z.string(),
   type: z.enum([MediaType.IMAGE, MediaType.AUDIO]),
+  name: z.string().min(1)
+});
+
+export const MediaSchema = MediaInputSchema.extend({
+  id: z.string(),
   url: z.string().url(),
-  name: z.string().min(1),
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime()
 });
@@ -51,16 +53,8 @@ export const ExerciseProgressSchema = z.object({
 // Input Validation Schemas
 export const CreateUserSchema = UserSchema.omit({ id: true, createdAt: true, updatedAt: true });
 export const CreateExerciseSchema = ExerciseSchema.omit({ id: true, createdAt: true, updatedAt: true });
-
-// Define the schema to match CreateMediaInput
-export const CreateMediaSchema = z.object({
-  exerciseId: z.string(),
-  type: z.enum([MediaType.IMAGE, MediaType.AUDIO]),
-  url: z.string().url(),
-  name: z.string().min(1)
-});
-
 export const CreateExerciseProgressSchema = ExerciseProgressSchema.omit({ id: true });
+export const CreateMediaSchema = MediaInputSchema;
 
 // Update Validation Schemas
 export const UpdateUserSchema = UserSchema.partial().omit({ id: true, createdAt: true });
@@ -72,11 +66,12 @@ export const UpdateExerciseProgressSchema = ExerciseProgressSchema.partial().omi
 export type User = z.infer<typeof UserSchema>;
 export type Exercise = z.infer<typeof ExerciseSchema>;
 export type Media = z.infer<typeof MediaSchema>;
+export type MediaInput = z.infer<typeof MediaInputSchema>;
 export type ExerciseProgress = z.infer<typeof ExerciseProgressSchema>;
 
 export type CreateUser = z.infer<typeof CreateUserSchema>;
 export type CreateExercise = z.infer<typeof CreateExerciseSchema>;
-export type CreateMedia = CreateMediaInput;
+export type CreateMedia = z.infer<typeof CreateMediaSchema>;
 export type CreateExerciseProgress = z.infer<typeof CreateExerciseProgressSchema>;
 
 export type UpdateUser = z.infer<typeof UpdateUserSchema>;

@@ -3,7 +3,6 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { mockDb } from '@/lib/mockData'
 import { MediaType } from '@/lib/types'
-import type { CreateMedia } from '@/lib/validation'
 
 interface Props {
   params: {
@@ -39,19 +38,19 @@ export async function POST(
       return NextResponse.json({ error: 'Invalid file type' }, { status: 400 })
     }
 
-    // Create a URL that matches our mock data pattern
     const urlPath = type === MediaType.IMAGE ? 'images' : 'audio';
     const fileName = file.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     const url = `https://storage.activera.com/exercises/${params.id}/${urlPath}/${fileName}`;
 
-    const createMediaData: CreateMedia = {
+    const mediaInput = {
       exerciseId: params.id,
       type,
+      name: file.name,
       url,
-      name: file.name
+      updatedAt: new Date().toISOString()
     }
 
-    const media = mockDb.createMedia(createMediaData)
+    const media = mockDb.createMedia(mediaInput)
 
     return NextResponse.json(media)
   } catch (error) {

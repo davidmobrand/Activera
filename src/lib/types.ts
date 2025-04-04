@@ -42,12 +42,15 @@ export const MediaType = {
 
 export type MediaType = typeof MediaType[keyof typeof MediaType];
 
-export interface Media {
-  id: string;
+export interface MediaInput {
   exerciseId: string;
   type: MediaType;
-  url: string;
   name: string;
+}
+
+export interface Media extends MediaInput {
+  id: string;
+  url: string;
   createdAt: string;
   updatedAt: string;
 }

@@ -1,5 +1,5 @@
-import { Media, MediaType } from '../types';
-import { MediaSchema, CreateMedia } from '../validation';
+import { Media, MediaType, MediaInput } from '../types';
+import { MediaSchema, MediaInputSchema } from '../validation';
 
 // Mock Media Files with realistic URLs and consistent timestamps
 export const mediaFiles: Media[] = [
@@ -23,7 +23,6 @@ export const mediaFiles: Media[] = [
   }
 ].map(media => MediaSchema.parse(media));
 
-// Media Database Functions
 export const findMediaByExerciseId = (exerciseId: string | string[]): Media[] => {
   if (Array.isArray(exerciseId)) {
     return mediaFiles
@@ -35,17 +34,18 @@ export const findMediaByExerciseId = (exerciseId: string | string[]): Media[] =>
     .map(media => MediaSchema.parse(media));
 };
 
-export const createMedia = (data: CreateMedia): Media => {
+export const createMedia = (input: Omit<Media, "id" | "createdAt">): Media => {
+  // Validate input first
+  const validatedInput = MediaInputSchema.parse(input);
+  
+  const urlPath = validatedInput.type === MediaType.IMAGE ? 'images' : 'audio';
+  const fileName = validatedInput.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const url = `https://storage.activera.com/exercises/${validatedInput.exerciseId}/${urlPath}/${fileName}`;
+  
   const now = new Date().toISOString();
-  
-  // Create a URL that matches our mock data pattern
-  const urlPath = data.type === MediaType.IMAGE ? 'images' : 'audio';
-  const fileName = data.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  const url = `https://storage.activera.com/exercises/${data.exerciseId}/${urlPath}/${fileName}`;
-  
   const newMedia: Media = {
-    ...data,
-    url, // Use our generated URL instead of the passed one
+    ...validatedInput,
+    url,
     id: String(mediaFiles.length + 1),
     createdAt: now,
     updatedAt: now

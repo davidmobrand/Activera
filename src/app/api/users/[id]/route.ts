@@ -69,8 +69,10 @@ export async function DELETE(
   }
 
   try {
-    // In a real app, we would delete from database
-    // For now, just return success
+    const success = mockDb.deleteUser(params.id)
+    if (!success) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 })
+    }
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Error deleting user:', error)

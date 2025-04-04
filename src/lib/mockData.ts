@@ -360,6 +360,15 @@ export const findUsers = () => {
   return users;
 };
 
+export const deleteUser = (id: string) => {
+  const index = users.findIndex(user => user.id === id);
+  if (index !== -1) {
+    users.splice(index, 1);
+    return true;
+  }
+  return false;
+};
+
 export const getExerciseMedia = (exerciseId: string | string[]) => {
   if (Array.isArray(exerciseId)) {
     return mediaFiles.filter(media => exerciseId.includes(media.exerciseId));
@@ -381,5 +390,6 @@ export const mockDb = {
   findUserById,
   findUserByEmail,
   findUsers,
+  deleteUser,
   getExerciseMedia
 };

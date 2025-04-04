@@ -17,7 +17,7 @@ export async function GET() {
       userId: exercise.userId,
       createdAt: exercise.createdAt,
       updatedAt: exercise.updatedAt,
-      media: mockDb.getExerciseMedia(exercise.mediaIds)
+      media: mockDb.getExerciseMedia(exercise.id)
     }))
 
     return NextResponse.json(formattedExercises)

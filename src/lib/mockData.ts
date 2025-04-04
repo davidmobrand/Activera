@@ -378,6 +378,46 @@ export const mediaFiles: Media[] = [
     url: "/images/values-action-plan.jpg",
     name: "Values Action Plan",
     createdAt: "2024-03-20T10:04:00Z"
+  },
+  {
+    id: "34",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/defusion-exercise.jpg",
+    name: "Defusion Exercise",
+    createdAt: "2024-03-20T11:00:00Z"
+  },
+  {
+    id: "35",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/self-compassion-meditation.jpg",
+    name: "Self-Compassion Meditation",
+    createdAt: "2024-03-20T11:01:00Z"
+  },
+  {
+    id: "36",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/values-exploration.jpg",
+    name: "Values Exploration",
+    createdAt: "2024-03-20T11:02:00Z"
+  },
+  {
+    id: "37",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/mindful-emotions.jpg",
+    name: "Mindful Emotions",
+    createdAt: "2024-03-20T11:03:00Z"
+  },
+  {
+    id: "38",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/acceptance-practice.jpg",
+    name: "Acceptance Practice",
+    createdAt: "2024-03-20T11:04:00Z"
   }
 ];
 
@@ -463,24 +503,38 @@ export const exercises: Exercise[] = [
     id: '4',
     title: 'Leaves on a Stream',
     content: `
-      <h2>Leaves on a Stream Visualization</h2>
-      <p>A gentle exercise for practicing acceptance and letting go of difficult thoughts.</p>
-      <h3>Instructions:</h3>
-      <ol>
-        <li>Imagine yourself sitting beside a gently flowing stream</li>
-        <li>Picture leaves floating by on the surface of the water</li>
-        <li>When thoughts arise, place each one on a leaf</li>
-        <li>Watch as the leaves carrying your thoughts drift away</li>
-        <li>If you get caught up in a thought, gently return to watching the stream</li>
-      </ol>
-      <p>Remember: The goal isn't to get rid of thoughts, but to practice letting them come and go.</p>
-    `,
-    category: ExerciseCategory.OPPENHET,
-    userId: '1',
-    createdAt: new Date('2024-01-04'),
-    updatedAt: new Date('2024-01-04'),
-    mediaIds: ['6'],
-    order: 2
+# Leaves on a Stream - Defusion Exercise
+
+A gentle practice to create distance from difficult thoughts.
+
+## Instructions
+
+1. Sit comfortably and visualize a gentle stream with leaves floating by
+2. As thoughts arise:
+   - Place each thought on a leaf
+   - Watch it float down the stream
+   - Let it drift away naturally
+
+## Key Points
+
+- Don't try to push thoughts away
+- Notice thoughts without getting caught up in them
+- Return to watching the stream when distracted
+
+## Practice Tips
+
+- Start with 5 minutes
+- Use any thoughts that arise
+- No need to judge or analyze thoughts
+- Regular practice builds skill
+
+Remember: The goal is to observe thoughts, not eliminate them.`,
+    category: "OPPENHET",
+    userId: "admin",
+    createdAt: "2024-03-20T11:00:00Z",
+    updatedAt: "2024-03-20T11:00:00Z",
+    mediaIds: ["34"],
+    order: 31
   },
   {
     id: '5',
@@ -680,30 +734,40 @@ export const exercises: Exercise[] = [
     id: '12',
     title: 'Self-Compassion Break',
     content: `
-      <h2>Self-Compassion Break</h2>
-      <p>A brief practice to cultivate self-compassion in difficult moments.</p>
-      <img src="/assets/exercises/images/self-compassion.jpg" alt="Self-Compassion Practice" class="w-full rounded-lg shadow-lg mb-6" />
-      <h3>Instructions:</h3>
-      <ol>
-        <li>Acknowledge your difficult moment: "This is a moment of suffering"</li>
-        <li>Recognize our shared human experience: "Suffering is a part of life"</li>
-        <li>Offer yourself kindness: Place a hand on your heart and say:
-          <ul>
-            <li>"May I be kind to myself"</li>
-            <li>"May I accept this moment as it is"</li>
-            <li>"May I give myself the compassion I need"</li>
-          </ul>
-        </li>
-        <li>Take a few deep breaths and feel the warmth of your hand</li>
-      </ol>
-      <p class="bg-gray-50 p-4 rounded-lg">Remember: Self-compassion is not self-indulgence; it's a skill that can be developed with practice.</p>
-    `,
-    category: ExerciseCategory.OPPENHET,
-    userId: '1',
-    createdAt: new Date('2024-01-26'),
-    updatedAt: new Date('2024-01-26'),
-    mediaIds: ['15'],
-    order: 5
+# Self-Compassion Break
+
+Learn to respond to difficulties with kindness and understanding.
+
+## Practice Steps
+
+1. Acknowledge Suffering
+   - Notice your pain or struggle
+   - Say: "This is a moment of suffering"
+   - Validate your experience
+
+2. Common Humanity
+   - Recognize you're not alone
+   - Others face similar challenges
+   - Say: "Suffering is part of life"
+
+3. Self-Kindness
+   - Offer yourself comfort
+   - Use gentle touch if helpful
+   - Say kind words to yourself
+
+## Daily Integration
+
+- Use during stressful moments
+- Practice regularly
+- Adapt words to fit your style
+
+Remember: Self-compassion is a skill that grows with practice.`,
+    category: "OPPENHET",
+    userId: "admin",
+    createdAt: "2024-03-20T11:01:00Z",
+    updatedAt: "2024-03-20T11:01:00Z",
+    mediaIds: ["35"],
+    order: 32
   },
   {
     id: '13',
@@ -1342,6 +1406,201 @@ Remember: Values are like a compass - they guide our actions but aren't a destin
     updatedAt: "2024-03-20T10:04:00Z",
     mediaIds: ["33"],
     order: 30
+  },
+  {
+    id: "31",
+    title: "Leaves on a Stream",
+    content: `
+# Leaves on a Stream - Defusion Exercise
+
+A gentle practice to create distance from difficult thoughts.
+
+## Instructions
+
+1. Sit comfortably and visualize a gentle stream with leaves floating by
+2. As thoughts arise:
+   - Place each thought on a leaf
+   - Watch it float down the stream
+   - Let it drift away naturally
+
+## Key Points
+
+- Don't try to push thoughts away
+- Notice thoughts without getting caught up in them
+- Return to watching the stream when distracted
+
+## Practice Tips
+
+- Start with 5 minutes
+- Use any thoughts that arise
+- No need to judge or analyze thoughts
+- Regular practice builds skill
+
+Remember: The goal is to observe thoughts, not eliminate them.`,
+    category: "OPPENHET",
+    userId: "admin",
+    createdAt: "2024-03-20T11:00:00Z",
+    updatedAt: "2024-03-20T11:00:00Z",
+    mediaIds: ["34"],
+    order: 31
+  },
+  {
+    id: "32",
+    title: "Self-Compassion Break",
+    content: `
+# Self-Compassion Break
+
+Learn to respond to difficulties with kindness and understanding.
+
+## Practice Steps
+
+1. Acknowledge Suffering
+   - Notice your pain or struggle
+   - Say: "This is a moment of suffering"
+   - Validate your experience
+
+2. Common Humanity
+   - Recognize you're not alone
+   - Others face similar challenges
+   - Say: "Suffering is part of life"
+
+3. Self-Kindness
+   - Offer yourself comfort
+   - Use gentle touch if helpful
+   - Say kind words to yourself
+
+## Daily Integration
+
+- Use during stressful moments
+- Practice regularly
+- Adapt words to fit your style
+
+Remember: Self-compassion is a skill that grows with practice.`,
+    category: "OPPENHET",
+    userId: "admin",
+    createdAt: "2024-03-20T11:01:00Z",
+    updatedAt: "2024-03-20T11:01:00Z",
+    mediaIds: ["35"],
+    order: 32
+  },
+  {
+    id: "33",
+    title: "Values Discovery Journey",
+    content: `
+# Values Discovery Journey
+
+Explore and clarify your personal values through guided reflection.
+
+## Exercise Steps
+
+1. Life Areas Exploration
+   - Relationships
+   - Career/Work
+   - Personal Growth
+   - Health/Wellbeing
+   - Community/Society
+
+2. For Each Area:
+   - What matters most?
+   - What brings meaning?
+   - What inspires you?
+
+3. Values Identification
+   - List key themes
+   - Rate importance
+   - Consider current alignment
+
+## Implementation
+
+- Choose one value to focus on
+- Set small, actionable goals
+- Track progress daily
+
+Remember: Values guide us but aren't destinations to reach.`,
+    category: "ENGAGEMANG",
+    userId: "admin",
+    createdAt: "2024-03-20T11:02:00Z",
+    updatedAt: "2024-03-20T11:02:00Z",
+    mediaIds: ["36"],
+    order: 33
+  },
+  {
+    id: "34",
+    title: "Mindful Emotions",
+    content: `
+# Mindful Emotions Practice
+
+Learn to observe and work with emotions mindfully.
+
+## Practice Guide
+
+1. Notice the Emotion
+   - Where do you feel it?
+   - What sensations arise?
+   - How intense is it?
+
+2. Name the Emotion
+   - Label it simply
+   - Use "I notice" language
+   - Avoid judgment
+
+3. Allow the Experience
+   - Make space for the feeling
+   - Don't try to change it
+   - Watch how it changes
+
+## Key Reminders
+
+- Emotions are temporary
+- You are not your emotions
+- Practice with both pleasant and unpleasant emotions
+
+Remember: The goal is awareness, not control.`,
+    category: "NARVARO",
+    userId: "admin",
+    createdAt: "2024-03-20T11:03:00Z",
+    updatedAt: "2024-03-20T11:03:00Z",
+    mediaIds: ["37"],
+    order: 34
+  },
+  {
+    id: "35",
+    title: "Acceptance Practice",
+    content: `
+# Acceptance Practice
+
+Learn to open up to difficult experiences with acceptance.
+
+## Exercise Steps
+
+1. Choose a Challenge
+   - Select a current difficulty
+   - Start with something manageable
+   - Notice your resistance
+
+2. Explore Your Experience
+   - Physical sensations
+   - Thoughts and images
+   - Emotions and urges
+
+3. Practice Opening Up
+   - Make room for the experience
+   - Drop the struggle
+   - Notice what changes
+
+## Practice Tips
+
+- Start small
+- Be patient
+- Notice results without forcing them
+
+Remember: Acceptance doesn't mean liking or wanting something.`,
+    category: "OPPENHET",
+    userId: "admin",
+    createdAt: "2024-03-20T11:04:00Z",
+    updatedAt: "2024-03-20T11:04:00Z",
+    mediaIds: ["38"],
+    order: 35
   }
 ].map(e => ({
   ...e,

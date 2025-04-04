@@ -55,6 +55,7 @@ export default withAuth(
         path,
         referer: req.headers.get('referer')
       })
+      loginUrl.searchParams.set('callbackUrl', path)
       return createRedirectResponse(loginUrl.toString(), req, 'unauthenticated_user')
     }
 

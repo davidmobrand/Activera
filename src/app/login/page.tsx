@@ -2,13 +2,13 @@
 
 import { useState } from 'react'
 import { signIn, useSession } from 'next-auth/react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 
 export default function LoginPage() {
-  const router = useRouter()
-  const { data: session, status } = useSession()
+  const searchParams = useSearchParams()
+  const { status } = useSession()
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
 
@@ -22,13 +22,18 @@ export default function LoginPage() {
     const password = formData.get('password') as string
 
     try {
-      console.log('Attempting sign in...')
+      const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
       const result = await signIn('credentials', {
         email,
         password,
-        callbackUrl: '/dashboard',
+        callbackUrl,
         redirect: true,
       })
+
+      if (result?.error) {
+        setError('Invalid email or password')
+        setIsLoading(false)
+      }
     } catch (error) {
       console.error('Sign in error:', error)
       setError('An error occurred. Please try again.')
@@ -48,7 +53,6 @@ export default function LoginPage() {
   }
 
   if (status === 'authenticated') {
-    router.push('/dashboard')
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">

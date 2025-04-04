@@ -1,12 +1,19 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
-import NotLoggedIn from '@/components/NotLoggedIn'
-import { Exercise } from '@/lib/mockData'
+
+interface Exercise {
+  id: string
+  title: string
+  category: string
+  order: number
+  content: string
+  createdAt: string
+  updatedAt: string
+}
 
 const categoryLabels = {
   NARVARO: 'Närvaro',
@@ -16,15 +23,12 @@ const categoryLabels = {
 
 export default function AdminExercises() {
   const router = useRouter()
-  const { data: session, status } = useSession()
   const [exercises, setExercises] = useState<Exercise[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (status !== 'loading') {
-      fetchExercises()
-    }
-  }, [status])
+    fetchExercises()
+  }, [])
 
   async function fetchExercises() {
     try {
@@ -54,21 +58,12 @@ export default function AdminExercises() {
     }
   }
 
-  if (status === 'loading' || loading) {
+  if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <LoadingSpinner className="h-8 w-8" />
       </div>
     )
-  }
-
-  if (!session) {
-    return <NotLoggedIn />
-  }
-
-  if (session.user?.role !== 'ADMIN') {
-    router.push('/dashboard')
-    return null
   }
 
   return (
@@ -115,9 +110,7 @@ export default function AdminExercises() {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
-                    {(exercise as any).order || '-'}
-                  </div>
+                  <div className="text-sm text-gray-900">{exercise.order}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">

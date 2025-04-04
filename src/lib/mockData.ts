@@ -34,6 +34,7 @@ export type Exercise = {
   createdAt: Date;
   updatedAt: Date;
   mediaIds: string[];
+  order: number;
 };
 
 // Media Types and Data
@@ -173,7 +174,8 @@ export const exercises: Exercise[] = [
     userId: '1',
     createdAt: new Date('2024-01-01'),
     updatedAt: new Date('2024-01-01'),
-    mediaIds: ['1', '2']
+    mediaIds: ['1', '2'],
+    order: 1
   },
   {
     id: '2',
@@ -198,7 +200,8 @@ export const exercises: Exercise[] = [
     userId: '1',
     createdAt: new Date('2024-01-02'),
     updatedAt: new Date('2024-01-02'),
-    mediaIds: ['3', '4']
+    mediaIds: ['3', '4'],
+    order: 2
   },
   {
     id: '3',
@@ -216,7 +219,8 @@ export const exercises: Exercise[] = [
     userId: '1',
     createdAt: new Date('2024-01-03'),
     updatedAt: new Date('2024-01-03'),
-    mediaIds: []
+    mediaIds: [],
+    order: 3
   },
   {
     id: '4',
@@ -235,7 +239,8 @@ export const exercises: Exercise[] = [
     userId: '1',
     createdAt: new Date('2024-01-04'),
     updatedAt: new Date('2024-01-04'),
-    mediaIds: []
+    mediaIds: [],
+    order: 4
   },
   {
     id: '5',
@@ -254,7 +259,8 @@ export const exercises: Exercise[] = [
     userId: '1',
     createdAt: new Date('2024-01-05'),
     updatedAt: new Date('2024-01-05'),
-    mediaIds: []
+    mediaIds: [],
+    order: 5
   }
 ].map(e => ({
   ...e,

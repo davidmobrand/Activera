@@ -1,8 +1,8 @@
-'use client'
-
-import { useState, useEffect } from 'react'
-import { useSession } from 'next-auth/react'
+import { redirect } from 'next/navigation'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 import Link from 'next/link'
+import { mockDb } from '@/lib/mockData'
 
 interface CategoryProgress {
   category: string
@@ -16,70 +16,41 @@ const categoryLabels = {
   ENGAGEMANG: 'Engagemang',
 }
 
-export default function Dashboard() {
-  const { data: session } = useSession()
-  const [progress, setProgress] = useState<CategoryProgress[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+export default async function Dashboard() {
+  const session = await getServerSession(authOptions)
+  
+  if (!session?.user) {
+    redirect('/login')
+  }
 
-  useEffect(() => {
-    fetchProgress()
-  }, [])
+  // Fetch data server-side
+  const exercises = mockDb.findExercises()
+  const progressData = mockDb.findExerciseProgress(session.user.id)
 
-  async function fetchProgress() {
-    try {
-      setIsLoading(true)
-      const [exercisesRes, progressRes] = await Promise.all([
-        fetch('/api/exercises'),
-        fetch('/api/progress'),
-      ])
-
-      if (!exercisesRes.ok || !progressRes.ok) {
-        throw new Error('Failed to fetch data')
+  // Calculate progress
+  const progressByCategory = exercises.reduce((acc: Record<string, CategoryProgress>, exercise) => {
+    if (!acc[exercise.category]) {
+      acc[exercise.category] = {
+        category: exercise.category,
+        total: 0,
+        completed: 0,
       }
-
-      const exercises = await exercisesRes.json()
-      const progressData = await progressRes.json()
-
-      const progressByCategory = exercises.reduce((acc: Record<string, CategoryProgress>, exercise: any) => {
-        if (!acc[exercise.category]) {
-          acc[exercise.category] = {
-            category: exercise.category,
-            total: 0,
-            completed: 0,
-          }
-        }
-        acc[exercise.category].total++
-        if (progressData.some((p: any) => p.exerciseId === exercise.id && p.completed)) {
-          acc[exercise.category].completed++
-        }
-        return acc
-      }, {})
-
-      setProgress(Object.values(progressByCategory))
-    } catch (error) {
-      console.error('Failed to fetch progress:', error)
-    } finally {
-      setIsLoading(false)
     }
-  }
+    acc[exercise.category].total++
+    if (progressData.some(p => p.exerciseId === exercise.id && p.completed)) {
+      acc[exercise.category].completed++
+    }
+    return acc
+  }, {} as Record<string, CategoryProgress>)
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading dashboard...</p>
-        </div>
-      </div>
-    )
-  }
+  const progress = Object.values(progressByCategory)
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Welcome, {session?.user?.name || 'User'}!</h1>
+      <h1 className="text-3xl font-bold mb-8">Welcome, {session.user.name || 'User'}!</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {progress.map((cat) => (
+        {progress.map((cat: CategoryProgress) => (
           <Link
             key={cat.category}
             href={`/exercises/${cat.category.toLowerCase()}`}
@@ -105,7 +76,7 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {session?.user?.role === 'ADMIN' && (
+      {session.user.role === 'ADMIN' && (
         <div className="mt-12">
           <h2 className="text-2xl font-semibold mb-4">Admin Actions</h2>
           <div className="space-x-4">

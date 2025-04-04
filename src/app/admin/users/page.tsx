@@ -1,26 +1,24 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
-
-interface User {
-  id: string
-  name: string | null
-  email: string
-  role: string
-  createdAt: string
-}
+import NotLoggedIn from '@/components/NotLoggedIn'
+import { User } from '@/lib/mockData'
 
 export default function AdminUsers() {
   const router = useRouter()
+  const { data: session, status } = useSession()
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchUsers()
-  }, [])
+    if (status !== 'loading') {
+      fetchUsers()
+    }
+  }, [status])
 
   async function fetchUsers() {
     try {
@@ -50,30 +48,21 @@ export default function AdminUsers() {
     }
   }
 
-  async function toggleRole(user: User) {
-    try {
-      const response = await fetch(`/api/users/${user.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          role: user.role === 'ADMIN' ? 'CLIENT' : 'ADMIN',
-        }),
-      })
-
-      if (!response.ok) throw new Error('Failed to update user role')
-      
-      await fetchUsers()
-    } catch (error) {
-      console.error('Error updating user role:', error)
-    }
-  }
-
-  if (loading) {
+  if (status === 'loading' || loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <LoadingSpinner className="h-8 w-8" />
       </div>
     )
+  }
+
+  if (!session) {
+    return <NotLoggedIn />
+  }
+
+  if (session.user?.role !== 'ADMIN') {
+    router.push('/dashboard')
+    return null
   }
 
   return (
@@ -108,43 +97,40 @@ export default function AdminUsers() {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {users.map((user) => (
-              <tr key={user.id} className="hover:bg-gray-50">
+              <tr key={user.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
-                    {user.name || 'No name'}
+                    {user.name || '-'}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{user.email}</div>
+                  <div className="text-sm text-gray-500">
+                    {user.email}
+                  </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    user.role === 'ADMIN'
-                      ? 'bg-purple-100 text-purple-800'
-                      : 'bg-green-100 text-green-800'
-                  }`}>
+                  <div className="text-sm text-gray-500">
                     {user.role}
-                  </span>
+                  </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
+                  <div className="text-sm text-gray-500">
                     {new Date(user.createdAt).toLocaleDateString()}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <Button
-                    variant="secondary"
-                    className="mr-2"
-                    onClick={() => toggleRole(user)}
+                  <button
+                    onClick={() => router.push(`/admin/users/${user.id}`)}
+                    className="text-blue-600 hover:text-blue-900 mr-4"
                   >
-                    Make {user.role === 'ADMIN' ? 'Client' : 'Admin'}
-                  </Button>
-                  <Button
-                    variant="outline"
+                    Edit
+                  </button>
+                  <button
                     onClick={() => deleteUser(user.id)}
+                    className="text-red-600 hover:text-red-900"
                   >
                     Delete
-                  </Button>
+                  </button>
                 </td>
               </tr>
             ))}

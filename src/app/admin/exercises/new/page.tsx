@@ -86,39 +86,42 @@ export default function CreateExercise() {
         </Button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            value={formData.title}
-            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            required
-          />
+      <form onSubmit={handleSubmit} className="space-y-8 bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="grid grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              value={formData.title}
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              placeholder="Enter exercise title"
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+              Category
+            </label>
+            <select
+              id="category"
+              value={formData.category}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value as FormData['category'] })}
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              required
+            >
+              <option value="NARVARO">Närvaro</option>
+              <option value="OPPENHET">Öppenhet</option>
+              <option value="ENGAGEMANG">Engagemang</option>
+            </select>
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-            Category
-          </label>
-          <select
-            id="category"
-            value={formData.category}
-            onChange={(e) => setFormData({ ...formData, category: e.target.value as FormData['category'] })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            required
-          >
-            <option value="NARVARO">Närvaro</option>
-            <option value="OPPENHET">Öppenhet</option>
-            <option value="ENGAGEMANG">Engagemang</option>
-          </select>
-        </div>
-
-        <div>
+        <div className="space-y-2">
           <label htmlFor="order" className="block text-sm font-medium text-gray-700">
             Order
           </label>
@@ -127,23 +130,26 @@ export default function CreateExercise() {
             id="order"
             value={formData.order}
             onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="block w-48 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             required
             min="1"
+            placeholder="Enter order number"
           />
         </div>
 
-        <div>
-          <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="space-y-2">
+          <label htmlFor="content" className="block text-sm font-medium text-gray-700">
             Content
           </label>
-          <Editor
-            value={formData.content}
-            onEditorChange={(content: string) => setFormData({ ...formData, content })}
-          />
+          <div className="mt-1 rounded-md shadow-sm">
+            <Editor
+              value={formData.content}
+              onEditorChange={(content: string) => setFormData({ ...formData, content })}
+            />
+          </div>
         </div>
 
-        <div className="flex justify-end space-x-3">
+        <div className="flex justify-end space-x-4 pt-4 border-t border-gray-200">
           <Button
             type="button"
             variant="outline"

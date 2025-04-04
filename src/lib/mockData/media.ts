@@ -1,13 +1,16 @@
 import { Media, MediaType, MediaInput } from '../types';
 import { MediaSchema, MediaInputSchema } from '../validation';
 
+// Default to localhost in development
+const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:3000'
+
 // Mock Media Files with realistic URLs and consistent timestamps
 export const mediaFiles: Media[] = [
   {
     id: '1',
     exerciseId: '1',
     type: MediaType.IMAGE,
-    url: 'https://storage.activera.com/exercises/1/images/peaceful-meditation.jpg',
+    url: `${STORAGE_URL}/exercises/1/images/peaceful-meditation.jpg`,
     name: 'Peaceful Meditation at Sunrise',
     createdAt: new Date('2024-01-01T00:00:00Z').toISOString(),
     updatedAt: new Date('2024-01-01T00:00:00Z').toISOString()
@@ -16,7 +19,7 @@ export const mediaFiles: Media[] = [
     id: '2',
     exerciseId: '1',
     type: MediaType.AUDIO,
-    url: 'https://storage.activera.com/exercises/1/audio/calm-meditation.mp3',
+    url: `${STORAGE_URL}/exercises/1/audio/calm-meditation.mp3`,
     name: 'Calming Meditation Music',
     createdAt: new Date('2024-01-15T00:00:00Z').toISOString(),
     updatedAt: new Date('2024-01-15T00:00:00Z').toISOString()
@@ -40,7 +43,7 @@ export const createMedia = (input: Omit<Media, "id" | "createdAt">): Media => {
   
   const urlPath = validatedInput.type === MediaType.IMAGE ? 'images' : 'audio';
   const fileName = validatedInput.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  const url = `https://storage.activera.com/exercises/${validatedInput.exerciseId}/${urlPath}/${fileName}`;
+  const url = `${STORAGE_URL}/exercises/${validatedInput.exerciseId}/${urlPath}/${fileName}`;
   
   const now = new Date().toISOString();
   const newMedia: Media = {

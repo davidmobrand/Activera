@@ -4,6 +4,9 @@ import { authOptions } from '@/lib/auth'
 import { mockDb } from '@/lib/mockData'
 import { MediaType } from '@/lib/types'
 
+// Default to localhost in development
+const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:3000'
+
 interface Props {
   params: {
     id: string
@@ -40,7 +43,7 @@ export async function POST(
 
     const urlPath = type === MediaType.IMAGE ? 'images' : 'audio';
     const fileName = file.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    const url = `https://storage.activera.com/exercises/${params.id}/${urlPath}/${fileName}`;
+    const url = `${STORAGE_URL}/exercises/${params.id}/${urlPath}/${fileName}`;
 
     const mediaInput = {
       exerciseId: params.id,

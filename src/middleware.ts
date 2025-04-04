@@ -24,11 +24,12 @@ export default withAuth(
       return NextResponse.next()
     }
 
-    // Redirect to login if no token (except for login page)
+    // Redirect to login if no token
     if (!token) {
       console.log('[Middleware] No token found, redirecting to login')
       const loginUrl = new URL('/login', req.url)
-      loginUrl.searchParams.set('callbackUrl', req.url)
+      // Only use pathname to avoid double-encoding of full URLs
+      loginUrl.searchParams.set('callbackUrl', path)
       return NextResponse.redirect(loginUrl)
     }
 

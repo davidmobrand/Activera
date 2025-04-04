@@ -92,20 +92,40 @@ export const exercises: Exercise[] = [
   },
   {
     id: '3',
-    title: 'Fem Sinnen Övning',
-    content: `
-      <h2>Fem Sinnen Medvetenhetsövning</h2>
-      <p>En övning för att förankra dig i nuet genom dina sinnen.</p>
-      <h3>Notera:</h3>
-      <ul>
-        <li>5 saker du kan se</li>
-        <li>4 saker du kan känna</li>
-        <li>3 saker du kan höra</li>
-        <li>2 saker du kan lukta</li>
-        <li>1 sak du kan smaka</li>
-      </ul>
-      <p>Använd denna övning när du känner dig överväldigad eller behöver grunda dig i nuet.</p>
-    `,
+    translations: {
+      en: {
+        title: 'Five Senses Exercise',
+        content: `
+          <h2>Five Senses Awareness Exercise</h2>
+          <p>An exercise to ground yourself in the present moment through your senses.</p>
+          <h3>Notice:</h3>
+          <ul>
+            <li>5 things you can see</li>
+            <li>4 things you can feel</li>
+            <li>3 things you can hear</li>
+            <li>2 things you can smell</li>
+            <li>1 thing you can taste</li>
+          </ul>
+          <p>Use this exercise when you feel overwhelmed or need to ground yourself in the present moment.</p>
+        `,
+      },
+      sv: {
+        title: 'Fem Sinnen Övning',
+        content: `
+          <h2>Fem Sinnen Medvetenhetsövning</h2>
+          <p>En övning för att förankra dig i nuet genom dina sinnen.</p>
+          <h3>Notera:</h3>
+          <ul>
+            <li>5 saker du kan se</li>
+            <li>4 saker du kan känna</li>
+            <li>3 saker du kan höra</li>
+            <li>2 saker du kan lukta</li>
+            <li>1 sak du kan smaka</li>
+          </ul>
+          <p>Använd denna övning när du känner dig överväldigad eller behöver grunda dig i nuet.</p>
+        `,
+      },
+    },
     category: ExerciseCategory.NARVARO,
     userId: '1',
     createdAt: '2024-01-03T00:00:00Z',
@@ -115,19 +135,38 @@ export const exercises: Exercise[] = [
   },
   {
     id: '4',
-    title: 'Tankar som Löv',
-    content: `
-      <h2>Övning: Tankar som Löv på en Ström</h2>
-      <p>En metaforisk övning för att öva på att observera tankar utan att fastna i dem.</p>
-      <h3>Instruktioner:</h3>
-      <ol>
-        <li>Föreställ dig en lugn ström med löv som flyter förbi</li>
-        <li>När tankar dyker upp, placera dem på löven</li>
-        <li>Observera hur löven med dina tankar flyter iväg</li>
-        <li>Återvänd till strömmen när du märker att du fastnat i en tanke</li>
-      </ol>
-      <p>Denna övning hjälper dig att skapa distans till dina tankar och se dem som mentala händelser snarare än fakta.</p>
-    `,
+    translations: {
+      en: {
+        title: 'Thoughts as Leaves',
+        content: `
+          <h2>Exercise: Thoughts as Leaves on a Stream</h2>
+          <p>A metaphorical exercise to practice observing thoughts without getting caught up in them.</p>
+          <h3>Instructions:</h3>
+          <ol>
+            <li>Imagine a calm stream with leaves floating by</li>
+            <li>As thoughts arise, place them on the leaves</li>
+            <li>Watch as the leaves carrying your thoughts float away</li>
+            <li>Return to the stream when you notice you've gotten caught up in a thought</li>
+          </ol>
+          <p>This exercise helps you create distance from your thoughts and see them as mental events rather than facts.</p>
+        `,
+      },
+      sv: {
+        title: 'Tankar som Löv',
+        content: `
+          <h2>Övning: Tankar som Löv på en Ström</h2>
+          <p>En metaforisk övning för att öva på att observera tankar utan att fastna i dem.</p>
+          <h3>Instruktioner:</h3>
+          <ol>
+            <li>Föreställ dig en lugn ström med löv som flyter förbi</li>
+            <li>När tankar dyker upp, placera dem på löven</li>
+            <li>Observera hur löven med dina tankar flyter iväg</li>
+            <li>Återvänd till strömmen när du märker att du fastnat i en tanke</li>
+          </ol>
+          <p>Denna övning hjälper dig att skapa distans till dina tankar och se dem som mentala händelser snarare än fakta.</p>
+        `,
+      },
+    },
     category: ExerciseCategory.OPPENHET,
     userId: '1',
     createdAt: '2024-01-04T00:00:00Z',
@@ -137,19 +176,38 @@ export const exercises: Exercise[] = [
   },
   {
     id: '5',
-    title: 'Värderingskompass',
-    content: `
-      <h2>Värderingskompass Övning</h2>
-      <p>En övning för att utforska och förtydliga dina personliga värderingar.</p>
-      <h3>Steg:</h3>
-      <ol>
-        <li>Identifiera viktiga livsområden (familj, arbete, hälsa, etc.)</li>
-        <li>Reflektera över vad som är viktigt inom varje område</li>
-        <li>Skriv ner konkreta handlingar som speglar dessa värderingar</li>
-        <li>Utvärdera hur väl ditt liv stämmer överens med dina värderingar</li>
-      </ol>
-      <p>Använd denna kompass regelbundet för att hålla dig på rätt kurs i livet.</p>
-    `,
+    translations: {
+      en: {
+        title: 'Values Compass',
+        content: `
+          <h2>Values Compass Exercise</h2>
+          <p>An exercise to explore and clarify your personal values.</p>
+          <h3>Steps:</h3>
+          <ol>
+            <li>Identify important life areas (family, work, health, etc.)</li>
+            <li>Reflect on what matters within each area</li>
+            <li>Write down concrete actions that reflect these values</li>
+            <li>Evaluate how well your life aligns with your values</li>
+          </ol>
+          <p>Use this compass regularly to stay on course in life.</p>
+        `,
+      },
+      sv: {
+        title: 'Värderingskompass',
+        content: `
+          <h2>Värderingskompass Övning</h2>
+          <p>En övning för att utforska och förtydliga dina personliga värderingar.</p>
+          <h3>Steg:</h3>
+          <ol>
+            <li>Identifiera viktiga livsområden (familj, arbete, hälsa, etc.)</li>
+            <li>Reflektera över vad som är viktigt inom varje område</li>
+            <li>Skriv ner konkreta handlingar som speglar dessa värderingar</li>
+            <li>Utvärdera hur väl ditt liv stämmer överens med dina värderingar</li>
+          </ol>
+          <p>Använd denna kompass regelbundet för att hålla dig på rätt kurs i livet.</p>
+        `,
+      },
+    },
     category: ExerciseCategory.ENGAGEMANG,
     userId: '1',
     createdAt: '2024-01-05T00:00:00Z',
@@ -159,19 +217,38 @@ export const exercises: Exercise[] = [
   },
   {
     id: '6',
-    title: 'Medveten Promenad',
-    content: `
-      <h2>Övning i Medveten Promenad</h2>
-      <p>En övning i att vara fullt närvarande medan du går.</p>
-      <h3>Fokuspunkter:</h3>
-      <ol>
-        <li>Känn varje steg mot marken</li>
-        <li>Notera balansen och kroppens rörelser</li>
-        <li>Uppmärksamma omgivningen med alla sinnen</li>
-        <li>Observera tankar som kommer och går</li>
-      </ol>
-      <p>Börja med 5-10 minuter och öka gradvis. Kan göras var som helst, inomhus eller utomhus.</p>
-    `,
+    translations: {
+      en: {
+        title: 'Mindful Walking',
+        content: `
+          <h2>Mindful Walking Exercise</h2>
+          <p>An exercise in being fully present while walking.</p>
+          <h3>Focus Points:</h3>
+          <ol>
+            <li>Feel each step against the ground</li>
+            <li>Notice balance and body movements</li>
+            <li>Pay attention to surroundings with all senses</li>
+            <li>Observe thoughts as they come and go</li>
+          </ol>
+          <p>Start with 5-10 minutes and gradually increase. Can be done anywhere, indoors or outdoors.</p>
+        `,
+      },
+      sv: {
+        title: 'Medveten Promenad',
+        content: `
+          <h2>Övning i Medveten Promenad</h2>
+          <p>En övning i att vara fullt närvarande medan du går.</p>
+          <h3>Fokuspunkter:</h3>
+          <ol>
+            <li>Känn varje steg mot marken</li>
+            <li>Notera balansen och kroppens rörelser</li>
+            <li>Uppmärksamma omgivningen med alla sinnen</li>
+            <li>Observera tankar som kommer och går</li>
+          </ol>
+          <p>Börja med 5-10 minuter och öka gradvis. Kan göras var som helst, inomhus eller utomhus.</p>
+        `,
+      },
+    },
     category: ExerciseCategory.NARVARO,
     userId: '1',
     createdAt: '2024-01-06T00:00:00Z',
@@ -181,19 +258,38 @@ export const exercises: Exercise[] = [
   },
   {
     id: '7',
-    title: 'Känslokarta',
-    content: `
-      <h2>Känslokarta Övning</h2>
-      <p>En övning för att öka din emotionella medvetenhet och acceptans.</p>
-      <h3>Process:</h3>
-      <ol>
-        <li>Identifiera känslan du upplever</li>
-        <li>Notera var i kroppen du känner den</li>
-        <li>Beskriv känslan utan att döma den</li>
-        <li>Observera hur känslan förändras över tid</li>
-      </ol>
-      <p>Använd denna övning för att bättre förstå och hantera dina känslor.</p>
-    `,
+    translations: {
+      en: {
+        title: 'Emotion Mapping',
+        content: `
+          <h2>Emotion Mapping Exercise</h2>
+          <p>An exercise to increase your emotional awareness and acceptance.</p>
+          <h3>Process:</h3>
+          <ol>
+            <li>Identify the emotion you're experiencing</li>
+            <li>Notice where in your body you feel it</li>
+            <li>Describe the emotion without judging it</li>
+            <li>Observe how the emotion changes over time</li>
+          </ol>
+          <p>Use this exercise to better understand and handle your emotions.</p>
+        `,
+      },
+      sv: {
+        title: 'Känslokarta',
+        content: `
+          <h2>Känslokarta Övning</h2>
+          <p>En övning för att öka din emotionella medvetenhet och acceptans.</p>
+          <h3>Process:</h3>
+          <ol>
+            <li>Identifiera känslan du upplever</li>
+            <li>Notera var i kroppen du känner den</li>
+            <li>Beskriv känslan utan att döma den</li>
+            <li>Observera hur känslan förändras över tid</li>
+          </ol>
+          <p>Använd denna övning för att bättre förstå och hantera dina känslor.</p>
+        `,
+      },
+    },
     category: ExerciseCategory.OPPENHET,
     userId: '1',
     createdAt: '2024-01-07T00:00:00Z',

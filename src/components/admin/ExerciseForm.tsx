@@ -7,12 +7,9 @@ import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Exercise, Media } from '@/lib/mockData'
 import type { Editor as TinyMCEEditor } from 'tinymce'
-import { useLanguage } from '@/lib/i18n/LanguageContext'
-import { Language } from '@/lib/i18n/types'
 
 interface ExerciseFormProps {
-  exercise?: Exercise
-  onSubmit: (data: Partial<Exercise>) => void
+  exercise: Exercise
 }
 
 interface FilePickerCallback {
@@ -23,21 +20,9 @@ interface FilePickerMeta {
   filetype: 'image' | 'media' | 'file';
 }
 
-const defaultExercise: Partial<Exercise> = {
-  translations: {
-    en: { title: '', content: '' },
-    sv: { title: '', content: '' },
-  },
-  category: Exercise.category.NARVARO,
-  mediaIds: [],
-  order: 1,
-}
-
-export function ExerciseForm({ exercise, onSubmit }: ExerciseFormProps) {
+export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
   const router = useRouter()
-  const { language } = useLanguage()
-  const [editingLanguage, setEditingLanguage] = useState<Language>(language)
-  const [formData, setFormData] = useState<typeof defaultExercise>(exercise || defaultExercise)
+  const [exercise, setExercise] = useState(initialExercise)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isUploading, setIsUploading] = useState(false)
@@ -72,7 +57,7 @@ export function ExerciseForm({ exercise, onSubmit }: ExerciseFormProps) {
       formData.append('type', type)
 
       // Upload the file
-      const response = await fetch(`/api/exercises/${exercise?.id}/media`, {
+      const response = await fetch(`/api/exercises/${exercise.id}/media`, {
         method: 'POST',
         body: formData
       })
@@ -103,13 +88,21 @@ export function ExerciseForm({ exercise, onSubmit }: ExerciseFormProps) {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setSaving(true)
     setError(null)
 
     try {
-      onSubmit(formData)
+      const response = await fetch(`/api/exercises/${exercise.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(exercise),
+      })
+
+      if (!response.ok) throw new Error('Failed to save exercise')
+      
+      router.push('/admin/exercises')
     } catch (error) {
       console.error('Error saving exercise:', error)
       setError(error instanceof Error ? error.message : 'Failed to save exercise')
@@ -118,85 +111,35 @@ export function ExerciseForm({ exercise, onSubmit }: ExerciseFormProps) {
     }
   }
 
-  const updateTranslation = (lang: Language, field: 'title' | 'content', value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      translations: {
-        ...prev.translations,
-        [lang]: {
-          ...prev.translations[lang],
-          [field]: value,
-        },
-      },
-    }))
-  }
-
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="flex gap-4 mb-4">
-        <Button
-          type="button"
-          variant={editingLanguage === 'en' ? 'primary' : 'outline'}
-          onClick={() => setEditingLanguage('en')}
-        >
-          English
-        </Button>
-        <Button
-          type="button"
-          variant={editingLanguage === 'sv' ? 'primary' : 'outline'}
-          onClick={() => setEditingLanguage('sv')}
-        >
-          Svenska
-        </Button>
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700">
+          Title
+        </label>
+        <input
+          type="text"
+          value={exercise.title}
+          onChange={(e) => setExercise({ ...exercise, title: e.target.value })}
+          className="w-full rounded-md border border-gray-300 px-4 py-2"
+          required
+        />
       </div>
 
-      <div className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Title ({editingLanguage === 'en' ? 'English' : 'Svenska'})
-          </label>
-          <input
-            type="text"
-            value={formData.translations[editingLanguage].title}
-            onChange={(e) => updateTranslation(editingLanguage, 'title', e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Content ({editingLanguage === 'en' ? 'English' : 'Svenska'})
-          </label>
-          <textarea
-            value={formData.translations[editingLanguage].content}
-            onChange={(e) => updateTranslation(editingLanguage, 'content', e.target.value)}
-            rows={10}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Category</label>
-          <select
-            value={formData.category}
-            onChange={(e) => setFormData({ ...formData, category: e.target.value as Exercise['category'] })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          >
-            <option value={Exercise.category.NARVARO}>Närvaro</option>
-            <option value={Exercise.category.OPPENHET}>Öppenhet</option>
-            <option value={Exercise.category.ENGAGEMANG}>Engagemang</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Order</label>
-          <input
-            type="number"
-            value={formData.order}
-            onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700">
+          Category
+        </label>
+        <select
+          value={exercise.category}
+          onChange={(e) => setExercise({ ...exercise, category: e.target.value as Exercise['category'] })}
+          className="w-full rounded-md border border-gray-300 px-4 py-2"
+          required
+        >
+          <option value="NARVARO">Närvaro</option>
+          <option value="OPPENHET">Öppenhet</option>
+          <option value="ENGAGEMANG">Engagemang</option>
+        </select>
       </div>
 
       <div className="space-y-2">
@@ -209,8 +152,8 @@ export function ExerciseForm({ exercise, onSubmit }: ExerciseFormProps) {
             onInit={(_evt: unknown, editor: TinyMCEEditor) => {
               editorRef.current = editor
             }}
-            value={formData.content || ''}
-            onEditorChange={(content: string) => setFormData({ ...formData, content })}
+            value={exercise.content}
+            onEditorChange={(content: string) => setExercise({ ...exercise, content })}
             init={{
               height: '100%',
               menubar: false,
@@ -260,11 +203,29 @@ export function ExerciseForm({ exercise, onSubmit }: ExerciseFormProps) {
         </div>
       </div>
 
-      <div className="flex justify-end">
-        <Button type="submit" variant="primary">
-          {exercise ? 'Update Exercise' : 'Create Exercise'}
+      <div className="flex gap-4 pt-6">
+        <Button type="submit" disabled={saving}>
+          {saving ? (
+            <>
+              <LoadingSpinner className="mr-2 h-4 w-4" />
+              Saving...
+            </>
+          ) : (
+            typeof exercise !== 'undefined' ? 'Update Exercise' : 'Create Exercise'
+          )}
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => router.push('/admin/exercises')}
+        >
+          Cancel
         </Button>
       </div>
+
+      {error && (
+        <p className="text-red-500 text-sm mt-2">{error}</p>
+      )}
     </form>
   )
 } 

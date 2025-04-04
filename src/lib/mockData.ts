@@ -529,7 +529,7 @@ A gentle practice to create distance from difficult thoughts.
 - Regular practice builds skill
 
 Remember: The goal is to observe thoughts, not eliminate them.`,
-    category: "OPPENHET",
+    category: ExerciseCategory.OPPENHET,
     userId: "admin",
     createdAt: "2024-03-20T11:00:00Z",
     updatedAt: "2024-03-20T11:00:00Z",
@@ -762,7 +762,7 @@ Learn to respond to difficulties with kindness and understanding.
 - Adapt words to fit your style
 
 Remember: Self-compassion is a skill that grows with practice.`,
-    category: "OPPENHET",
+    category: ExerciseCategory.OPPENHET,
     userId: "admin",
     createdAt: "2024-03-20T11:01:00Z",
     updatedAt: "2024-03-20T11:01:00Z",
@@ -1241,7 +1241,7 @@ This exercise helps you develop a strong foundation in mindfulness by using the 
 - Use this as a quick centering technique throughout the day
 
 Remember: The goal isn't to clear your mind, but to practice returning to the present moment using your breath as an anchor.`,
-    category: "NARVARO",
+    category: ExerciseCategory.NARVARO,
     userId: "admin",
     createdAt: "2024-03-20T10:00:00Z",
     updatedAt: "2024-03-20T10:00:00Z",
@@ -1279,7 +1279,7 @@ Use this exercise to explore and clarify your personal values in different life 
 3. Track your progress and adjust as needed
 
 Remember: Values are like a compass that guides your journey, not a destination to reach.`,
-    category: "ENGAGEMANG",
+    category: ExerciseCategory.ENGAGEMANG,
     userId: "admin",
     createdAt: "2024-03-20T10:01:00Z",
     updatedAt: "2024-03-20T10:01:00Z",
@@ -1320,7 +1320,7 @@ Imagine you're climbing a mountain called "Acceptance Mountain." Each step repre
 - Progress isn't always linear - that's okay
 
 Remember: Like climbing a mountain, acceptance is a journey that requires patience and persistence.`,
-    category: "OPPENHET",
+    category: ExerciseCategory.OPPENHET,
     userId: "admin",
     createdAt: "2024-03-20T10:02:00Z",
     updatedAt: "2024-03-20T10:02:00Z",
@@ -1360,7 +1360,7 @@ Transform a simple walk into a powerful mindfulness exercise.
 - Practice regularly to build the habit
 
 Remember: Every step is an opportunity to return to the present moment.`,
-    category: "NARVARO",
+    category: ExerciseCategory.NARVARO,
     userId: "admin",
     createdAt: "2024-03-20T10:03:00Z",
     updatedAt: "2024-03-20T10:03:00Z",
@@ -1400,7 +1400,7 @@ Create a concrete plan to align your daily actions with your core values.
 - Adjust plan as needed
 
 Remember: Values are like a compass - they guide our actions but aren't a destination.`,
-    category: "ENGAGEMANG",
+    category: ExerciseCategory.ENGAGEMANG,
     userId: "admin",
     createdAt: "2024-03-20T10:04:00Z",
     updatedAt: "2024-03-20T10:04:00Z",
@@ -1437,7 +1437,7 @@ A gentle practice to create distance from difficult thoughts.
 - Regular practice builds skill
 
 Remember: The goal is to observe thoughts, not eliminate them.`,
-    category: "OPPENHET",
+    category: ExerciseCategory.OPPENHET,
     userId: "admin",
     createdAt: "2024-03-20T11:00:00Z",
     updatedAt: "2024-03-20T11:00:00Z",
@@ -1476,7 +1476,7 @@ Learn to respond to difficulties with kindness and understanding.
 - Adapt words to fit your style
 
 Remember: Self-compassion is a skill that grows with practice.`,
-    category: "OPPENHET",
+    category: ExerciseCategory.OPPENHET,
     userId: "admin",
     createdAt: "2024-03-20T11:01:00Z",
     updatedAt: "2024-03-20T11:01:00Z",
@@ -1517,7 +1517,7 @@ Explore and clarify your personal values through guided reflection.
 - Track progress daily
 
 Remember: Values guide us but aren't destinations to reach.`,
-    category: "ENGAGEMANG",
+    category: ExerciseCategory.ENGAGEMANG,
     userId: "admin",
     createdAt: "2024-03-20T11:02:00Z",
     updatedAt: "2024-03-20T11:02:00Z",
@@ -1556,7 +1556,7 @@ Learn to observe and work with emotions mindfully.
 - Practice with both pleasant and unpleasant emotions
 
 Remember: The goal is awareness, not control.`,
-    category: "NARVARO",
+    category: ExerciseCategory.NARVARO,
     userId: "admin",
     createdAt: "2024-03-20T11:03:00Z",
     updatedAt: "2024-03-20T11:03:00Z",
@@ -1595,7 +1595,7 @@ Learn to open up to difficult experiences with acceptance.
 - Notice results without forcing them
 
 Remember: Acceptance doesn't mean liking or wanting something.`,
-    category: "OPPENHET",
+    category: ExerciseCategory.OPPENHET,
     userId: "admin",
     createdAt: "2024-03-20T11:04:00Z",
     updatedAt: "2024-03-20T11:04:00Z",

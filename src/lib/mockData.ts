@@ -418,6 +418,46 @@ export const mediaFiles: Media[] = [
     url: "/images/acceptance-practice.jpg",
     name: "Acceptance Practice",
     createdAt: "2024-03-20T11:04:00Z"
+  },
+  {
+    id: "39",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/values-clarification.jpg",
+    name: "Values Clarification Exercise",
+    createdAt: "2024-03-20T12:00:00Z"
+  },
+  {
+    id: "40",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/committed-action.jpg",
+    name: "Committed Action Practice",
+    createdAt: "2024-03-20T12:01:00Z"
+  },
+  {
+    id: "41",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/mindful-goals.jpg",
+    name: "Mindful Goals Setting",
+    createdAt: "2024-03-20T12:02:00Z"
+  },
+  {
+    id: "42",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/values-obstacles.jpg",
+    name: "Values Obstacles Exercise",
+    createdAt: "2024-03-20T12:03:00Z"
+  },
+  {
+    id: "43",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/life-compass.jpg",
+    name: "Life Compass Exercise",
+    createdAt: "2024-03-20T12:04:00Z"
   }
 ];
 
@@ -1408,199 +1448,197 @@ Remember: Values are like a compass - they guide our actions but aren't a destin
     order: 30
   },
   {
-    id: "31",
-    title: "Leaves on a Stream",
+    id: "36",
+    title: "Values Clarification",
     content: `
-# Leaves on a Stream - Defusion Exercise
+# Values Clarification Exercise
 
-A gentle practice to create distance from difficult thoughts.
-
-## Instructions
-
-1. Sit comfortably and visualize a gentle stream with leaves floating by
-2. As thoughts arise:
-   - Place each thought on a leaf
-   - Watch it float down the stream
-   - Let it drift away naturally
-
-## Key Points
-
-- Don't try to push thoughts away
-- Notice thoughts without getting caught up in them
-- Return to watching the stream when distracted
-
-## Practice Tips
-
-- Start with 5 minutes
-- Use any thoughts that arise
-- No need to judge or analyze thoughts
-- Regular practice builds skill
-
-Remember: The goal is to observe thoughts, not eliminate them.`,
-    category: ExerciseCategory.OPPENHET,
-    userId: "admin",
-    createdAt: "2024-03-20T11:00:00Z",
-    updatedAt: "2024-03-20T11:00:00Z",
-    mediaIds: ["34"],
-    order: 31
-  },
-  {
-    id: "32",
-    title: "Self-Compassion Break",
-    content: `
-# Self-Compassion Break
-
-Learn to respond to difficulties with kindness and understanding.
-
-## Practice Steps
-
-1. Acknowledge Suffering
-   - Notice your pain or struggle
-   - Say: "This is a moment of suffering"
-   - Validate your experience
-
-2. Common Humanity
-   - Recognize you're not alone
-   - Others face similar challenges
-   - Say: "Suffering is part of life"
-
-3. Self-Kindness
-   - Offer yourself comfort
-   - Use gentle touch if helpful
-   - Say kind words to yourself
-
-## Daily Integration
-
-- Use during stressful moments
-- Practice regularly
-- Adapt words to fit your style
-
-Remember: Self-compassion is a skill that grows with practice.`,
-    category: ExerciseCategory.OPPENHET,
-    userId: "admin",
-    createdAt: "2024-03-20T11:01:00Z",
-    updatedAt: "2024-03-20T11:01:00Z",
-    mediaIds: ["35"],
-    order: 32
-  },
-  {
-    id: "33",
-    title: "Values Discovery Journey",
-    content: `
-# Values Discovery Journey
-
-Explore and clarify your personal values through guided reflection.
+Deepen your understanding of what truly matters to you.
 
 ## Exercise Steps
 
-1. Life Areas Exploration
-   - Relationships
-   - Career/Work
-   - Personal Growth
-   - Health/Wellbeing
-   - Community/Society
+1. Life Domains Review
+   - Family relationships
+   - Intimate relationships
+   - Parenting
+   - Friendship
+   - Career
+   - Education/Growth
+   - Recreation
+   - Spirituality
+   - Community
+   - Health/Self-care
 
-2. For Each Area:
-   - What matters most?
-   - What brings meaning?
-   - What inspires you?
+2. For Each Domain:
+   - What would be ideal?
+   - What small steps can you take?
+   - What's stopping you?
 
-3. Values Identification
-   - List key themes
-   - Rate importance
-   - Consider current alignment
+3. Values Action Plan
+   - Choose priority areas
+   - Set specific goals
+   - Create action steps
 
-## Implementation
-
-- Choose one value to focus on
-- Set small, actionable goals
-- Track progress daily
-
-Remember: Values guide us but aren't destinations to reach.`,
+Remember: Values are directions, not destinations.`,
     category: ExerciseCategory.ENGAGEMANG,
     userId: "admin",
-    createdAt: "2024-03-20T11:02:00Z",
-    updatedAt: "2024-03-20T11:02:00Z",
-    mediaIds: ["36"],
-    order: 33
+    createdAt: "2024-03-20T12:00:00Z",
+    updatedAt: "2024-03-20T12:00:00Z",
+    mediaIds: ["39"],
+    order: 36
   },
   {
-    id: "34",
-    title: "Mindful Emotions",
+    id: "37",
+    title: "Committed Action",
     content: `
-# Mindful Emotions Practice
+# Committed Action Practice
 
-Learn to observe and work with emotions mindfully.
+Turn your values into meaningful actions.
 
 ## Practice Guide
 
-1. Notice the Emotion
-   - Where do you feel it?
-   - What sensations arise?
-   - How intense is it?
+1. Select a Value
+   - Choose one important value
+   - Consider its meaning to you
+   - Identify potential actions
 
-2. Name the Emotion
-   - Label it simply
-   - Use "I notice" language
-   - Avoid judgment
+2. Plan Your Actions
+   - Start very small
+   - Make it specific
+   - Set a timeline
+   - Identify resources needed
 
-3. Allow the Experience
-   - Make space for the feeling
-   - Don't try to change it
-   - Watch how it changes
+3. Handle Obstacles
+   - List potential barriers
+   - Plan for setbacks
+   - Create backup plans
 
-## Key Reminders
+## Implementation Tips
 
-- Emotions are temporary
-- You are not your emotions
-- Practice with both pleasant and unpleasant emotions
+- Begin with tiny steps
+- Celebrate progress
+- Learn from setbacks
+- Stay flexible
 
-Remember: The goal is awareness, not control.`,
-    category: ExerciseCategory.NARVARO,
+Remember: Small consistent actions lead to meaningful change.`,
+    category: ExerciseCategory.ENGAGEMANG,
     userId: "admin",
-    createdAt: "2024-03-20T11:03:00Z",
-    updatedAt: "2024-03-20T11:03:00Z",
-    mediaIds: ["37"],
-    order: 34
+    createdAt: "2024-03-20T12:01:00Z",
+    updatedAt: "2024-03-20T12:01:00Z",
+    mediaIds: ["40"],
+    order: 37
   },
   {
-    id: "35",
-    title: "Acceptance Practice",
+    id: "38",
+    title: "Mindful Goal Setting",
     content: `
-# Acceptance Practice
+# Mindful Goal Setting
 
-Learn to open up to difficult experiences with acceptance.
+Align your goals with your values while staying present.
 
 ## Exercise Steps
 
-1. Choose a Challenge
-   - Select a current difficulty
-   - Start with something manageable
-   - Notice your resistance
+1. Present Moment Check-in
+   - Take three mindful breaths
+   - Notice your current state
+   - Connect with your values
 
-2. Explore Your Experience
-   - Physical sensations
-   - Thoughts and images
-   - Emotions and urges
+2. Goal Exploration
+   - What matters most?
+   - What's realistic?
+   - What's in your control?
 
-3. Practice Opening Up
-   - Make room for the experience
-   - Drop the struggle
-   - Notice what changes
+3. SMART Goals with Heart
+   - Specific
+   - Measurable
+   - Achievable
+   - Relevant to values
+   - Time-bound
 
-## Practice Tips
+## Key Reminders
 
-- Start small
-- Be patient
-- Notice results without forcing them
+- Focus on process over outcome
+- Stay flexible
+- Practice self-compassion
+- Revisit and adjust as needed
 
-Remember: Acceptance doesn't mean liking or wanting something.`,
+Remember: Goals are tools for living your values, not measures of your worth.`,
+    category: ExerciseCategory.NARVARO,
+    userId: "admin",
+    createdAt: "2024-03-20T12:02:00Z",
+    updatedAt: "2024-03-20T12:02:00Z",
+    mediaIds: ["41"],
+    order: 38
+  },
+  {
+    id: "39",
+    title: "Values Obstacles",
+    content: `
+# Values Obstacles Exercise
+
+Learn to work with barriers to living your values.
+
+## Practice Steps
+
+1. Identify Obstacles
+   - Internal barriers (thoughts, feelings)
+   - External barriers (situations, resources)
+   - Avoidance patterns
+
+2. Explore Your Response
+   - Notice your reactions
+   - Identify unhelpful patterns
+   - Consider workable alternatives
+
+3. Create Strategies
+   - Acceptance practices
+   - Mindful awareness
+   - Committed actions
+   - Support systems
+
+Remember: Obstacles are part of the journey, not roadblocks.`,
     category: ExerciseCategory.OPPENHET,
     userId: "admin",
-    createdAt: "2024-03-20T11:04:00Z",
-    updatedAt: "2024-03-20T11:04:00Z",
-    mediaIds: ["38"],
-    order: 35
+    createdAt: "2024-03-20T12:03:00Z",
+    updatedAt: "2024-03-20T12:03:00Z",
+    mediaIds: ["42"],
+    order: 39
+  },
+  {
+    id: "40",
+    title: "Life Compass",
+    content: `
+# Life Compass Exercise
+
+Navigate life's challenges using your values as a guide.
+
+## Exercise Guide
+
+1. Create Your Compass
+   - Draw a circle
+   - Divide into life areas
+   - Rate current satisfaction
+   - Note desired direction
+
+2. Choose Direction
+   - Select priority areas
+   - Set intentions
+   - Plan small steps
+   - Track progress
+
+3. Regular Check-ins
+   - Review weekly
+   - Adjust course
+   - Celebrate progress
+   - Plan next steps
+
+Remember: Your compass points to what matters, even in stormy weather.`,
+    category: ExerciseCategory.ENGAGEMANG,
+    userId: "admin",
+    createdAt: "2024-03-20T12:04:00Z",
+    updatedAt: "2024-03-20T12:04:00Z",
+    mediaIds: ["43"],
+    order: 40
   }
 ].map(e => ({
   ...e,

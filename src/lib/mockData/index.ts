@@ -28,7 +28,7 @@ import {
   updateExerciseProgress
 } from './exerciseProgress';
 
-import type { Media } from '../types';
+import type { Media, MediaType } from '../types';
 import type { CreateMedia } from '../validation';
 
 export * from './users';
@@ -46,7 +46,7 @@ interface MockDb {
 
   // Media functions
   findMediaByExerciseId: typeof findMediaByExerciseId;
-  createMedia: typeof createMedia;
+  createMedia: (data: { exerciseId: string; type: MediaType; url: string; name: string; }) => Media;
   deleteMedia: typeof deleteMedia;
   getExerciseMedia: typeof getExerciseMedia;
 

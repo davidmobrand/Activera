@@ -21,16 +21,27 @@ export default function LoginPage() {
       const email = formData.get('email') as string
       const password = formData.get('password') as string
 
-      // Use signIn with redirect: true
-      await signIn('credentials', {
+      console.log('[Login] Attempting sign in:', { email })
+
+      const result = await signIn('credentials', {
         email,
         password,
-        redirect: true,
-        callbackUrl: '/dashboard'
+        redirect: false
       })
+
+      console.log('[Login] Sign in result:', result)
+
+      if (result?.error) {
+        setError(result.error)
+        setIsLoading(false)
+        return
+      }
+
+      // Only redirect after successful sign in
+      window.location.href = '/dashboard'
     } catch (error) {
-      console.error('Login error:', error)
-      setError('An error occurred during sign in')
+      console.error('[Login] Error:', error)
+      setError('An unexpected error occurred')
       setIsLoading(false)
     }
   }
@@ -42,6 +53,11 @@ export default function LoginPage() {
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Sign in to ACTivera
           </h2>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            Admin: admin@activera.com / admin123
+            <br />
+            Client: client@example.com / client123
+          </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">

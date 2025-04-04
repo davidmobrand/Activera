@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { mockDb } from '@/lib/mockData'
+import { mockDb, users, User } from '@/lib/mockData'
 
 export async function GET(
   request: NextRequest,
@@ -40,14 +40,24 @@ export async function PUT(
 
   try {
     const data = await request.json()
+    const user = mockDb.findUserById(params.id)
+    
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 })
+    }
+
     const updatedUser = {
-      id: params.id,
+      ...user,
       ...data,
       updatedAt: new Date()
     }
+
+    // Update user in mock database
+    const index = users.findIndex((u: User) => u.id === params.id)
+    if (index !== -1) {
+      users[index] = updatedUser
+    }
     
-    // In a real app, we would update the database
-    // For now, just return the mock updated user
     return NextResponse.json(updatedUser)
   } catch (error) {
     console.error('Error updating user:', error)

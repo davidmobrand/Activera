@@ -1,9 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
-import { Navbar } from '@/components/ui/Navbar'
+import { Navigation } from '@/components/layout/Navigation'
 import AuthProvider from '@/components/AuthProvider'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -13,19 +11,17 @@ export const metadata: Metadata = {
   description: 'Track your mindfulness and ACT exercises',
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const session = await getServerSession(authOptions)
-  
   return (
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
-          <Navbar session={session} />
-          <main className="container mx-auto px-4 py-8">
+          <Navigation />
+          <main>
             {children}
           </main>
         </AuthProvider>

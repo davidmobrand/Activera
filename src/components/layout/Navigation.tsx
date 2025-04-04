@@ -7,12 +7,16 @@ import { Button } from '@/components/ui/Button'
 
 export function Navigation() {
   const pathname = usePathname()
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
 
-  const isAdmin = session?.user?.role === 'ADMIN'
+  // Don't render anything if not authenticated
+  if (!session) return null
+
+  const isAdmin = session.user?.role === 'ADMIN'
   const isActive = (path: string) => pathname === path
 
   const menuItems = [
+    { href: '/dashboard', label: 'Dashboard' },
     ...(isAdmin
       ? [
           { href: '/admin/exercises', label: 'Manage Exercises' },
@@ -53,7 +57,7 @@ export function Navigation() {
           </div>
           <div className="flex items-center">
             <span className="text-sm text-gray-500 mr-4">
-              {session?.user?.name || session?.user?.email}
+              {session.user?.name || session.user?.email}
             </span>
             <Button
               variant="outline"

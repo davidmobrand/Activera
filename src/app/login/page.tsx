@@ -16,35 +16,48 @@ export default function LoginPage() {
 
   // Debug session state
   useEffect(() => {
+    console.log('[Login] Environment:', process.env.NODE_ENV)
     console.log('[Login] Status:', status)
     console.log('[Login] Session:', session)
+    console.log('[Login] Current URL:', window.location.href)
   }, [status, session])
 
   // Handle authenticated state
   useEffect(() => {
+    console.log('[Login] Auth effect triggered:', { status, isRedirecting })
+    
     if (status === 'authenticated' && !isRedirecting) {
       setIsRedirecting(true)
+      console.log('[Login] User authenticated, preparing redirect')
       
       // Get the callback URL from the URL parameters
       const rawCallbackUrl = searchParams.get('callbackUrl')
+      console.log('[Login] Raw callback URL:', rawCallbackUrl)
+      
       let callbackUrl = '/dashboard' // Default fallback
 
       if (rawCallbackUrl) {
         try {
           // Decode and validate the callback URL
           const decodedUrl = decodeURIComponent(rawCallbackUrl)
+          console.log('[Login] Decoded callback URL:', decodedUrl)
+          
           const url = new URL(decodedUrl, window.location.origin)
+          console.log('[Login] Parsed URL:', url.toString())
           
           // Only accept URLs from our domain
           if (url.origin === window.location.origin) {
             callbackUrl = url.pathname + url.search
+            console.log('[Login] Using callback URL:', callbackUrl)
+          } else {
+            console.log('[Login] Rejected external callback URL')
           }
         } catch (e) {
           console.error('[Login] Invalid callback URL:', e)
         }
       }
 
-      console.log('[Login] Redirecting to:', callbackUrl)
+      console.log('[Login] Final redirect URL:', callbackUrl)
       router.replace(callbackUrl)
     }
   }, [status, session, router, searchParams, isRedirecting])
@@ -61,7 +74,7 @@ export default function LoginPage() {
     const password = formData.get('password') as string
 
     try {
-      console.log('[Login] Attempting sign in...')
+      console.log('[Login] Attempting sign in with email:', email)
       const result = await signIn('credentials', {
         email,
         password,

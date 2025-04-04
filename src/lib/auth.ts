@@ -9,6 +9,7 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/login',
   },
+  debug: true, // Enable debug logs in production
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -17,13 +18,18 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
+        console.log('[Auth] Authorizing credentials:', { email: credentials?.email })
+        
         if (!credentials?.email || !credentials?.password) {
+          console.log('[Auth] Missing credentials')
           throw new Error('Missing credentials')
         }
 
         const user = mockDb.findUserByEmail(credentials.email)
+        console.log('[Auth] Found user:', user ? { ...user, password: undefined } : null)
         
         if (!user) {
+          console.log('[Auth] No user found')
           throw new Error('No user found')
         }
 
@@ -32,10 +38,14 @@ export const authOptions: NextAuthOptions = {
           (credentials.password === 'admin123' && user.email === 'admin@activera.com') ||
           (credentials.password === 'client123' && user.email === 'client@example.com')
 
+        console.log('[Auth] Password validation:', { isValid: isValidPassword })
+
         if (!isValidPassword) {
+          console.log('[Auth] Invalid password')
           throw new Error('Invalid password')
         }
 
+        console.log('[Auth] Authorization successful')
         return {
           id: user.id,
           email: user.email,
@@ -47,6 +57,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ session, token }) {
+      console.log('[Auth] Session callback:', { session, token })
       if (session.user) {
         session.user.role = token.role
         session.user.id = token.id
@@ -54,6 +65,7 @@ export const authOptions: NextAuthOptions = {
       return session
     },
     async jwt({ token, user }) {
+      console.log('[Auth] JWT callback:', { token, user })
       if (user) {
         token.role = user.role
         token.id = user.id

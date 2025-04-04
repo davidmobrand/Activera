@@ -77,16 +77,7 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: ({ token, req }) => {
-        console.log('[Middleware] Auth check:', {
-          hasToken: !!token,
-          tokenId: token?.sub,
-          role: token?.role,
-          path: req?.nextUrl?.pathname,
-          timestamp: new Date().toISOString()
-        })
-        return true
-      }
+      authorized: () => true // Let the middleware handle the auth logic
     },
     pages: {
       signIn: '/login',

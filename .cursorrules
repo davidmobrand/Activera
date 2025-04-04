@@ -1,0 +1,50 @@
+# ACTivera Project Rules
+
+## Authentication & Authorization
+1. NO REDIRECTS for authentication
+   - When user is not logged in, show NotLoggedIn component with login link
+   - No automatic redirects to login page
+   - Let components handle their own auth state
+
+2. Admin Route Protection
+   - Admin routes (/admin/*) should check for admin role
+   - If not admin, show appropriate message or redirect to dashboard
+   - No redirects to login page
+
+3. Session Handling
+   - Use JWT for session management
+   - Session maxAge: 30 days
+   - Include user role and ID in session token
+
+## Component Guidelines
+1. Authentication State
+   - Use NotLoggedIn component for unauthenticated states
+   - Handle loading states with LoadingSpinner
+   - Check session status before rendering protected content
+
+2. Navigation
+   - Show admin links only for admin users
+   - Regular users see exercise category links
+   - Display user role (Admin) next to name when applicable
+
+## Code Style
+1. Error Handling
+   - Add descriptive error messages
+   - Log errors with relevant context
+   - Handle edge cases gracefully
+
+2. Type Safety
+   - Use TypeScript types for all components and functions
+   - Avoid type assertions (as any) when possible
+   - Define clear interfaces for data structures
+
+## API Guidelines
+1. Response Format
+   - Use consistent error response structure
+   - Include appropriate HTTP status codes
+   - Validate input data
+
+2. Security
+   - Validate user permissions for protected routes
+   - Sanitize user input
+   - Use CSRF protection where needed 

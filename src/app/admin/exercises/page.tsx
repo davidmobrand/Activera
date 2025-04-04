@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
+import NotLoggedIn from '@/components/NotLoggedIn'
 
 interface Exercise {
   id: string
@@ -23,12 +25,15 @@ const categoryLabels = {
 
 export default function AdminExercises() {
   const router = useRouter()
+  const { data: session, status } = useSession()
   const [exercises, setExercises] = useState<Exercise[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchExercises()
-  }, [])
+    if (status !== 'loading') {
+      fetchExercises()
+    }
+  }, [status])
 
   async function fetchExercises() {
     try {
@@ -58,10 +63,29 @@ export default function AdminExercises() {
     }
   }
 
-  if (loading) {
+  if (status === 'loading' || loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <LoadingSpinner className="h-8 w-8" />
+      </div>
+    )
+  }
+
+  if (!session) {
+    return <NotLoggedIn />
+  }
+
+  if (session.user?.role !== 'ADMIN') {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h1>
+        <p className="text-gray-600">You need admin privileges to access this page.</p>
+        <Button
+          className="mt-4"
+          onClick={() => router.push('/dashboard')}
+        >
+          Go to Dashboard
+        </Button>
       </div>
     )
   }
@@ -98,7 +122,7 @@ export default function AdminExercises() {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {exercises.map((exercise) => (
-              <tr key={exercise.id} className="hover:bg-gray-50">
+              <tr key={exercise.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
                     {exercise.title}

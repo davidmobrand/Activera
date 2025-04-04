@@ -36,19 +36,9 @@ export default withAuth(
       return NextResponse.next()
     }
 
-    // If trying to access admin routes without admin role, redirect to dashboard
-    if (path.startsWith('/admin')) {
-      if (!token) {
-        // Redirect to login if not authenticated
-        const loginUrl = new URL('/login', req.url)
-        loginUrl.searchParams.set('callbackUrl', req.url)
-        return NextResponse.redirect(loginUrl)
-      }
-      
-      if (token.role !== 'ADMIN') {
-        // Redirect to dashboard if not admin
-        return NextResponse.redirect(new URL('/dashboard', req.url))
-      }
+    // For admin routes, only check if user is admin
+    if (path.startsWith('/admin') && token?.role !== 'ADMIN') {
+      return new Response('Unauthorized - Admin access required', { status: 403 })
     }
 
     return NextResponse.next()
@@ -56,11 +46,7 @@ export default withAuth(
   {
     callbacks: {
       authorized: ({ token, req }) => {
-        // Only require authentication for admin routes
-        if (req.nextUrl.pathname.startsWith('/admin')) {
-          return !!token
-        }
-        // Allow access to all other routes
+        // Allow all routes - components will handle auth state
         return true
       }
     }

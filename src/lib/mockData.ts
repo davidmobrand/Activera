@@ -282,77 +282,92 @@ export const exerciseProgress: ExerciseProgress[] = [
 ];
 
 // Mock Database Functions
-export const mockDb = {
-  findMediaByExerciseId: (exerciseId: string) => {
-    return mediaFiles.filter(media => media.exerciseId === exerciseId);
-  },
+export const findMediaByExerciseId = (exerciseId: string) => {
+  return mediaFiles.filter(media => media.exerciseId === exerciseId);
+};
 
-  createMedia: (media: Omit<Media, 'id' | 'createdAt'>) => {
-    const newMedia = {
-      ...media,
-      id: String(mediaFiles.length + 1),
-      createdAt: new Date().toISOString()
-    };
-    mediaFiles.push(newMedia);
-    return newMedia;
-  },
+export const createMedia = (media: Omit<Media, 'id' | 'createdAt'>) => {
+  const newMedia = {
+    ...media,
+    id: String(mediaFiles.length + 1),
+    createdAt: new Date().toISOString()
+  };
+  mediaFiles.push(newMedia);
+  return newMedia;
+};
 
-  deleteMedia: (id: string) => {
-    const index = mediaFiles.findIndex(media => media.id === id);
-    if (index !== -1) {
-      mediaFiles.splice(index, 1);
-      return true;
-    }
-    return false;
-  },
-
-  findExerciseById: (id: string) => {
-    return exercises.find(exercise => exercise.id === id);
-  },
-
-  findExercises: () => {
-    return exercises;
-  },
-
-  findExercisesByCategory: (category: ExerciseCategory) => {
-    return exercises.filter(exercise => exercise.category === category);
-  },
-
-  findExerciseProgress: (userId: string) => {
-    return exerciseProgress.filter(progress => progress.userId === userId);
-  },
-
-  createExerciseProgress: (progress: Omit<ExerciseProgress, 'id'>) => {
-    const newProgress = {
-      ...progress,
-      id: String(exerciseProgress.length + 1)
-    };
-    exerciseProgress.push(newProgress);
-    return newProgress;
-  },
-
-  updateExerciseProgress: (id: string, data: Partial<ExerciseProgress>) => {
-    const index = exerciseProgress.findIndex(progress => progress.id === id);
-    if (index !== -1) {
-      exerciseProgress[index] = { ...exerciseProgress[index], ...data };
-      return exerciseProgress[index];
-    }
-    return null;
-  },
-
-  findUserById: (id: string) => {
-    return users.find(user => user.id === id);
-  },
-
-  findUserByEmail: (email: string) => {
-    return users.find(user => user.email === email);
-  },
-
-  findUsers: () => {
-    return users;
-  },
-
-  getExerciseMedia: (exerciseId: string) => {
-    return mediaFiles.filter(media => media.exerciseId === exerciseId);
+export const deleteMedia = (id: string) => {
+  const index = mediaFiles.findIndex(media => media.id === id);
+  if (index !== -1) {
+    mediaFiles.splice(index, 1);
+    return true;
   }
+  return false;
+};
+
+export const findExerciseById = (id: string) => {
+  return exercises.find(exercise => exercise.id === id);
+};
+
+export const findExercises = () => {
+  return exercises;
+};
+
+export const findExercisesByCategory = (category: ExerciseCategory) => {
+  return exercises.filter(exercise => exercise.category === category);
+};
+
+export const findExerciseProgress = (userId: string) => {
+  return exerciseProgress.filter(progress => progress.userId === userId);
+};
+
+export const createExerciseProgress = (progress: Omit<ExerciseProgress, 'id'>) => {
+  const newProgress = {
+    ...progress,
+    id: String(exerciseProgress.length + 1)
+  };
+  exerciseProgress.push(newProgress);
+  return newProgress;
+};
+
+export const updateExerciseProgress = (id: string, data: Partial<ExerciseProgress>) => {
+  const index = exerciseProgress.findIndex(progress => progress.id === id);
+  if (index !== -1) {
+    exerciseProgress[index] = { ...exerciseProgress[index], ...data };
+    return exerciseProgress[index];
+  }
+  return null;
+};
+
+export const findUserById = (id: string) => {
+  return users.find(user => user.id === id);
+};
+
+export const findUserByEmail = (email: string) => {
+  return users.find(user => user.email === email);
+};
+
+export const findUsers = () => {
+  return users;
+};
+
+export const getExerciseMedia = (exerciseId: string) => {
+  return mediaFiles.filter(media => media.exerciseId === exerciseId);
+};
+
+// Export mockDb object with all functions
+export const mockDb = {
+  findMediaByExerciseId,
+  createMedia,
+  deleteMedia,
+  findExerciseById,
+  findExercises,
+  findExercisesByCategory,
+  findExerciseProgress,
+  createExerciseProgress,
+  updateExerciseProgress,
+  findUserById,
+  findUserByEmail,
+  findUsers,
+  getExerciseMedia
 };

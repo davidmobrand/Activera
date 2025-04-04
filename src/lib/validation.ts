@@ -12,12 +12,21 @@ export const UserSchema = z.object({
   updatedAt: z.string().datetime()
 });
 
+const TranslationSchema = z.object({
+  title: z.string().min(1),
+  content: z.string().min(1),
+});
+
+const TranslationsSchema = z.object({
+  en: TranslationSchema,
+  sv: TranslationSchema,
+});
+
 // Exercise Validation
 export const ExerciseSchema = z.object({
   id: z.string(),
-  title: z.string().min(1),
-  content: z.string().min(1),
-  category: z.enum([ExerciseCategory.OPPENHET, ExerciseCategory.NARVARO, ExerciseCategory.ENGAGEMANG]),
+  translations: TranslationsSchema,
+  category: z.nativeEnum(ExerciseCategory),
   userId: z.string(),
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime(),
@@ -58,7 +67,7 @@ export const CreateMediaSchema = MediaInputSchema;
 
 // Update Validation Schemas
 export const UpdateUserSchema = UserSchema.partial().omit({ id: true, createdAt: true });
-export const UpdateExerciseSchema = ExerciseSchema.partial().omit({ id: true, createdAt: true });
+export const UpdateExerciseSchema = ExerciseSchema.omit({ id: true, createdAt: true, updatedAt: true }).partial();
 export const UpdateMediaSchema = MediaSchema.partial().omit({ id: true, createdAt: true });
 export const UpdateExerciseProgressSchema = ExerciseProgressSchema.partial().omit({ id: true });
 

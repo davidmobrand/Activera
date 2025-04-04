@@ -6,49 +6,89 @@ import type { CreateExercise } from '../validation';
 export const exercises: Exercise[] = [
   {
     id: '1',
-    title: 'Medveten Andning',
-    content: `
-      <h2>Övning i Medveten Andning</h2>
-      <p>Denna enkla men kraftfulla mindfulness-övning hjälper dig att vara närvarande och centrerad.</p>
-      <h3>Instruktioner:</h3>
-      <ol>
-        <li>Hitta en bekväm sittande position</li>
-        <li>Blunda eller håll en mjuk blick</li>
-        <li>Fokusera din uppmärksamhet på din andning</li>
-        <li>Observera känslan av att andas utan att försöka förändra den</li>
-        <li>När dina tankar vandrar, för varsamt tillbaka uppmärksamheten till andningen</li>
-      </ol>
-      <p>Öva denna övning 5-10 minuter dagligen för att utveckla mindfulness.</p>
-    `,
+    translations: {
+      en: {
+        title: 'Mindful Breathing',
+        content: `
+          <h2>Mindful Breathing Exercise</h2>
+          <p>This simple yet powerful mindfulness exercise helps you stay present and centered.</p>
+          <h3>Instructions:</h3>
+          <ol>
+            <li>Find a comfortable sitting position</li>
+            <li>Close your eyes or maintain a soft gaze</li>
+            <li>Focus your attention on your breathing</li>
+            <li>Observe the sensation of breathing without trying to change it</li>
+            <li>When your mind wanders, gently bring attention back to the breath</li>
+          </ol>
+          <p>Practice this exercise for 5-10 minutes daily to develop mindfulness.</p>
+        `,
+      },
+      sv: {
+        title: 'Medveten Andning',
+        content: `
+          <h2>Övning i Medveten Andning</h2>
+          <p>Denna enkla men kraftfulla mindfulness-övning hjälper dig att vara närvarande och centrerad.</p>
+          <h3>Instruktioner:</h3>
+          <ol>
+            <li>Hitta en bekväm sittande position</li>
+            <li>Blunda eller håll en mjuk blick</li>
+            <li>Fokusera din uppmärksamhet på din andning</li>
+            <li>Observera känslan av att andas utan att försöka förändra den</li>
+            <li>När dina tankar vandrar, för varsamt tillbaka uppmärksamheten till andningen</li>
+          </ol>
+          <p>Öva denna övning 5-10 minuter dagligen för att utveckla mindfulness.</p>
+        `,
+      },
+    },
     category: ExerciseCategory.NARVARO,
     userId: '1',
-    createdAt: '2024-01-01T00:00:00Z',
-    updatedAt: '2024-01-01T00:00:00Z',
+    createdAt: new Date('2024-01-01').toISOString(),
+    updatedAt: new Date('2024-01-01').toISOString(),
     mediaIds: ['1', '2'],
-    order: 1
+    order: 1,
   },
   {
     id: '2',
-    title: 'Kroppsskanning',
-    content: `
-      <h2>Övning i Kroppsskanning</h2>
-      <p>En guidad övning för att öka medvetenheten om din kropp och släppa fysisk spänning.</p>
-      <h3>Instruktioner:</h3>
-      <ol>
-        <li>Ligg på rygg i en bekväm position</li>
-        <li>Börja med att uppmärksamma dina tår</li>
-        <li>Flytta långsamt uppmärksamheten genom hela kroppen</li>
-        <li>Observera alla förnimmelser utan att döma</li>
-        <li>Avsluta med att känna hela kroppen som en helhet</li>
-      </ol>
-      <p>Denna övning tar cirka 20 minuter och kan göras före sänggående för bättre sömn.</p>
-    `,
+    translations: {
+      en: {
+        title: 'Body Scan',
+        content: `
+          <h2>Body Scan Exercise</h2>
+          <p>A guided exercise to increase awareness of your body and release physical tension.</p>
+          <h3>Instructions:</h3>
+          <ol>
+            <li>Lie on your back in a comfortable position</li>
+            <li>Start by bringing attention to your toes</li>
+            <li>Slowly move your attention through the entire body</li>
+            <li>Observe all sensations without judgment</li>
+            <li>End by feeling the body as a whole</li>
+          </ol>
+          <p>This exercise takes about 20 minutes and can be done before bedtime for better sleep.</p>
+        `,
+      },
+      sv: {
+        title: 'Kroppsskanning',
+        content: `
+          <h2>Övning i Kroppsskanning</h2>
+          <p>En guidad övning för att öka medvetenheten om din kropp och släppa fysisk spänning.</p>
+          <h3>Instruktioner:</h3>
+          <ol>
+            <li>Ligg på rygg i en bekväm position</li>
+            <li>Börja med att uppmärksamma dina tår</li>
+            <li>Flytta långsamt uppmärksamheten genom hela kroppen</li>
+            <li>Observera alla förnimmelser utan att döma</li>
+            <li>Avsluta med att känna hela kroppen som en helhet</li>
+          </ol>
+          <p>Denna övning tar cirka 20 minuter och kan göras före sänggående för bättre sömn.</p>
+        `,
+      },
+    },
     category: ExerciseCategory.NARVARO,
     userId: '1',
-    createdAt: '2024-01-02T00:00:00Z',
-    updatedAt: '2024-01-02T00:00:00Z',
+    createdAt: new Date('2024-01-02').toISOString(),
+    updatedAt: new Date('2024-01-02').toISOString(),
     mediaIds: ['3', '4'],
-    order: 2
+    order: 2,
   },
   {
     id: '3',
@@ -186,27 +226,29 @@ export const createExercise = (exercise: CreateExercise): Exercise => {
     ...validatedData,
     id: String(exercises.length + 1),
     createdAt: now,
-    updatedAt: now
+    updatedAt: now,
   };
   const validatedExercise = ExerciseSchema.parse(newExercise);
   exercises.push(validatedExercise);
   return validatedExercise;
 };
 
-export const updateExercise = (id: string, data: Partial<Exercise>): Exercise | null => {
-  const validatedData = UpdateExerciseSchema.parse(data);
-  const index = exercises.findIndex(exercise => exercise.id === id);
-  if (index !== -1) {
-    const updatedExercise = {
-      ...exercises[index],
-      ...validatedData,
-      updatedAt: new Date().toISOString()
-    };
-    const validatedExercise = ExerciseSchema.parse(updatedExercise);
-    exercises[index] = validatedExercise;
-    return validatedExercise;
+export const updateExercise = (id: string, data: Partial<Exercise>): Exercise => {
+  const index = exercises.findIndex(e => e.id === id);
+  if (index === -1) {
+    throw new Error('Exercise not found');
   }
-  return null;
+
+  const validatedData = UpdateExerciseSchema.parse(data);
+  const updatedExercise = {
+    ...exercises[index],
+    ...validatedData,
+    updatedAt: new Date().toISOString(),
+  };
+
+  const validatedExercise = ExerciseSchema.parse(updatedExercise);
+  exercises[index] = validatedExercise;
+  return validatedExercise;
 };
 
 export const deleteExercise = (id: string): boolean => {

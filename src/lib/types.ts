@@ -35,10 +35,16 @@ export const ExerciseCategoryDescription = {
 
 export type ExerciseCategory = typeof ExerciseCategory[keyof typeof ExerciseCategory];
 
+import { Language } from './i18n/types';
+
 export interface Exercise {
   id: string;
-  title: string;
-  content: string;
+  translations: {
+    [lang in Language]: {
+      title: string;
+      content: string;
+    };
+  };
   category: ExerciseCategory;
   userId: string;
   createdAt: string;

@@ -338,6 +338,46 @@ export const mediaFiles: Media[] = [
     url: '/assets/exercises/images/values-mirror.jpg',
     name: 'Values Mirror Exercise',
     createdAt: new Date('2024-02-08').toISOString()
+  },
+  {
+    id: "29",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/mindful-breathing-practice.jpg",
+    name: "Mindful Breathing Practice",
+    createdAt: "2024-03-20T10:00:00Z"
+  },
+  {
+    id: "30",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/values-compass.jpg",
+    name: "Values Compass Exercise",
+    createdAt: "2024-03-20T10:01:00Z"
+  },
+  {
+    id: "31",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/acceptance-mountain.jpg",
+    name: "Acceptance Mountain",
+    createdAt: "2024-03-20T10:02:00Z"
+  },
+  {
+    id: "32",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/mindful-walking.jpg",
+    name: "Mindful Walking Practice",
+    createdAt: "2024-03-20T10:03:00Z"
+  },
+  {
+    id: "33",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/values-action-plan.jpg",
+    name: "Values Action Plan",
+    createdAt: "2024-03-20T10:04:00Z"
   }
 ];
 
@@ -1112,10 +1152,202 @@ export const exercises: Exercise[] = [
     updatedAt: new Date('2024-02-08'),
     mediaIds: ['28'],
     order: 7
+  },
+  {
+    id: 26,
+    title: "Mindful Breathing Anchor",
+    content: `
+# Mindful Breathing Anchor Exercise
+
+This exercise helps you develop a strong foundation in mindfulness by using the breath as an anchor point.
+
+## Instructions
+
+1. Find a comfortable position and close your eyes or maintain a soft gaze.
+2. Bring your attention to your breathing, noticing where you feel it most prominently in your body.
+3. Observe the natural rhythm of your breath without trying to change it:
+   - Notice the sensation of air moving in and out
+   - Feel the rise and fall of your chest or belly
+   - Pay attention to the temperature of the air
+
+## Key Points
+
+- When your mind wanders (which is natural), gently return your focus to the breath
+- Practice this for 5-10 minutes daily
+- Use this as a quick centering technique throughout the day
+
+Remember: The goal isn't to clear your mind, but to practice returning to the present moment using your breath as an anchor.`,
+    category: "NARVARO",
+    userId: "admin",
+    createdAt: "2024-03-20T10:00:00Z",
+    updatedAt: "2024-03-20T10:00:00Z",
+    mediaIds: ["29"],
+    order: 26
+  },
+  {
+    id: 27,
+    title: "Values Compass",
+    content: `
+# Values Compass Exercise
+
+Use this exercise to explore and clarify your personal values in different life domains.
+
+## Instructions
+
+1. Draw or imagine a compass with four directions representing different life areas:
+   - North: Work/Education
+   - South: Relationships
+   - East: Personal Growth
+   - West: Health/Well-being
+
+2. For each direction, reflect on:
+   - What matters most to you in this area?
+   - What kind of person do you want to be?
+   - What qualities do you want to embody?
+
+3. Write down specific values for each area
+4. Consider how your current actions align with these values
+
+## Action Steps
+
+1. Choose one area to focus on this week
+2. Identify small steps you can take to live more in line with your values
+3. Track your progress and adjust as needed
+
+Remember: Values are like a compass that guides your journey, not a destination to reach.`,
+    category: "ENGAGEMANG",
+    userId: "admin",
+    createdAt: "2024-03-20T10:01:00Z",
+    updatedAt: "2024-03-20T10:01:00Z",
+    mediaIds: ["30"],
+    order: 27
+  },
+  {
+    id: 28,
+    title: "Acceptance Mountain",
+    content: `
+# Acceptance Mountain Exercise
+
+This exercise uses the metaphor of climbing a mountain to understand and practice acceptance.
+
+## The Exercise
+
+Imagine you're climbing a mountain called "Acceptance Mountain." Each step represents moving toward accepting something challenging in your life.
+
+### Steps to Practice
+
+1. Identify Your Mountain
+   - What situation are you struggling to accept?
+   - What emotions or thoughts feel difficult?
+
+2. Notice Your Resistance
+   - Where do you feel tension in your body?
+   - What thoughts come up when facing this challenge?
+
+3. Take Small Steps
+   - Start with accepting small discomforts
+   - Gradually work up to bigger challenges
+   - Celebrate each step forward
+
+## Key Principles
+
+- Acceptance doesn't mean liking or wanting something
+- It's about reducing the struggle with what is
+- Progress isn't always linear - that's okay
+
+Remember: Like climbing a mountain, acceptance is a journey that requires patience and persistence.`,
+    category: "OPPENHET",
+    userId: "admin",
+    createdAt: "2024-03-20T10:02:00Z",
+    updatedAt: "2024-03-20T10:02:00Z",
+    mediaIds: ["31"],
+    order: 28
+  },
+  {
+    id: 29,
+    title: "Mindful Walking",
+    content: `
+# Mindful Walking Practice
+
+Transform a simple walk into a powerful mindfulness exercise.
+
+## Instructions
+
+1. Choose Your Space
+   - Find a quiet path or space
+   - You can practice indoors or outdoors
+   - No destination needed - walking for awareness
+
+2. Begin Walking Slowly
+   - Notice the sensation in your feet
+   - Feel the movement of your legs
+   - Observe your balance and posture
+
+3. Expand Your Awareness
+   - Notice sounds around you
+   - Feel the air on your skin
+   - Observe your surroundings without judgment
+
+## Tips for Practice
+
+- Start with 5-10 minutes
+- Use natural walking pace
+- When mind wanders, return to physical sensations
+- Practice regularly to build the habit
+
+Remember: Every step is an opportunity to return to the present moment.`,
+    category: "NARVARO",
+    userId: "admin",
+    createdAt: "2024-03-20T10:03:00Z",
+    updatedAt: "2024-03-20T10:03:00Z",
+    mediaIds: ["32"],
+    order: 29
+  },
+  {
+    id: 30,
+    title: "Values Action Plan",
+    content: `
+# Values Action Plan
+
+Create a concrete plan to align your daily actions with your core values.
+
+## Exercise Steps
+
+1. Value Selection
+   - Choose one core value to focus on
+   - Write why this value matters to you
+   - Describe how living this value looks
+
+2. Current Assessment
+   - Rate current alignment (1-10)
+   - List current actions supporting this value
+   - Identify barriers to living this value
+
+3. Action Planning
+   - Set 3 small, achievable goals
+   - Create weekly action items
+   - Plan for potential obstacles
+
+## Implementation Tips
+
+- Start small and build gradually
+- Track your progress daily
+- Celebrate small wins
+- Adjust plan as needed
+
+Remember: Values are like a compass - they guide our actions but aren't a destination.`,
+    category: "ENGAGEMANG",
+    userId: "admin",
+    createdAt: "2024-03-20T10:04:00Z",
+    updatedAt: "2024-03-20T10:04:00Z",
+    mediaIds: ["33"],
+    order: 30
   }
 ].map(e => ({
   ...e,
-  mediaIds: e.mediaIds.map(id => mediaFiles.find(m => m.id === id)?.id || '')
+  id: String(e.id),
+  createdAt: new Date(e.createdAt),
+  updatedAt: new Date(e.updatedAt)
 }));
 
 // Mock Exercise Progress

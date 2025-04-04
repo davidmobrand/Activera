@@ -8,7 +8,11 @@ function createRedirectResponse(url: string, req: Request, reason: string) {
     from: req.url,
     to: url,
     reason,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    headers: {
+      cookie: req.headers.get('cookie') ? 'present' : 'absent',
+      authorization: req.headers.get('authorization') ? 'present' : 'absent'
+    }
   })
   return response
 }
@@ -23,17 +27,32 @@ export default withAuth(
       timestamp,
       path,
       hasToken: !!token,
-      role: token?.role,
+      tokenDetails: token ? {
+        sub: token.sub,
+        role: token.role,
+        email: token.email,
+        exp: token.exp,
+        iat: token.iat
+      } : null,
       method: req.method,
       headers: {
         referer: req.headers.get('referer'),
-        cookie: req.headers.get('cookie') ? 'present' : 'absent'
+        cookie: req.headers.get('cookie') ? 'present' : 'absent',
+        authorization: req.headers.get('authorization') ? 'present' : 'absent'
+      },
+      url: {
+        full: req.url,
+        pathname: req.nextUrl.pathname,
+        search: req.nextUrl.search
       }
     })
 
     // Always allow API routes and static files
     if (path.startsWith('/api/') || path.startsWith('/_next/') || path === '/favicon.ico') {
-      console.log('[Middleware] Skipping auth check for:', path)
+      console.log('[Middleware] Skipping auth check for:', {
+        path,
+        timestamp
+      })
       return NextResponse.next()
     }
 
@@ -44,7 +63,9 @@ export default withAuth(
     if (path === '/login' && token) {
       console.log('[Middleware] Redirecting authenticated user from login:', {
         userId: token.sub,
-        role: token.role
+        role: token.role,
+        timestamp,
+        destination: dashboardUrl.toString()
       })
       return createRedirectResponse(dashboardUrl.toString(), req, 'authenticated_user_on_login')
     }
@@ -53,7 +74,9 @@ export default withAuth(
     if (!token && path !== '/login') {
       console.log('[Middleware] Redirecting unauthenticated user to login:', {
         path,
-        referer: req.headers.get('referer')
+        timestamp,
+        referer: req.headers.get('referer'),
+        destination: loginUrl.toString()
       })
       loginUrl.searchParams.set('callbackUrl', path)
       return createRedirectResponse(loginUrl.toString(), req, 'unauthenticated_user')
@@ -64,7 +87,9 @@ export default withAuth(
       console.log('[Middleware] Blocking non-admin access:', {
         path,
         userRole: token?.role,
-        userId: token?.sub
+        userId: token?.sub,
+        timestamp,
+        destination: dashboardUrl.toString()
       })
       return createRedirectResponse(dashboardUrl.toString(), req, 'unauthorized_admin_access')
     }
@@ -72,13 +97,28 @@ export default withAuth(
     console.log('[Middleware] Allowing request:', {
       path,
       userId: token?.sub,
-      role: token?.role
+      role: token?.role,
+      timestamp
     })
     return NextResponse.next()
   },
   {
     callbacks: {
-      authorized: () => true // Let the middleware handle the auth logic
+      authorized: ({ token, req }) => {
+        console.log('[Middleware] Authorization check:', {
+          hasToken: !!token,
+          tokenDetails: token ? {
+            sub: token.sub,
+            role: token.role,
+            email: token.email,
+            exp: token.exp,
+            iat: token.iat
+          } : null,
+          path: req?.nextUrl?.pathname,
+          timestamp: new Date().toISOString()
+        })
+        return true
+      }
     },
     pages: {
       signIn: '/login',

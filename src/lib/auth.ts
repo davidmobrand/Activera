@@ -5,6 +5,7 @@ import { mockDb } from '@/lib/mockData'
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   pages: {
     signIn: '/login',
@@ -56,6 +57,14 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   callbacks: {
+    async jwt({ token, user, account }) {
+      console.log('[Auth] JWT callback:', { token, user, account })
+      if (user) {
+        token.role = user.role
+        token.id = user.id
+      }
+      return token
+    },
     async session({ session, token }) {
       console.log('[Auth] Session callback:', { session, token })
       if (session.user) {
@@ -63,14 +72,17 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.id
       }
       return session
+    }
+  },
+  events: {
+    async signIn(message) {
+      console.log('[Auth] Sign in event:', message)
     },
-    async jwt({ token, user }) {
-      console.log('[Auth] JWT callback:', { token, user })
-      if (user) {
-        token.role = user.role
-        token.id = user.id
-      }
-      return token
+    async signOut(message) {
+      console.log('[Auth] Sign out event:', message)
+    },
+    async session(message) {
+      console.log('[Auth] Session event:', message)
     }
   }
 } 

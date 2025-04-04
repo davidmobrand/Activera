@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
@@ -12,19 +12,39 @@ export default function LoginPage() {
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
 
-  // Let middleware handle the redirect for authenticated users
-  
+  // Debug session state changes
+  useEffect(() => {
+    console.log('[Login] Session state changed:', {
+      status,
+      session: session ? {
+        user: session.user,
+        expires: session.expires
+      } : null,
+      timestamp: new Date().toISOString()
+    })
+  }, [session, status])
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (isLoading) return
+    if (isLoading) {
+      console.log('[Login] Submit blocked - already loading')
+      return
+    }
 
     setIsLoading(true)
     setError('')
+    console.log('[Login] Starting sign in process')
 
     try {
       const formData = new FormData(event.currentTarget)
       const email = formData.get('email') as string
       const password = formData.get('password') as string
+
+      console.log('[Login] Calling signIn with credentials:', {
+        email,
+        callbackUrl: '/dashboard',
+        timestamp: new Date().toISOString()
+      })
 
       const result = await signIn('credentials', {
         email,
@@ -33,14 +53,19 @@ export default function LoginPage() {
         callbackUrl: '/dashboard'
       })
 
-      // The redirect will be handled by NextAuth since redirect: true
+      console.log('[Login] SignIn result:', {
+        result,
+        timestamp: new Date().toISOString()
+      })
     } catch (error) {
+      console.error('[Login] Error during sign in:', error)
       setError('An error occurred. Please try again.')
       setIsLoading(false)
     }
   }
 
   if (status === 'loading') {
+    console.log('[Login] Rendering loading state')
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -51,6 +76,7 @@ export default function LoginPage() {
     )
   }
 
+  console.log('[Login] Rendering login form')
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">

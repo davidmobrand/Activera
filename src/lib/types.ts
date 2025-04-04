@@ -21,6 +21,12 @@ export const ExerciseCategory = {
   ENGAGEMANG: 'ENGAGEMANG'
 } as const;
 
+export const ExerciseCategoryDisplay = {
+  [ExerciseCategory.OPPENHET]: 'Öppenhet',
+  [ExerciseCategory.NARVARO]: 'Närvaro',
+  [ExerciseCategory.ENGAGEMANG]: 'Engagemang'
+} as const;
+
 export type ExerciseCategory = typeof ExerciseCategory[keyof typeof ExerciseCategory];
 
 export interface Exercise {

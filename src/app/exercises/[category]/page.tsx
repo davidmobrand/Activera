@@ -1,12 +1,19 @@
-import { notFound } from 'next/navigation'
 import { getServerSession } from 'next-auth'
+import { notFound } from 'next/navigation'
 import { authOptions } from '@/lib/auth'
-import { mockDb, ExerciseCategory } from '@/lib/mockData'
+import { mockDb } from '@/lib/mockData'
 import { ExerciseList } from '@/components/exercises/ExerciseList'
 import NotLoggedIn from '@/components/NotLoggedIn'
+import { ExerciseCategory, ExerciseCategoryDisplay } from '@/lib/types'
 
 const validCategories = Object.values(ExerciseCategory)
 type Category = typeof validCategories[number]
+
+const categoryMap = {
+  'oppenhet': ExerciseCategory.OPPENHET,
+  'narvaro': ExerciseCategory.NARVARO,
+  'engagemang': ExerciseCategory.ENGAGEMANG,
+} as const
 
 interface Props {
   params: {
@@ -14,25 +21,22 @@ interface Props {
   }
 }
 
-export default async function CategoryPage({ params }: Props) {
+export default async function ExercisesPage({ params }: Props) {
   const session = await getServerSession(authOptions)
-  if (!session?.user?.id) {
+
+  if (!session?.user) {
     return <NotLoggedIn />
   }
 
-  const category = params.category.toUpperCase() as ExerciseCategory
+  const category = categoryMap[params.category as keyof typeof categoryMap]
   if (!validCategories.includes(category)) {
     return notFound()
   }
 
-  const exercises = mockDb.findExercisesByCategory(category)
-
+  const exercises = await mockDb.findExercisesByCategory(category)
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">
-        {category.charAt(0) + category.slice(1).toLowerCase()} Exercises
-      </h1>
-
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">{ExerciseCategoryDisplay[category]}</h1>
       <ExerciseList exercises={exercises} category={category} />
     </div>
   )

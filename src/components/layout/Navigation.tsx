@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
+import { ExerciseCategory, ExerciseCategoryDisplay } from '@/lib/types'
 
 export function Navigation() {
   const pathname = usePathname()
@@ -24,9 +25,9 @@ export function Navigation() {
           { href: '/admin/users', label: 'Manage Users' },
         ]
       : [
-          { href: '/exercises/narvaro', label: 'Närvaro' },
-          { href: '/exercises/oppenhet', label: 'Öppenhet' },
-          { href: '/exercises/engagemang', label: 'Engagemang' },
+          { href: '/exercises/oppenhet', label: ExerciseCategoryDisplay[ExerciseCategory.OPPENHET] },
+          { href: '/exercises/narvaro', label: ExerciseCategoryDisplay[ExerciseCategory.NARVARO] },
+          { href: '/exercises/engagemang', label: ExerciseCategoryDisplay[ExerciseCategory.ENGAGEMANG] },
         ]),
   ]
 

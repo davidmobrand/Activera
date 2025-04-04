@@ -46,7 +46,7 @@ interface MockDb {
 
   // Media functions
   findMediaByExerciseId: typeof findMediaByExerciseId;
-  createMedia: (data: CreateMedia) => Media;
+  createMedia: typeof createMedia;
   deleteMedia: typeof deleteMedia;
   getExerciseMedia: typeof getExerciseMedia;
 

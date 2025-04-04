@@ -1,52 +1,53 @@
-import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
+import { ExerciseProgress } from '@/lib/types'
 import { mockDb } from '@/lib/mockData'
 
 export async function GET() {
-  const session = await getServerSession(authOptions)
-  
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
   try {
-    const progress = mockDb.findExerciseProgress(session.user.id)
-    return NextResponse.json(progress)
+    const session = await getServerSession(authOptions)
+    if (!session?.user?.id) {
+      return new Response('Unauthorized', { status: 401 })
+    }
+
+    const progress = await mockDb.findExerciseProgress(session.user.id)
+    return Response.json(progress)
   } catch (error) {
     console.error('Error fetching progress:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch progress' },
-      { status: 500 }
-    )
+    return new Response('Internal Server Error', { status: 500 })
   }
 }
 
-export async function POST(request: NextRequest) {
-  const session = await getServerSession(authOptions)
-  
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
+export async function POST(request: Request) {
   try {
+    const session = await getServerSession(authOptions)
+    if (!session?.user?.id) {
+      return new Response('Unauthorized', { status: 401 })
+    }
+
     const { exerciseId, completed, notes } = await request.json()
 
-    const newProgress = mockDb.createExerciseProgress({
+    if (!exerciseId || typeof completed !== 'boolean') {
+      return new Response('Missing required fields', { status: 400 })
+    }
+
+    const exercise = await mockDb.findExerciseById(exerciseId)
+    if (!exercise) {
+      return new Response('Exercise not found', { status: 404 })
+    }
+
+    const newProgress = await mockDb.createExerciseProgress({
       userId: session.user.id,
       exerciseId,
       completed,
-      notes,
+      notes: notes || '',
       startedAt: new Date(),
       completedAt: completed ? new Date() : undefined
     })
 
-    return NextResponse.json(newProgress)
+    return Response.json(newProgress)
   } catch (error) {
-    console.error('Error updating progress:', error)
-    return NextResponse.json(
-      { error: 'Failed to update progress' },
-      { status: 500 }
-    )
+    console.error('Error creating progress:', error)
+    return new Response('Internal Server Error', { status: 500 })
   }
 } 

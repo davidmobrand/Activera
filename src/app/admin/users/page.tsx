@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import NotLoggedIn from '@/components/NotLoggedIn'
-import { User, UserRole } from '@/lib/mockData'
+import { User, UserRole } from '@/lib/types'
 
 export default function AdminUsers() {
   const router = useRouter()

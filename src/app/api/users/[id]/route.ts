@@ -1,94 +1,92 @@
-import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { mockDb, users, User } from '@/lib/mockData'
+import { User, UserRole } from '@/lib/types'
+import { mockDb } from '@/lib/mockData'
 
 export async function GET(
-  request: NextRequest,
+  request: Request,
   { params }: { params: { id: string } }
 ) {
-  const session = await getServerSession(authOptions)
-  
-  if (!session?.user?.id || session.user.role !== 'ADMIN') {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
   try {
-    const user = mockDb.findUserById(params.id)
-    if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
+    const session = await getServerSession(authOptions)
+    if (!session?.user?.id) {
+      return new Response('Unauthorized', { status: 401 })
     }
-    return NextResponse.json(user)
+
+    const user = await mockDb.findUserById(params.id)
+    if (!user) {
+      return new Response('User not found', { status: 404 })
+    }
+
+    // Only allow users to access their own data unless they're an admin
+    if (user.id !== session.user.id && session.user.role !== UserRole.ADMIN) {
+      return new Response('Unauthorized', { status: 401 })
+    }
+
+    return Response.json(user)
   } catch (error) {
     console.error('Error fetching user:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch user' },
-      { status: 500 }
-    )
+    return new Response('Internal Server Error', { status: 500 })
   }
 }
 
 export async function PUT(
-  request: NextRequest,
+  request: Request,
   { params }: { params: { id: string } }
 ) {
-  const session = await getServerSession(authOptions)
-  
-  if (!session?.user?.id || session.user.role !== 'ADMIN') {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
   try {
-    const data = await request.json()
-    const user = mockDb.findUserById(params.id)
-    
+    const session = await getServerSession(authOptions)
+    if (!session?.user?.id) {
+      return new Response('Unauthorized', { status: 401 })
+    }
+
+    const user = await mockDb.findUserById(params.id)
     if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
+      return new Response('User not found', { status: 404 })
     }
 
-    const updatedUser = {
-      ...user,
-      ...data,
-      updatedAt: new Date()
+    // Only allow users to update their own data unless they're an admin
+    if (user.id !== session.user.id && session.user.role !== UserRole.ADMIN) {
+      return new Response('Unauthorized', { status: 401 })
     }
 
-    // Update user in mock database
-    const index = users.findIndex((u: User) => u.id === params.id)
-    if (index !== -1) {
-      users[index] = updatedUser
+    const data = await request.json()
+    const updatedUser = await mockDb.updateUser(params.id, data)
+
+    if (!updatedUser) {
+      return new Response('Failed to update user', { status: 500 })
     }
-    
-    return NextResponse.json(updatedUser)
+
+    return Response.json(updatedUser)
   } catch (error) {
     console.error('Error updating user:', error)
-    return NextResponse.json(
-      { error: 'Failed to update user' },
-      { status: 500 }
-    )
+    return new Response('Internal Server Error', { status: 500 })
   }
 }
 
 export async function DELETE(
-  request: NextRequest,
+  request: Request,
   { params }: { params: { id: string } }
 ) {
-  const session = await getServerSession(authOptions)
-  
-  if (!session?.user?.id || session.user.role !== 'ADMIN') {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
   try {
-    const success = mockDb.deleteUser(params.id)
-    if (!success) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
+    const session = await getServerSession(authOptions)
+    if (!session?.user?.id) {
+      return new Response('Unauthorized', { status: 401 })
     }
-    return NextResponse.json({ success: true })
+
+    // Only allow admins to delete users
+    if (session.user.role !== UserRole.ADMIN) {
+      return new Response('Unauthorized', { status: 401 })
+    }
+
+    const success = await mockDb.deleteUser(params.id)
+    if (!success) {
+      return new Response('User not found', { status: 404 })
+    }
+
+    return new Response(null, { status: 204 })
   } catch (error) {
     console.error('Error deleting user:', error)
-    return NextResponse.json(
-      { error: 'Failed to delete user' },
-      { status: 500 }
-    )
+    return new Response('Internal Server Error', { status: 500 })
   }
 } 

@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import NotLoggedIn from '@/components/NotLoggedIn'
-import { ExerciseCategory } from '@/lib/mockData'
+import { ExerciseCategory } from '@/lib/types'
 import dynamic from 'next/dynamic'
 
 const Editor = dynamic(() => import('@/components/Editor'), { ssr: false })

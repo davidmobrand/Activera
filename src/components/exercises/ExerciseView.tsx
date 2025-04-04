@@ -1,114 +1,123 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
-import { Exercise, mockDb } from '@/lib/mockData'
-import { Media, MediaType } from '@/lib/mockData'
+import { Exercise, Media, MediaType } from '@/lib/types'
+import { mockDb } from '@/lib/mockData'
+import { useLanguage } from '@/lib/hooks/useLanguage'
 
 interface ExerciseViewProps {
   exercise: Exercise
-  initialProgress?: boolean
+  onComplete?: () => void
 }
 
-export function ExerciseView({
-  exercise,
-  initialProgress = false,
-}: ExerciseViewProps) {
-  const [completed, setCompleted] = useState(initialProgress)
-  const [isUpdating, setIsUpdating] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+export function ExerciseView({ exercise, onComplete }: ExerciseViewProps) {
+  const router = useRouter()
+  const { currentLanguage } = useLanguage()
   const [media, setMedia] = useState<Media[]>([])
-  const [mediaError, setMediaError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [completed, setCompleted] = useState(false)
 
-  const handleProgressUpdate = async () => {
-    setIsUpdating(true)
-    setError(null)
-    
-    try {
-      // For now, just toggle the state since we're using mock data
-      setCompleted(!completed)
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message)
-      } else {
-        setError('Failed to update progress')
+  useEffect(() => {
+    async function loadMedia() {
+      try {
+        setLoading(true)
+        setError(null)
+        const exerciseMedia = await mockDb.media.findByExerciseId(exercise.id)
+        setMedia(exerciseMedia)
+      } catch (error) {
+        console.error('Error loading media:', error)
+        setError(error instanceof Error ? error.message : 'Failed to load media')
+      } finally {
+        setLoading(false)
       }
-      console.error('Failed to update progress:', error)
-    } finally {
-      setIsUpdating(false)
+    }
+
+    loadMedia()
+  }, [exercise.id])
+
+  const handleComplete = async () => {
+    try {
+      setCompleted(true)
+      onComplete?.()
+    } catch (error) {
+      console.error('Error marking exercise as complete:', error)
+      setError(error instanceof Error ? error.message : 'Failed to mark exercise as complete')
+      setCompleted(false)
     }
   }
 
-  useEffect(() => {
-    try {
-      const fetchedMedia = mockDb.findMediaByExerciseId(exercise.mediaIds)
-      setMedia(fetchedMedia)
-      setMediaError(null)
-    } catch (error) {
-      console.error('Error fetching media:', error)
-      setMediaError('Failed to load media')
-      setMedia([])
-    }
-  }, [exercise.mediaIds])
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <LoadingSpinner className="h-8 w-8" />
+      </div>
+    )
+  }
+
+  const translation = exercise.translations[currentLanguage]
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">{exercise.title}</h2>
-      
-      <div className="prose max-w-none mb-6" 
-        dangerouslySetInnerHTML={{ __html: exercise.content }} 
+    <div className="space-y-6">
+      <h1 className="text-3xl font-bold text-gray-900">
+        {translation.title}
+      </h1>
+
+      <div 
+        className="prose prose-lg max-w-none"
+        dangerouslySetInnerHTML={{ __html: translation.content }}
       />
 
-      {/* Display media error if any */}
-      {mediaError && (
-        <p className="text-red-500 text-sm mb-4">{mediaError}</p>
-      )}
-
-      {/* Display media if available */}
       {media.length > 0 && (
-        <div className="mb-6 space-y-4">
-          {/* Display images */}
-          {media.filter(m => m.type === MediaType.IMAGE).map(image => (
-            <div key={image.id}>
-              <img
-                src={image.url}
-                alt={image.name}
-                className="w-full max-h-96 object-contain rounded-lg"
-              />
-            </div>
-          ))}
-          
-          {/* Display audio */}
-          {media.filter(m => m.type === MediaType.AUDIO).map(audio => (
-            <div key={audio.id}>
-              <audio controls src={audio.url} className="w-full" />
-            </div>
-          ))}
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-gray-900">Media</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {media.map((item) => (
+              <div key={item.id} className="rounded-lg overflow-hidden">
+                {item.type === MediaType.IMAGE ? (
+                  <img
+                    src={item.url}
+                    alt={item.name}
+                    className="w-full h-auto"
+                  />
+                ) : (
+                  <audio
+                    controls
+                    src={item.url}
+                    className="w-full"
+                  >
+                    Your browser does not support the audio element.
+                  </audio>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
-      <div className="space-y-2">
+      {error && (
+        <div className="text-red-600 text-sm">
+          {error}
+        </div>
+      )}
+
+      <div className="flex justify-end gap-4">
         <Button
-          onClick={handleProgressUpdate}
-          disabled={isUpdating}
-          className="w-full sm:w-auto"
-          variant={completed ? 'outline' : 'primary'}
+          variant="secondary"
+          onClick={() => router.back()}
         >
-          {isUpdating ? (
-            <>
-              <LoadingSpinner className="mr-2" />
-              Updating...
-            </>
-          ) : completed ? (
-            'Mark as Incomplete'
-          ) : (
-            'Mark as Complete'
-          )}
+          Back
         </Button>
-        {error && (
-          <p className="text-red-500 text-sm">{error}</p>
-        )}
+        <Button
+          variant="primary"
+          onClick={handleComplete}
+          disabled={completed}
+        >
+          {completed ? 'Completed' : 'Mark as Complete'}
+        </Button>
       </div>
     </div>
   )

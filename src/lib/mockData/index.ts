@@ -15,6 +15,8 @@ import {
 } from './media';
 import {
   findExerciseById,
+  findExercises,
+  findExercisesByCategory,
   createExercise,
   updateExercise,
   deleteExercise
@@ -42,6 +44,8 @@ export interface MockDb {
 
   // Exercise functions
   findExerciseById: typeof findExerciseById;
+  findExercises: typeof findExercises;
+  findExercisesByCategory: typeof findExercisesByCategory;
   createExercise: typeof createExercise;
   updateExercise: typeof updateExercise;
   deleteExercise: typeof deleteExercise;
@@ -66,6 +70,8 @@ export const mockDb: MockDb = {
   getExerciseMedia,
 
   findExerciseById,
+  findExercises,
+  findExercisesByCategory,
   createExercise,
   updateExercise,
   deleteExercise,

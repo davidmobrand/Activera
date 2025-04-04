@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation'
 import { Editor } from '@tinymce/tinymce-react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
-import { Exercise, Media } from '@/lib/mockData'
+import { Exercise, Media } from '@/lib/types'
+import { Language } from '@/lib/hooks/useLanguage'
 import type { Editor as TinyMCEEditor } from 'tinymce'
 
 interface ExerciseFormProps {
@@ -23,6 +24,7 @@ interface FilePickerMeta {
 export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
   const router = useRouter()
   const [exercise, setExercise] = useState(initialExercise)
+  const [currentLanguage, setCurrentLanguage] = useState<Language>('en')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isUploading, setIsUploading] = useState(false)
@@ -111,16 +113,46 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
     }
   }
 
+  const updateTranslation = (field: 'title' | 'content', value: string) => {
+    setExercise({
+      ...exercise,
+      translations: {
+        ...exercise.translations,
+        [currentLanguage]: {
+          ...exercise.translations[currentLanguage],
+          [field]: value
+        }
+      }
+    })
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="flex gap-4 mb-4">
+        <Button
+          type="button"
+          onClick={() => setCurrentLanguage('en')}
+          variant={currentLanguage === 'en' ? 'primary' : 'secondary'}
+        >
+          English
+        </Button>
+        <Button
+          type="button"
+          onClick={() => setCurrentLanguage('sv')}
+          variant={currentLanguage === 'sv' ? 'primary' : 'secondary'}
+        >
+          Swedish
+        </Button>
+      </div>
+
       <div className="space-y-2">
         <label className="block text-sm font-medium text-gray-700">
           Title
         </label>
         <input
           type="text"
-          value={exercise.title}
-          onChange={(e) => setExercise({ ...exercise, title: e.target.value })}
+          value={exercise.translations[currentLanguage].title}
+          onChange={(e) => updateTranslation('title', e.target.value)}
           className="w-full rounded-md border border-gray-300 px-4 py-2"
           required
         />
@@ -152,8 +184,8 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
             onInit={(_evt: unknown, editor: TinyMCEEditor) => {
               editorRef.current = editor
             }}
-            value={exercise.content}
-            onEditorChange={(content: string) => setExercise({ ...exercise, content })}
+            value={exercise.translations[currentLanguage].content}
+            onEditorChange={(content: string) => updateTranslation('content', content)}
             init={{
               height: '100%',
               menubar: false,
@@ -198,34 +230,36 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
             </div>
           )}
           {error && (
-            <p className="text-red-500 text-sm mt-2">{error}</p>
+            <div className="mt-2 text-sm text-red-600">
+              {error}
+            </div>
           )}
         </div>
       </div>
 
-      <div className="flex gap-4 pt-6">
-        <Button type="submit" disabled={saving}>
-          {saving ? (
-            <>
-              <LoadingSpinner className="mr-2 h-4 w-4" />
-              Saving...
-            </>
-          ) : (
-            typeof exercise !== 'undefined' ? 'Update Exercise' : 'Create Exercise'
-          )}
-        </Button>
+      <div className="flex justify-end gap-4">
         <Button
           type="button"
-          variant="outline"
+          variant="secondary"
           onClick={() => router.push('/admin/exercises')}
         >
           Cancel
         </Button>
+        <Button
+          type="submit"
+          variant="primary"
+          disabled={saving}
+        >
+          {saving ? (
+            <>
+              <LoadingSpinner className="h-4 w-4 mr-2" />
+              Saving...
+            </>
+          ) : (
+            'Save Exercise'
+          )}
+        </Button>
       </div>
-
-      {error && (
-        <p className="text-red-500 text-sm mt-2">{error}</p>
-      )}
     </form>
   )
 } 

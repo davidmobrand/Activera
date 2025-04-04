@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import NotLoggedIn from '@/components/NotLoggedIn'
-import { UserRole } from '@/lib/mockData'
+import { UserRole } from '@/lib/types'
 
 export default function CreateUser() {
   const router = useRouter()

@@ -11,9 +11,14 @@ export interface CategoryTranslation {
   description: string;
 }
 
+export interface ExerciseTranslation {
+  title: string;
+  content: string;
+}
+
 export interface ExerciseTranslations {
   [key: string]: {
-    [lang in Language]: Translation;
+    [lang in Language]: ExerciseTranslation;
   };
 }
 

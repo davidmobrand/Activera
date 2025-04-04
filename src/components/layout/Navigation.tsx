@@ -28,9 +28,9 @@ export function Navigation() {
           { href: '/admin/users', label: 'Manage Users' },
         ]
       : [
-          { href: '/exercises/oppenhet', label: t('OPPENHET').name },
-          { href: '/exercises/narvaro', label: t('NARVARO').name },
-          { href: '/exercises/engagemang', label: t('ENGAGEMANG').name },
+          { href: '/exercises/oppenhet', label: t.category('OPPENHET').name },
+          { href: '/exercises/narvaro', label: t.category('NARVARO').name },
+          { href: '/exercises/engagemang', label: t.category('ENGAGEMANG').name },
         ]),
   ]
 

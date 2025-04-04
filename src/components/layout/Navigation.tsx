@@ -4,11 +4,14 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
-import { ExerciseCategory, ExerciseCategoryDisplay } from '@/lib/types'
+import { ExerciseCategory } from '@/lib/types'
+import { LanguageSelector } from '@/components/LanguageSelector'
+import { useTranslation } from '@/lib/i18n/useTranslation'
 
 export function Navigation() {
   const pathname = usePathname()
   const { data: session, status } = useSession()
+  const { t } = useTranslation()
 
   // Don't render anything if loading or not authenticated
   if (status === 'loading' || !session) return null
@@ -25,9 +28,9 @@ export function Navigation() {
           { href: '/admin/users', label: 'Manage Users' },
         ]
       : [
-          { href: '/exercises/oppenhet', label: ExerciseCategoryDisplay[ExerciseCategory.OPPENHET] },
-          { href: '/exercises/narvaro', label: ExerciseCategoryDisplay[ExerciseCategory.NARVARO] },
-          { href: '/exercises/engagemang', label: ExerciseCategoryDisplay[ExerciseCategory.ENGAGEMANG] },
+          { href: '/exercises/oppenhet', label: t('OPPENHET').name },
+          { href: '/exercises/narvaro', label: t('NARVARO').name },
+          { href: '/exercises/engagemang', label: t('ENGAGEMANG').name },
         ]),
   ]
 
@@ -62,13 +65,16 @@ export function Navigation() {
               {session.user?.name || session.user?.email}
               {isAdmin && ' (Admin)'}
             </span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => signOut({ callbackUrl: '/login' })}
-            >
-              Sign out
-            </Button>
+            <LanguageSelector />
+            <div className="ml-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => signOut({ callbackUrl: '/login' })}
+              >
+                Sign out
+              </Button>
+            </div>
           </div>
         </div>
       </div>

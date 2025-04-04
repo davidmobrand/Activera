@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 interface CategoryProgress {
@@ -18,26 +17,13 @@ const categoryLabels = {
 }
 
 export default function Dashboard() {
-  const router = useRouter()
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
   const [progress, setProgress] = useState<CategoryProgress[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    console.log('Dashboard page - Session status:', status)
-    console.log('Dashboard page - Session data:', session)
-    
-    if (status === 'unauthenticated') {
-      console.log('No session found, redirecting to login...')
-      router.replace('/login')
-      return
-    }
-
-    if (status === 'authenticated') {
-      console.log('Session found, fetching progress...')
-      fetchProgress()
-    }
-  }, [status, session, router])
+    fetchProgress()
+  }, [])
 
   async function fetchProgress() {
     try {
@@ -53,9 +39,6 @@ export default function Dashboard() {
 
       const exercises = await exercisesRes.json()
       const progressData = await progressRes.json()
-
-      console.log('Exercises:', exercises)
-      console.log('Progress data:', progressData)
 
       const progressByCategory = exercises.reduce((acc: Record<string, CategoryProgress>, exercise: any) => {
         if (!acc[exercise.category]) {
@@ -78,28 +61,6 @@ export default function Dashboard() {
     } finally {
       setIsLoading(false)
     }
-  }
-
-  if (status === 'loading') {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (status === 'unauthenticated') {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">Redirecting to login...</p>
-        </div>
-      </div>
-    )
   }
 
   if (isLoading) {

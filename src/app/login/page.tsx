@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
@@ -8,20 +8,9 @@ import { Input } from '@/components/ui/Input'
 
 export default function LoginPage() {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const { data: session, status } = useSession()
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
-
-  useEffect(() => {
-    console.log('Login page - Session status:', status)
-    console.log('Login page - Session data:', session)
-    
-    if (status === 'authenticated') {
-      console.log('Login successful, redirecting to dashboard...')
-      router.replace('/dashboard')
-    }
-  }, [status, session, router])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -37,16 +26,9 @@ export default function LoginPage() {
       const result = await signIn('credentials', {
         email,
         password,
-        redirect: false,
+        callbackUrl: '/dashboard',
+        redirect: true,
       })
-
-      console.log('Sign in result:', result)
-
-      if (result?.error) {
-        setError('Invalid email or password')
-        setIsLoading(false)
-        return
-      }
     } catch (error) {
       console.error('Sign in error:', error)
       setError('An error occurred. Please try again.')
@@ -66,6 +48,7 @@ export default function LoginPage() {
   }
 
   if (status === 'authenticated') {
+    router.push('/dashboard')
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">

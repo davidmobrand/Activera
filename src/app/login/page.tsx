@@ -8,37 +8,94 @@ import { Input } from '@/components/ui/Input'
 
 export default function LoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { data: session, status } = useSession()
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
+  const [redirectAttempts, setRedirectAttempts] = useState(0)
 
-  // Log every render
+  // Debug session object in detail
+  useEffect(() => {
+    if (session) {
+      console.log('[Login] Detailed session info:', {
+        user: session.user,
+        expires: session.expires,
+        role: session.user?.role
+      })
+    }
+  }, [session])
+
+  // Log every render with detailed component state
   console.log('[Login] Component rendered:', {
     status,
-    session,
+    session: session ? {
+      exists: true,
+      user: session.user,
+      expires: session.expires
+    } : null,
     error,
     isLoading,
-    currentUrl: typeof window !== 'undefined' ? window.location.href : 'SSR'
+    currentUrl: typeof window !== 'undefined' ? window.location.href : 'SSR',
+    searchParams: searchParams ? Object.fromEntries(searchParams.entries()) : {},
+    redirectAttempts
   })
 
   useEffect(() => {
     console.log('[Login] Session effect triggered:', {
       status,
-      session,
+      hasSession: !!session,
+      sessionExpiry: session?.expires,
       error,
-      isLoading
+      isLoading,
+      redirectAttempts
     })
 
     if (status === 'authenticated') {
-      console.log('[Login] Authenticated, attempting redirect')
-      try {
-        router.push('/dashboard')
-        console.log('[Login] Redirect initiated')
-      } catch (e) {
-        console.error('[Login] Redirect failed:', e)
-      }
+      console.log('[Login] Authenticated, preparing redirect')
+      
+      // Add delay to ensure session is fully established
+      setTimeout(() => {
+        try {
+          console.log('[Login] Executing redirect to dashboard')
+          setRedirectAttempts(prev => prev + 1)
+          
+          // Force a hard navigation
+          if (redirectAttempts >= 2) {
+            console.log('[Login] Multiple redirect attempts detected, forcing hard navigation')
+            window.location.href = '/dashboard'
+            return
+          }
+
+          router.push('/dashboard')
+          console.log('[Login] Soft redirect initiated via router.push')
+          
+          // Add a fallback redirect
+          setTimeout(() => {
+            if (window.location.pathname === '/login') {
+              console.log('[Login] Still on login page after redirect attempt, forcing navigation')
+              window.location.href = '/dashboard'
+            }
+          }, 1000)
+        } catch (e) {
+          console.error('[Login] Redirect failed:', e)
+        }
+      }, 500)
     }
-  }, [status, session, router, error, isLoading])
+  }, [status, session, router, error, isLoading, redirectAttempts])
+
+  // Monitor URL changes
+  useEffect(() => {
+    const handleRouteChange = () => {
+      console.log('[Login] URL changed:', {
+        pathname: window.location.pathname,
+        search: window.location.search,
+        href: window.location.href
+      })
+    }
+
+    window.addEventListener('popstate', handleRouteChange)
+    return () => window.removeEventListener('popstate', handleRouteChange)
+  }, [])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -58,7 +115,12 @@ export default function LoginPage() {
       const email = formData.get('email') as string
       const password = formData.get('password') as string
 
-      console.log('[Login] Calling signIn with credentials:', { email })
+      console.log('[Login] Calling signIn with credentials:', { 
+        email,
+        callbackUrl: '/dashboard',
+        timestamp: new Date().toISOString()
+      })
+
       const result = await signIn('credentials', {
         email,
         password,
@@ -66,7 +128,13 @@ export default function LoginPage() {
         callbackUrl: '/dashboard'
       })
 
-      console.log('[Login] Sign in result:', result)
+      console.log('[Login] Sign in result:', {
+        ok: result?.ok,
+        error: result?.error,
+        url: result?.url,
+        status: result?.status,
+        timestamp: new Date().toISOString()
+      })
 
       if (!result) {
         console.error('[Login] No result returned from signIn')
@@ -80,7 +148,9 @@ export default function LoginPage() {
       }
 
       if (result.ok) {
-        console.log('[Login] Sign in successful, waiting for session update')
+        console.log('[Login] Sign in successful, session update expected')
+        // Reset redirect attempts on new login
+        setRedirectAttempts(0)
       }
     } catch (error) {
       console.error('[Login] Sign in error:', error)
@@ -91,13 +161,15 @@ export default function LoginPage() {
     }
   }
 
-  // Log state changes
+  // Log state changes with timestamps
   useEffect(() => {
     console.log('[Login] State changed:', {
       error,
       isLoading,
       status,
-      hasSession: !!session
+      hasSession: !!session,
+      timestamp: new Date().toISOString(),
+      pathname: typeof window !== 'undefined' ? window.location.pathname : 'SSR'
     })
   }, [error, isLoading, status, session])
 
@@ -107,7 +179,7 @@ export default function LoginPage() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">Checking session...</p>
+          <p className="text-gray-600">Checking session state...</p>
         </div>
       </div>
     )
@@ -119,7 +191,10 @@ export default function LoginPage() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">Session authenticated, redirecting...</p>
+          <p className="text-gray-600">
+            Session authenticated ({redirectAttempts} redirect attempts)...
+            {redirectAttempts >= 2 ? ' Forcing navigation...' : ' Redirecting...'}
+          </p>
         </div>
       </div>
     )

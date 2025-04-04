@@ -21,17 +21,24 @@ export default function Dashboard() {
   const { data: session, status } = useSession()
   const router = useRouter()
   const [progress, setProgress] = useState<CategoryProgress[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    console.log('Dashboard session status:', status)
+    console.log('Dashboard session data:', session)
+    
     if (status === 'unauthenticated') {
-      router.push('/login')
+      console.log('Redirecting to login...')
+      router.replace('/login')
     } else if (status === 'authenticated') {
+      console.log('Fetching progress...')
       fetchProgress()
     }
-  }, [status, router])
+  }, [status, router, session])
 
   async function fetchProgress() {
     try {
+      setIsLoading(true)
       const [exercisesRes, progressRes] = await Promise.all([
         fetch('/api/exercises'),
         fetch('/api/progress'),
@@ -43,6 +50,9 @@ export default function Dashboard() {
 
       const exercises = await exercisesRes.json()
       const progressData = await progressRes.json()
+
+      console.log('Exercises:', exercises)
+      console.log('Progress data:', progressData)
 
       const progressByCategory = exercises.reduce((acc: Record<string, CategoryProgress>, exercise: any) => {
         if (!acc[exercise.category]) {
@@ -62,13 +72,18 @@ export default function Dashboard() {
       setProgress(Object.values(progressByCategory))
     } catch (error) {
       console.error('Failed to fetch progress:', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
-  if (status === 'loading') {
+  if (status === 'loading' || isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
       </div>
     )
   }

@@ -8,15 +8,18 @@ import { Input } from '@/components/ui/Input'
 
 export default function LoginPage() {
   const router = useRouter()
-  const { status } = useSession()
+  const { data: session, status } = useSession()
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
+    console.log('Session status:', status)
+    console.log('Session data:', session)
     if (status === 'authenticated') {
-      router.push('/dashboard')
+      console.log('Redirecting to dashboard...')
+      router.replace('/dashboard')
     }
-  }, [status, router])
+  }, [status, router, session])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -28,30 +31,41 @@ export default function LoginPage() {
     const password = formData.get('password') as string
 
     try {
+      console.log('Attempting sign in...')
       const result = await signIn('credentials', {
         email,
         password,
         redirect: false,
       })
 
+      console.log('Sign in result:', result)
+
       if (result?.error) {
         setError('Invalid email or password')
         return
       }
 
-      router.push('/dashboard')
-      router.refresh()
+      // Don't redirect here, let the useEffect handle it
     } catch (error) {
+      console.error('Sign in error:', error)
       setError('An error occurred. Please try again.')
     } finally {
       setIsLoading(false)
     }
   }
 
-  if (status === 'loading' || status === 'authenticated') {
+  if (status === 'loading') {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+      </div>
+    )
+  }
+
+  if (status === 'authenticated') {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div>Redirecting to dashboard...</div>
       </div>
     )
   }
@@ -92,6 +106,9 @@ export default function LoginPage() {
           >
             {isLoading ? 'Signing in...' : 'Sign in'}
           </Button>
+          {error && (
+            <p className="mt-2 text-sm text-red-600">{error}</p>
+          )}
         </form>
       </div>
     </div>

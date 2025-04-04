@@ -498,6 +498,46 @@ export const mediaFiles: Media[] = [
     url: "/images/present-moment.jpg",
     name: "Present Moment Exercise",
     createdAt: "2024-03-20T13:04:00Z"
+  },
+  {
+    id: "49",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/thought-train.jpg",
+    name: "Thought Train Exercise",
+    createdAt: "2024-03-20T14:00:00Z"
+  },
+  {
+    id: "50",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/radio-metaphor.jpg",
+    name: "Radio Metaphor Exercise",
+    createdAt: "2024-03-20T14:01:00Z"
+  },
+  {
+    id: "51",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/values-diary.jpg",
+    name: "Values Diary Exercise",
+    createdAt: "2024-03-20T14:02:00Z"
+  },
+  {
+    id: "52",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/life-roles.jpg",
+    name: "Life Roles Exercise",
+    createdAt: "2024-03-20T14:03:00Z"
+  },
+  {
+    id: "53",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/thought-defusion.jpg",
+    name: "Thought Defusion Exercise",
+    createdAt: "2024-03-20T14:04:00Z"
   }
 ];
 
@@ -1702,6 +1742,215 @@ Remember: The present moment is always available.`,
     updatedAt: "2024-03-20T13:04:00Z",
     mediaIds: ["48"],
     order: 45
+  },
+  {
+    id: "46",
+    title: "Thought Train",
+    content: `
+# Thought Train Exercise
+
+A defusion exercise using the metaphor of a train to create distance from thoughts.
+
+## Practice Guide
+
+1. Initial Setup
+   - Find a comfortable position
+   - Close eyes or maintain soft gaze
+   - Take a few grounding breaths
+
+2. Visualization
+   - Imagine sitting at a train station
+   - Each thought is a train car passing by
+   - Notice thoughts without boarding the train
+   - Let each thought-train pass through
+
+3. Common Thought Types
+   - Worries about the future
+   - Memories from the past
+   - Self-judgments
+   - Plans and to-do lists
+
+## Key Points
+
+- You are the observer at the station
+- Thoughts are just passing trains
+- No need to jump aboard
+- Return to the platform when caught up
+
+Remember: You can watch your thoughts without becoming them.`,
+    category: ExerciseCategory.OPPENHET,
+    userId: "admin",
+    createdAt: "2024-03-20T14:00:00Z",
+    updatedAt: "2024-03-20T14:00:00Z",
+    mediaIds: ["49"],
+    order: 46
+  },
+  {
+    id: "47",
+    title: "Radio Metaphor",
+    content: `
+# Radio Metaphor Exercise
+
+Use the metaphor of a radio to understand and work with difficult thoughts.
+
+## Exercise Steps
+
+1. The Radio Setup
+   - Imagine your mind as a radio
+   - Thoughts are like radio stations
+   - You are the listener, not the radio
+   - Notice different "channels" playing
+
+2. Working with Channels
+   - Notice the "doom and gloom" channel
+   - Observe the "worry news" station
+   - Listen to the "self-critic" broadcast
+   - Be aware of "future fears" programming
+
+3. Practice Options
+   - Notice without changing channels
+   - Adjust the volume
+   - Step back from the radio
+   - Remember you're not the radio
+
+Remember: You can notice the radio without believing everything it broadcasts.`,
+    category: ExerciseCategory.OPPENHET,
+    userId: "admin",
+    createdAt: "2024-03-20T14:01:00Z",
+    updatedAt: "2024-03-20T14:01:00Z",
+    mediaIds: ["50"],
+    order: 47
+  },
+  {
+    id: "48",
+    title: "Values Diary",
+    content: `
+# Values Diary Exercise
+
+Track and reflect on your values in daily life.
+
+## Practice Guide
+
+1. Daily Check-in
+   - Morning values intention
+   - Evening values reflection
+   - Note specific situations
+   - Record your responses
+
+2. Areas to Track
+   - Value-aligned actions
+   - Challenging moments
+   - Missed opportunities
+   - New insights gained
+
+3. Weekly Review
+   - Notice patterns
+   - Celebrate successes
+   - Plan adjustments
+   - Set new intentions
+
+## Integration Tips
+
+- Keep entries brief
+- Focus on specific examples
+- Include both successes and struggles
+- Use for future planning
+
+Remember: Your values diary is a tool for growth, not judgment.`,
+    category: ExerciseCategory.ENGAGEMANG,
+    userId: "admin",
+    createdAt: "2024-03-20T14:02:00Z",
+    updatedAt: "2024-03-20T14:02:00Z",
+    mediaIds: ["51"],
+    order: 48
+  },
+  {
+    id: "49",
+    title: "Life Roles",
+    content: `
+# Life Roles Exercise
+
+Explore your values through different life roles.
+
+## Exercise Steps
+
+1. Identify Your Roles
+   - Family member
+   - Professional
+   - Friend
+   - Community member
+   - Personal growth
+   - Health/wellness
+
+2. For Each Role
+   - What matters most?
+   - How do you want to show up?
+   - What qualities matter?
+   - What actions align?
+
+3. Integration
+   - Find common themes
+   - Notice conflicts
+   - Plan balanced action
+   - Review regularly
+
+## Practice Tips
+
+- Start with 3-4 key roles
+- Be specific about values
+- Consider priorities
+- Plan small actions
+
+Remember: Your roles are opportunities to live your values.`,
+    category: ExerciseCategory.ENGAGEMANG,
+    userId: "admin",
+    createdAt: "2024-03-20T14:03:00Z",
+    updatedAt: "2024-03-20T14:03:00Z",
+    mediaIds: ["52"],
+    order: 49
+  },
+  {
+    id: "50",
+    title: "Thought Defusion",
+    content: `
+# Thought Defusion Techniques
+
+A collection of practices to create space between you and your thoughts.
+
+## Techniques
+
+1. Thought Labeling
+   - "I'm having the thought that..."
+   - "My mind is telling me..."
+   - "I notice I'm thinking..."
+   - Watch thoughts like weather
+
+2. Playful Approaches
+   - Sing thoughts to a tune
+   - Use silly voices
+   - Thank your mind
+   - Give thoughts names
+
+3. Visualization
+   - Thoughts on leaves
+   - Clouds passing by
+   - Words on a screen
+   - Bubbles floating away
+
+## Implementation
+
+- Practice regularly
+- Use variety
+- Start with easier thoughts
+- Build up gradually
+
+Remember: Thoughts are just thoughts, not facts or commands.`,
+    category: ExerciseCategory.OPPENHET,
+    userId: "admin",
+    createdAt: "2024-03-20T14:04:00Z",
+    updatedAt: "2024-03-20T14:04:00Z",
+    mediaIds: ["53"],
+    order: 50
   }
 ].map(e => ({
   ...e,

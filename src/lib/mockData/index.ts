@@ -28,7 +28,8 @@ import {
   updateExerciseProgress
 } from './exerciseProgress';
 
-import type { CreateMedia, Media } from '../validation';
+import type { Media } from '../types';
+import type { CreateMedia } from '../validation';
 
 export * from './users';
 export * from './media';

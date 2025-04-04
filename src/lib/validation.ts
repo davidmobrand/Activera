@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { UserRole, ExerciseCategory, MediaType } from './types';
+import type { CreateMediaInput } from './types';
 
 // User Validation
 export const UserSchema = z.object({
@@ -51,7 +52,7 @@ export const ExerciseProgressSchema = z.object({
 export const CreateUserSchema = UserSchema.omit({ id: true, createdAt: true, updatedAt: true });
 export const CreateExerciseSchema = ExerciseSchema.omit({ id: true, createdAt: true, updatedAt: true });
 
-// Define the exact fields we want for media creation
+// Define the schema to match CreateMediaInput
 export const CreateMediaSchema = z.object({
   exerciseId: z.string(),
   type: z.enum([MediaType.IMAGE, MediaType.AUDIO]),
@@ -75,7 +76,7 @@ export type ExerciseProgress = z.infer<typeof ExerciseProgressSchema>;
 
 export type CreateUser = z.infer<typeof CreateUserSchema>;
 export type CreateExercise = z.infer<typeof CreateExerciseSchema>;
-export type CreateMedia = z.infer<typeof CreateMediaSchema>;
+export type CreateMedia = CreateMediaInput;
 export type CreateExerciseProgress = z.infer<typeof CreateExerciseProgressSchema>;
 
 export type UpdateUser = z.infer<typeof UpdateUserSchema>;

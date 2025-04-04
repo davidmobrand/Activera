@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { mockDb } from '@/lib/mockData'
 import { MediaType } from '@/lib/types'
-import type { CreateMedia } from '@/lib/validation'
+import type { CreateMediaInput } from '@/lib/types'
 
 interface Props {
   params: {
@@ -45,7 +45,7 @@ export async function POST(
       ? `https://example.com/images-${Date.now()}.jpg`
       : `https://example.com/audio-${Date.now()}.mp3`
 
-    const createMediaData: CreateMedia = {
+    const createMediaData: CreateMediaInput = {
       exerciseId: params.id,
       type,
       url: mockUrl,

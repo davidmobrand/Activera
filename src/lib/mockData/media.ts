@@ -1,6 +1,5 @@
-import { Media, MediaType } from '../types';
+import { Media, MediaType, CreateMediaInput } from '../types';
 import { CreateMediaSchema, MediaSchema, UpdateMediaSchema } from '../validation';
-import type { CreateMedia } from '../validation';
 
 // Mock Media Files
 export const mediaFiles: Media[] = [
@@ -34,14 +33,6 @@ export const findMediaByExerciseId = (exerciseId: string | string[]): Media[] =>
   return mediaFiles
     .filter(media => media.exerciseId === exerciseId)
     .map(media => MediaSchema.parse(media));
-};
-
-// Define the input type explicitly
-type CreateMediaInput = {
-  exerciseId: string;
-  type: MediaType;
-  url: string;
-  name: string;
 };
 
 export const createMedia = (data: CreateMediaInput): Media => {

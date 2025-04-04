@@ -1,103 +1,40 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
-import { signIn, useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { signIn } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 
 export default function LoginPage() {
-  const router = useRouter()
-  const { data: session, status } = useSession()
-  const [error, setError] = useState<string>('')
+  const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [hasRedirected, setHasRedirected] = useState(false)
-
-  const handleRedirect = useCallback(() => {
-    if (status === 'authenticated' && !hasRedirected) {
-      console.log('[Login] User is authenticated, redirecting to dashboard via window.location')
-      setHasRedirected(true)
-      window.location.href = '/dashboard'
-    }
-  }, [status, hasRedirected])
-
-  // Debug session state changes
-  useEffect(() => {
-    console.log('[Login] Session state changed:', {
-      status,
-      session: session ? {
-        user: session.user,
-        expires: session.expires
-      } : null,
-      hasRedirected,
-      timestamp: new Date().toISOString()
-    })
-
-    handleRedirect()
-  }, [session, status, handleRedirect, hasRedirected])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (isLoading) {
-      console.log('[Login] Submit blocked - already loading')
-      return
-    }
+    if (isLoading) return
 
     setIsLoading(true)
     setError('')
-    console.log('[Login] Starting sign in process')
 
     try {
       const formData = new FormData(event.currentTarget)
       const email = formData.get('email') as string
       const password = formData.get('password') as string
 
-      console.log('[Login] Calling signIn with credentials:', {
-        email,
-        callbackUrl: '/dashboard',
-        timestamp: new Date().toISOString()
-      })
-
-      const result = await signIn('credentials', {
+      // Use signIn with redirect: true
+      await signIn('credentials', {
         email,
         password,
-        redirect: false,
+        redirect: true,
         callbackUrl: '/dashboard'
       })
-
-      console.log('[Login] SignIn result:', {
-        result,
-        timestamp: new Date().toISOString()
-      })
-
-      if (result?.ok) {
-        handleRedirect()
-      } else {
-        setError('Invalid email or password')
-      }
     } catch (error) {
-      console.error('[Login] Error during sign in:', error)
-      setError('An error occurred. Please try again.')
-    } finally {
+      console.error('Login error:', error)
+      setError('An error occurred during sign in')
       setIsLoading(false)
     }
   }
 
-  if (status === 'loading' || hasRedirected) {
-    console.log('[Login] Rendering loading/redirect state')
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">
-            {status === 'loading' ? 'Loading...' : 'Redirecting to dashboard...'}
-          </p>
-        </div>
-      </div>
-    )
-  }
-
-  console.log('[Login] Rendering login form')
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -137,7 +74,9 @@ export default function LoginPage() {
             {isLoading ? 'Signing in...' : 'Sign in'}
           </Button>
           {error && (
-            <p className="mt-2 text-sm text-red-600">{error}</p>
+            <p className="mt-2 text-sm text-red-600" role="alert">
+              {error}
+            </p>
           )}
         </form>
       </div>

@@ -117,7 +117,12 @@ export default withAuth(
           path: req?.nextUrl?.pathname,
           timestamp: new Date().toISOString()
         })
-        return true
+        // Allow login page without authentication
+        if (req.nextUrl.pathname === '/login') {
+          return true
+        }
+        // Require authentication for all other pages
+        return !!token
       }
     },
     pages: {

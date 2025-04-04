@@ -360,6 +360,17 @@ export const findUsers = () => {
   return users;
 };
 
+export const createUser = (data: Omit<User, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const newUser = {
+    ...data,
+    id: String(users.length + 1),
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
+  users.push(newUser);
+  return newUser;
+};
+
 export const deleteUser = (id: string) => {
   const index = users.findIndex(user => user.id === id);
   if (index !== -1) {
@@ -390,6 +401,7 @@ export const mockDb = {
   findUserById,
   findUserByEmail,
   findUsers,
+  createUser,
   deleteUser,
   getExerciseMedia
 };

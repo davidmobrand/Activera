@@ -38,13 +38,25 @@ export async function POST(request: NextRequest) {
 
   try {
     const data = await request.json()
-    const newUser = {
-      id: Math.random().toString(),
-      ...data,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }
     
+    // Validate required fields
+    if (!data.email || !data.password || !data.role) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      )
+    }
+
+    // Check if email is already taken
+    const existingUser = mockDb.findUserByEmail(data.email)
+    if (existingUser) {
+      return NextResponse.json(
+        { error: 'Email already in use' },
+        { status: 400 }
+      )
+    }
+
+    const newUser = mockDb.createUser(data)
     console.log('[API] Users POST - Created user:', newUser)
     return NextResponse.json(newUser)
   } catch (error) {

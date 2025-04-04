@@ -52,6 +52,7 @@ export type Media = {
   url: string;
   name: string;
   createdAt: string;
+  updatedAt: string;
 };
 
 export interface ExerciseProgress {
@@ -114,22 +115,24 @@ export const users: User[] = [
 ];
 
 // Mock Media Files
-export const mediaFiles: Media[] = [
+export const mediaFiles = [
   {
     id: '1',
     exerciseId: '1',
     type: MediaType.IMAGE,
-    url: '/assets/exercises/images/peaceful-meditation.jpg',
+    url: '/images/peaceful-meditation.jpg',
     name: 'Peaceful Meditation at Sunrise',
-    createdAt: new Date('2024-01-15').toISOString()
+    createdAt: new Date('2024-01-01').toISOString(),
+    updatedAt: new Date('2024-01-01').toISOString()
   },
   {
     id: '2',
     exerciseId: '1',
     type: MediaType.AUDIO,
-    url: '/assets/exercises/audio/calm-meditation.mp3',
+    url: '/audio/calm-meditation.mp3',
     name: 'Calming Meditation Music',
-    createdAt: new Date('2024-01-15').toISOString()
+    createdAt: new Date('2024-01-15').toISOString(),
+    updatedAt: new Date('2024-01-15').toISOString()
   },
   {
     id: '3',
@@ -137,7 +140,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/mindful-yoga.jpg',
     name: 'Mindful Yoga Pose',
-    createdAt: new Date('2024-01-16').toISOString()
+    createdAt: new Date('2024-01-16').toISOString(),
+    updatedAt: new Date('2024-01-16').toISOString()
   },
   {
     id: '4',
@@ -145,7 +149,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.AUDIO,
     url: '/assets/exercises/audio/zen-meditation.mp3',
     name: 'Zen Meditation Sounds',
-    createdAt: new Date('2024-01-16').toISOString()
+    createdAt: new Date('2024-01-16').toISOString(),
+    updatedAt: new Date('2024-01-16').toISOString()
   },
   {
     id: '5',
@@ -153,7 +158,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/five-senses.jpg',
     name: 'Five Senses Mindfulness Illustration',
-    createdAt: new Date('2024-01-17').toISOString()
+    createdAt: new Date('2024-01-17').toISOString(),
+    updatedAt: new Date('2024-01-17').toISOString()
   },
   {
     id: '6',
@@ -161,7 +167,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/stream-leaves.jpg',
     name: 'Peaceful Stream with Floating Leaves',
-    createdAt: new Date('2024-01-18').toISOString()
+    createdAt: new Date('2024-01-18').toISOString(),
+    updatedAt: new Date('2024-01-18').toISOString()
   },
   {
     id: '7',
@@ -169,7 +176,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/compass-values.jpg',
     name: 'Compass with Core Values',
-    createdAt: new Date('2024-01-19').toISOString()
+    createdAt: new Date('2024-01-19').toISOString(),
+    updatedAt: new Date('2024-01-19').toISOString()
   },
   {
     id: '8',
@@ -177,7 +185,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/mindful-walking.jpg',
     name: 'Person Walking Mindfully in Nature',
-    createdAt: new Date('2024-01-20').toISOString()
+    createdAt: new Date('2024-01-20').toISOString(),
+    updatedAt: new Date('2024-01-20').toISOString()
   },
   {
     id: '9',
@@ -185,7 +194,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/emotional-awareness.jpg',
     name: 'Emotional Awareness Illustration',
-    createdAt: new Date('2024-01-21').toISOString()
+    createdAt: new Date('2024-01-21').toISOString(),
+    updatedAt: new Date('2024-01-21').toISOString()
   },
   {
     id: '10',
@@ -193,7 +203,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/action-plan.jpg',
     name: 'Action Planning and Goal Setting',
-    createdAt: new Date('2024-01-22').toISOString()
+    createdAt: new Date('2024-01-22').toISOString(),
+    updatedAt: new Date('2024-01-22').toISOString()
   },
   {
     id: '11',
@@ -201,7 +212,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/mountain-meditation.jpg',
     name: 'Mountain Meditation Scene',
-    createdAt: new Date('2024-01-23').toISOString()
+    createdAt: new Date('2024-01-23').toISOString(),
+    updatedAt: new Date('2024-01-23').toISOString()
   },
   {
     id: '12',
@@ -209,7 +221,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.AUDIO,
     url: '/assets/exercises/audio/mountain-meditation.mp3',
     name: 'Mountain Meditation Guidance',
-    createdAt: new Date('2024-01-23').toISOString()
+    createdAt: new Date('2024-01-23').toISOString(),
+    updatedAt: new Date('2024-01-23').toISOString()
   },
   {
     id: '13',
@@ -217,7 +230,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/defusion.jpg',
     name: 'Thought Defusion Exercise',
-    createdAt: new Date('2024-01-24').toISOString()
+    createdAt: new Date('2024-01-24').toISOString(),
+    updatedAt: new Date('2024-01-24').toISOString()
   },
   {
     id: '14',
@@ -225,7 +239,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/values-in-action.jpg',
     name: 'Values in Action',
-    createdAt: new Date('2024-01-25').toISOString()
+    createdAt: new Date('2024-01-25').toISOString(),
+    updatedAt: new Date('2024-01-25').toISOString()
   },
   {
     id: '15',
@@ -233,7 +248,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/self-compassion.jpg',
     name: 'Self-Compassion Practice',
-    createdAt: new Date('2024-01-26').toISOString()
+    createdAt: new Date('2024-01-26').toISOString(),
+    updatedAt: new Date('2024-01-26').toISOString()
   },
   {
     id: '16',
@@ -241,7 +257,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/gratitude-journal.jpg',
     name: 'Gratitude Journaling',
-    createdAt: new Date('2024-01-27').toISOString()
+    createdAt: new Date('2024-01-27').toISOString(),
+    updatedAt: new Date('2024-01-27').toISOString()
   },
   {
     id: '17',
@@ -249,7 +266,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/mindful-eating.jpg',
     name: 'Mindful Eating Practice',
-    createdAt: new Date('2024-01-28').toISOString()
+    createdAt: new Date('2024-01-28').toISOString(),
+    updatedAt: new Date('2024-01-28').toISOString()
   },
   {
     id: '18',
@@ -257,7 +275,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/values-tree.jpg',
     name: 'Values Tree Visualization',
-    createdAt: new Date('2024-01-29').toISOString()
+    createdAt: new Date('2024-01-29').toISOString(),
+    updatedAt: new Date('2024-01-29').toISOString()
   },
   {
     id: '19',
@@ -265,7 +284,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/observer-self.jpg',
     name: 'Observer Self Exercise',
-    createdAt: new Date('2024-01-30').toISOString()
+    createdAt: new Date('2024-01-30').toISOString(),
+    updatedAt: new Date('2024-01-30').toISOString()
   },
   {
     id: '20',
@@ -273,7 +293,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/willingness.jpg',
     name: 'Willingness Practice',
-    createdAt: new Date('2024-01-31').toISOString()
+    createdAt: new Date('2024-01-31').toISOString(),
+    updatedAt: new Date('2024-01-31').toISOString()
   },
   {
     id: '21',
@@ -281,7 +302,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/values-bullseye.jpg',
     name: 'Values Bullseye',
-    createdAt: new Date('2024-02-01').toISOString()
+    createdAt: new Date('2024-02-01').toISOString(),
+    updatedAt: new Date('2024-02-01').toISOString()
   },
   {
     id: '22',
@@ -289,7 +311,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/mindful-movement.jpg',
     name: 'Mindful Movement',
-    createdAt: new Date('2024-02-02').toISOString()
+    createdAt: new Date('2024-02-02').toISOString(),
+    updatedAt: new Date('2024-02-02').toISOString()
   },
   {
     id: '23',
@@ -297,7 +320,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/acceptance-diary.jpg',
     name: 'Acceptance Diary',
-    createdAt: new Date('2024-02-03').toISOString()
+    createdAt: new Date('2024-02-03').toISOString(),
+    updatedAt: new Date('2024-02-03').toISOString()
   },
   {
     id: '24',
@@ -305,7 +329,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/body-awareness.jpg',
     name: 'Body Awareness Exercise',
-    createdAt: new Date('2024-02-04').toISOString()
+    createdAt: new Date('2024-02-04').toISOString(),
+    updatedAt: new Date('2024-02-04').toISOString()
   },
   {
     id: '25',
@@ -313,7 +338,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/values-letter.jpg',
     name: 'Values Letter Writing',
-    createdAt: new Date('2024-02-05').toISOString()
+    createdAt: new Date('2024-02-05').toISOString(),
+    updatedAt: new Date('2024-02-05').toISOString()
   },
   {
     id: '26',
@@ -321,7 +347,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/mindful-listening.jpg',
     name: 'Mindful Listening Practice',
-    createdAt: new Date('2024-02-06').toISOString()
+    createdAt: new Date('2024-02-06').toISOString(),
+    updatedAt: new Date('2024-02-06').toISOString()
   },
   {
     id: '27',
@@ -329,7 +356,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/self-story.jpg',
     name: 'Self-as-Story Exercise',
-    createdAt: new Date('2024-02-07').toISOString()
+    createdAt: new Date('2024-02-07').toISOString(),
+    updatedAt: new Date('2024-02-07').toISOString()
   },
   {
     id: '28',
@@ -337,7 +365,8 @@ export const mediaFiles: Media[] = [
     type: MediaType.IMAGE,
     url: '/assets/exercises/images/values-mirror.jpg',
     name: 'Values Mirror Exercise',
-    createdAt: new Date('2024-02-08').toISOString()
+    createdAt: new Date('2024-02-08').toISOString(),
+    updatedAt: new Date('2024-02-08').toISOString()
   },
   {
     id: "29",
@@ -345,7 +374,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/mindful-breathing-practice.jpg",
     name: "Mindful Breathing Practice",
-    createdAt: "2024-03-20T10:00:00Z"
+    createdAt: "2024-03-20T10:00:00Z",
+    updatedAt: "2024-03-20T10:00:00Z"
   },
   {
     id: "30",
@@ -353,7 +383,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/values-compass.jpg",
     name: "Values Compass Exercise",
-    createdAt: "2024-03-20T10:01:00Z"
+    createdAt: "2024-03-20T10:01:00Z",
+    updatedAt: "2024-03-20T10:01:00Z"
   },
   {
     id: "31",
@@ -361,7 +392,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/acceptance-mountain.jpg",
     name: "Acceptance Mountain",
-    createdAt: "2024-03-20T10:02:00Z"
+    createdAt: "2024-03-20T10:02:00Z",
+    updatedAt: "2024-03-20T10:02:00Z"
   },
   {
     id: "32",
@@ -369,7 +401,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/mindful-walking.jpg",
     name: "Mindful Walking Practice",
-    createdAt: "2024-03-20T10:03:00Z"
+    createdAt: "2024-03-20T10:03:00Z",
+    updatedAt: "2024-03-20T10:03:00Z"
   },
   {
     id: "33",
@@ -377,7 +410,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/values-action-plan.jpg",
     name: "Values Action Plan",
-    createdAt: "2024-03-20T10:04:00Z"
+    createdAt: "2024-03-20T10:04:00Z",
+    updatedAt: "2024-03-20T10:04:00Z"
   },
   {
     id: "34",
@@ -385,7 +419,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/defusion-exercise.jpg",
     name: "Defusion Exercise",
-    createdAt: "2024-03-20T11:00:00Z"
+    createdAt: "2024-03-20T11:00:00Z",
+    updatedAt: "2024-03-20T11:00:00Z"
   },
   {
     id: "35",
@@ -393,7 +428,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/self-compassion-meditation.jpg",
     name: "Self-Compassion Meditation",
-    createdAt: "2024-03-20T11:01:00Z"
+    createdAt: "2024-03-20T11:01:00Z",
+    updatedAt: "2024-03-20T11:01:00Z"
   },
   {
     id: "36",
@@ -401,7 +437,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/values-exploration.jpg",
     name: "Values Exploration",
-    createdAt: "2024-03-20T11:02:00Z"
+    createdAt: "2024-03-20T11:02:00Z",
+    updatedAt: "2024-03-20T11:02:00Z"
   },
   {
     id: "37",
@@ -409,7 +446,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/mindful-emotions.jpg",
     name: "Mindful Emotions",
-    createdAt: "2024-03-20T11:03:00Z"
+    createdAt: "2024-03-20T11:03:00Z",
+    updatedAt: "2024-03-20T11:03:00Z"
   },
   {
     id: "38",
@@ -417,7 +455,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/acceptance-practice.jpg",
     name: "Acceptance Practice",
-    createdAt: "2024-03-20T11:04:00Z"
+    createdAt: "2024-03-20T11:04:00Z",
+    updatedAt: "2024-03-20T11:04:00Z"
   },
   {
     id: "39",
@@ -425,7 +464,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/values-clarification.jpg",
     name: "Values Clarification Exercise",
-    createdAt: "2024-03-20T12:00:00Z"
+    createdAt: "2024-03-20T12:00:00Z",
+    updatedAt: "2024-03-20T12:00:00Z"
   },
   {
     id: "40",
@@ -433,7 +473,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/committed-action.jpg",
     name: "Committed Action Practice",
-    createdAt: "2024-03-20T12:01:00Z"
+    createdAt: "2024-03-20T12:01:00Z",
+    updatedAt: "2024-03-20T12:01:00Z"
   },
   {
     id: "41",
@@ -441,7 +482,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/mindful-goals.jpg",
     name: "Mindful Goals Setting",
-    createdAt: "2024-03-20T12:02:00Z"
+    createdAt: "2024-03-20T12:02:00Z",
+    updatedAt: "2024-03-20T12:02:00Z"
   },
   {
     id: "42",
@@ -449,7 +491,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/values-obstacles.jpg",
     name: "Values Obstacles Exercise",
-    createdAt: "2024-03-20T12:03:00Z"
+    createdAt: "2024-03-20T12:03:00Z",
+    updatedAt: "2024-03-20T12:03:00Z"
   },
   {
     id: "43",
@@ -457,7 +500,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/life-compass.jpg",
     name: "Life Compass Exercise",
-    createdAt: "2024-03-20T12:04:00Z"
+    createdAt: "2024-03-20T12:04:00Z",
+    updatedAt: "2024-03-20T12:04:00Z"
   },
   {
     id: "44",
@@ -465,7 +509,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/body-scan.jpg",
     name: "Body Scan Meditation",
-    createdAt: "2024-03-20T13:00:00Z"
+    createdAt: "2024-03-20T13:00:00Z",
+    updatedAt: "2024-03-20T13:00:00Z"
   },
   {
     id: "45",
@@ -473,7 +518,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/mindful-eating.jpg",
     name: "Mindful Eating Exercise",
-    createdAt: "2024-03-20T13:01:00Z"
+    createdAt: "2024-03-20T13:01:00Z",
+    updatedAt: "2024-03-20T13:01:00Z"
   },
   {
     id: "46",
@@ -481,7 +527,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/sound-awareness.jpg",
     name: "Sound Awareness Practice",
-    createdAt: "2024-03-20T13:02:00Z"
+    createdAt: "2024-03-20T13:02:00Z",
+    updatedAt: "2024-03-20T13:02:00Z"
   },
   {
     id: "47",
@@ -489,7 +536,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/mindful-movement.jpg",
     name: "Mindful Movement Exercise",
-    createdAt: "2024-03-20T13:03:00Z"
+    createdAt: "2024-03-20T13:03:00Z",
+    updatedAt: "2024-03-20T13:03:00Z"
   },
   {
     id: "48",
@@ -497,7 +545,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/present-moment.jpg",
     name: "Present Moment Exercise",
-    createdAt: "2024-03-20T13:04:00Z"
+    createdAt: "2024-03-20T13:04:00Z",
+    updatedAt: "2024-03-20T13:04:00Z"
   },
   {
     id: "49",
@@ -505,7 +554,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/thought-train.jpg",
     name: "Thought Train Exercise",
-    createdAt: "2024-03-20T14:00:00Z"
+    createdAt: "2024-03-20T14:00:00Z",
+    updatedAt: "2024-03-20T14:00:00Z"
   },
   {
     id: "50",
@@ -513,7 +563,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/radio-metaphor.jpg",
     name: "Radio Metaphor Exercise",
-    createdAt: "2024-03-20T14:01:00Z"
+    createdAt: "2024-03-20T14:01:00Z",
+    updatedAt: "2024-03-20T14:01:00Z"
   },
   {
     id: "51",
@@ -521,7 +572,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/values-diary.jpg",
     name: "Values Diary Exercise",
-    createdAt: "2024-03-20T14:02:00Z"
+    createdAt: "2024-03-20T14:02:00Z",
+    updatedAt: "2024-03-20T14:02:00Z"
   },
   {
     id: "52",
@@ -529,7 +581,8 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/life-roles.jpg",
     name: "Life Roles Exercise",
-    createdAt: "2024-03-20T14:03:00Z"
+    createdAt: "2024-03-20T14:03:00Z",
+    updatedAt: "2024-03-20T14:03:00Z"
   },
   {
     id: "53",
@@ -537,9 +590,168 @@ export const mediaFiles: Media[] = [
     type: "IMAGE",
     url: "/images/thought-defusion.jpg",
     name: "Thought Defusion Exercise",
-    createdAt: "2024-03-20T14:04:00Z"
+    createdAt: "2024-03-20T14:04:00Z",
+    updatedAt: "2024-03-20T14:04:00Z"
+  },
+  {
+    id: "54",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/breathing-space.jpg",
+    name: "Three-Minute Breathing Space",
+    createdAt: "2024-03-21T10:00:00Z",
+    updatedAt: "2024-03-21T10:00:00Z"
+  },
+  {
+    id: "55",
+    exerciseId: "",
+    type: "AUDIO",
+    url: "/audio/breathing-space-guide.mp3",
+    name: "Breathing Space Guidance",
+    createdAt: "2024-03-21T10:00:00Z",
+    updatedAt: "2024-03-21T10:00:00Z"
+  },
+  {
+    id: "56",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/loving-kindness.jpg",
+    name: "Loving-Kindness Meditation",
+    createdAt: "2024-03-21T10:01:00Z",
+    updatedAt: "2024-03-21T10:01:00Z"
+  },
+  {
+    id: "57",
+    exerciseId: "",
+    type: "AUDIO",
+    url: "/audio/loving-kindness-guide.mp3",
+    name: "Loving-Kindness Guidance",
+    createdAt: "2024-03-21T10:01:00Z",
+    updatedAt: "2024-03-21T10:01:00Z"
+  },
+  {
+    id: "58",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/values-exploration.jpg",
+    name: "Values Life Areas",
+    createdAt: "2024-03-21T10:02:00Z",
+    updatedAt: "2024-03-21T10:02:00Z"
+  },
+  {
+    id: "59",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/defusion-clouds.jpg",
+    name: "Clouds in the Sky Exercise",
+    createdAt: "2024-03-21T10:03:00Z",
+    updatedAt: "2024-03-21T10:03:00Z"
+  },
+  {
+    id: "60",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/mindful-stretching.jpg",
+    name: "Mindful Stretching",
+    createdAt: "2024-03-21T10:04:00Z",
+    updatedAt: "2024-03-21T10:04:00Z"
+  },
+  {
+    id: "61",
+    exerciseId: "",
+    type: "AUDIO",
+    url: "/audio/mindful-stretching-guide.mp3",
+    name: "Stretching Guidance",
+    createdAt: "2024-03-21T10:04:00Z",
+    updatedAt: "2024-03-21T10:04:00Z"
+  },
+  {
+    id: "62",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/values-vision.jpg",
+    name: "Values Vision Board",
+    createdAt: "2024-03-21T10:05:00Z",
+    updatedAt: "2024-03-21T10:05:00Z"
+  },
+  {
+    id: "63",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/acceptance-waves.jpg",
+    name: "Acceptance Waves",
+    createdAt: "2024-03-21T10:06:00Z",
+    updatedAt: "2024-03-21T10:06:00Z"
+  },
+  {
+    id: "64",
+    exerciseId: "",
+    type: MediaType.IMAGE,
+    url: "/images/gratitude-practice.jpg",
+    name: "Daily Gratitude Practice",
+    createdAt: "2024-03-21T11:00:00Z",
+    updatedAt: "2024-03-21T11:00:00Z"
+  },
+  {
+    id: "65",
+    exerciseId: "",
+    type: MediaType.IMAGE,
+    url: "/images/self-story.jpg",
+    name: "Self-Story Exercise",
+    createdAt: "2024-03-21T11:00:00Z",
+    updatedAt: "2024-03-21T11:00:00Z"
+  },
+  {
+    id: "66",
+    exerciseId: "",
+    type: MediaType.IMAGE,
+    url: "/images/values-obstacles.jpg",
+    name: "Values Obstacles Exercise",
+    createdAt: "2024-03-21T11:00:00Z",
+    updatedAt: "2024-03-21T11:00:00Z"
+  },
+  {
+    id: "67",
+    exerciseId: "",
+    type: MediaType.IMAGE,
+    url: "/images/mindful-touch.jpg",
+    name: "Mindful Touch Exercise",
+    createdAt: "2024-03-21T11:00:00Z",
+    updatedAt: "2024-03-21T11:00:00Z"
+  },
+  {
+    id: "68",
+    exerciseId: "",
+    type: MediaType.IMAGE,
+    url: "/images/defusion-theater.jpg",
+    name: "Mind Theater Exercise",
+    createdAt: "2024-03-21T11:00:00Z",
+    updatedAt: "2024-03-21T11:00:00Z"
+  },
+  {
+    id: "69",
+    exerciseId: "",
+    type: MediaType.IMAGE,
+    url: "/images/values-legacy.jpg",
+    name: "Values Legacy Exercise",
+    createdAt: "2024-03-21T11:00:00Z",
+    updatedAt: "2024-03-21T11:00:00Z"
+  },
+  {
+    id: "70",
+    exerciseId: "",
+    type: MediaType.IMAGE,
+    url: "/images/acceptance-garden.jpg",
+    name: "Acceptance Garden",
+    createdAt: "2024-03-21T11:00:00Z",
+    updatedAt: "2024-03-21T11:00:00Z"
   }
-];
+].map(e => ({
+  ...e,
+  id: String(e.id),
+  createdAt: new Date(e.createdAt),
+  updatedAt: new Date(e.updatedAt)
+})) as Media[];
 
 // Mock Exercises
 export const exercises: Exercise[] = [
@@ -1951,6 +2163,613 @@ Remember: Thoughts are just thoughts, not facts or commands.`,
     updatedAt: "2024-03-20T14:04:00Z",
     mediaIds: ["53"],
     order: 50
+  },
+  {
+    id: "51",
+    title: "Three-Minute Breathing Space",
+    content: `
+# Three-Minute Breathing Space
+
+A brief mindfulness practice for busy moments.
+
+## Practice Steps
+
+1. First Minute - Awareness
+   - Notice thoughts, feelings, sensations
+   - Take a bird's eye view of experience
+   - Simply observe what's present
+
+2. Second Minute - Gathering
+   - Bring attention to the breath
+   - Feel the sensations of breathing
+   - Use breath as an anchor
+
+3. Third Minute - Expanding
+   - Expand awareness to whole body
+   - Include sounds and surroundings
+   - Hold everything in awareness
+
+## Key Points
+
+- Brief but powerful practice
+- Can be done anywhere
+- Perfect for transitions
+- Use multiple times daily
+
+Remember: This is your portable mindfulness practice.`,
+    category: ExerciseCategory.NARVARO,
+    userId: "admin",
+    createdAt: "2024-03-21T10:00:00Z",
+    updatedAt: "2024-03-21T10:00:00Z",
+    mediaIds: ["54", "55"],
+    order: 51
+  },
+  {
+    id: "52",
+    title: "Loving-Kindness Practice",
+    content: `
+# Loving-Kindness Meditation
+
+Develop compassion for yourself and others.
+
+## Practice Guide
+
+1. Setting Up
+   - Find a comfortable position
+   - Take a few calming breaths
+   - Set your intention
+
+2. Phrases
+   - "May I be happy"
+   - "May I be healthy"
+   - "May I be safe"
+   - "May I live with ease"
+
+3. Expanding Circle
+   - Start with yourself
+   - Include a loved one
+   - Add a neutral person
+   - Include a difficult person
+   - Extend to all beings
+
+## Integration Tips
+
+- Start with short sessions
+- Use gentle, sincere tone
+- Adapt phrases as needed
+- Notice any resistance
+
+Remember: Self-compassion strengthens resilience.`,
+    category: ExerciseCategory.NARVARO,
+    userId: "admin",
+    createdAt: "2024-03-21T10:01:00Z",
+    updatedAt: "2024-03-21T10:01:00Z",
+    mediaIds: ["56", "57"],
+    order: 52
+  },
+  {
+    id: "53",
+    title: "Life Areas Values",
+    content: `
+# Life Areas Values Exercise
+
+Explore your values across different life domains.
+
+## Areas to Explore
+
+1. Relationships
+   - Family connections
+   - Friendships
+   - Romantic relationships
+   - Community involvement
+
+2. Personal Growth
+   - Learning and education
+   - Spiritual development
+   - Creative expression
+   - Skills development
+
+3. Health & Wellbeing
+   - Physical health
+   - Mental wellbeing
+   - Self-care practices
+   - Lifestyle choices
+
+4. Work & Career
+   - Professional goals
+   - Work environment
+   - Career development
+   - Work-life balance
+
+## Integration Steps
+
+- Rate importance (1-10)
+- Assess current living
+- Plan specific actions
+- Review regularly
+
+Remember: Values guide meaningful life choices.`,
+    category: ExerciseCategory.ENGAGEMANG,
+    userId: "admin",
+    createdAt: "2024-03-21T10:02:00Z",
+    updatedAt: "2024-03-21T10:02:00Z",
+    mediaIds: ["58"],
+    order: 53
+  },
+  {
+    id: "54",
+    title: "Clouds in the Sky",
+    content: `
+# Clouds in the Sky Defusion Exercise
+
+Use this metaphor to create distance from thoughts.
+
+## Practice Steps
+
+1. Setup
+   - Find quiet space
+   - Comfortable position
+   - Eyes closed or soft gaze
+
+2. Visualization
+   - Imagine clear blue sky
+   - Thoughts as clouds passing
+   - No need to push or pull
+   - Watch them drift by
+
+3. Common Experiences
+   - Some clouds dark/stormy
+   - Some light and fluffy
+   - Different speeds
+   - Changing shapes
+
+## Key Points
+
+- Sky always present
+- Clouds temporary
+- No cloud changes sky
+- You are the sky
+
+Remember: Thoughts come and go like clouds.`,
+    category: ExerciseCategory.OPPENHET,
+    userId: "admin",
+    createdAt: "2024-03-21T10:03:00Z",
+    updatedAt: "2024-03-21T10:03:00Z",
+    mediaIds: ["59"],
+    order: 54
+  },
+  {
+    id: "55",
+    title: "Mindful Stretching",
+    content: `
+# Mindful Stretching Practice
+
+Combine gentle movement with mindfulness.
+
+## Exercise Flow
+
+1. Standing Mountain
+   - Feet hip-width apart
+   - Feel ground contact
+   - Lengthen spine
+   - Relax shoulders
+
+2. Gentle Movements
+   - Side stretches
+   - Forward folds
+   - Shoulder rolls
+   - Neck rotations
+
+3. Mindful Attention
+   - Notice sensations
+   - Follow movement
+   - Feel the stretch
+   - Honor limits
+
+## Practice Tips
+
+- Move slowly
+- Breathe naturally
+- Stay within comfort
+- Regular practice
+
+Remember: Movement can be meditation.`,
+    category: ExerciseCategory.NARVARO,
+    userId: "admin",
+    createdAt: "2024-03-21T10:04:00Z",
+    updatedAt: "2024-03-21T10:04:00Z",
+    mediaIds: ["60", "61"],
+    order: 55
+  },
+  {
+    id: "56",
+    title: "Values Vision Board",
+    content: `
+# Values Vision Board Exercise
+
+Create a visual representation of your values.
+
+## Creation Steps
+
+1. Preparation
+   - Gather materials
+   - Find quiet space
+   - Set aside time
+   - Clear workspace
+
+2. Vision Areas
+   - Personal growth
+   - Relationships
+   - Career/Work
+   - Health/Wellbeing
+   - Community
+   - Leisure
+
+3. Implementation
+   - Select images
+   - Add key words
+   - Include quotes
+   - Create layout
+
+## Usage Guide
+
+- Display prominently
+- Review daily
+- Update quarterly
+- Share with others
+
+Remember: Visual reminders strengthen values connection.`,
+    category: ExerciseCategory.ENGAGEMANG,
+    userId: "admin",
+    createdAt: "2024-03-21T10:05:00Z",
+    updatedAt: "2024-03-21T10:05:00Z",
+    mediaIds: ["62"],
+    order: 56
+  },
+  {
+    id: "57",
+    title: "Acceptance Waves",
+    content: `
+# Acceptance Waves Exercise
+
+Use the metaphor of waves to work with difficult experiences.
+
+## Practice Guide
+
+1. Initial Setup
+   - Comfortable position
+   - Eyes closed/soft gaze
+   - Connect with breath
+   - Notice present moment
+
+2. Wave Awareness
+   - Notice challenging experience
+   - Feel it like a wave
+   - Watch it rise and fall
+   - Stay with the process
+
+3. Common Waves
+   - Emotional waves
+   - Physical sensations
+   - Thought patterns
+   - Urges/Impulses
+
+## Key Points
+
+- Waves naturally come and go
+- No wave lasts forever
+- Resistance creates struggle
+- Acceptance surfs the wave
+
+Remember: Like waves, experiences naturally flow.`,
+    category: ExerciseCategory.OPPENHET,
+    userId: "admin",
+    createdAt: "2024-03-21T10:06:00Z",
+    updatedAt: "2024-03-21T10:06:00Z",
+    mediaIds: ["63"],
+    order: 57
+  },
+  {
+    id: "58",
+    title: "Daily Gratitude",
+    content: `
+# Daily Gratitude Practice
+
+Cultivate appreciation and presence through gratitude.
+
+## Practice Guide
+
+1. Morning Practice
+   - Notice three simple gifts
+   - Feel the appreciation
+   - Express thanks silently
+   - Set grateful intention
+
+2. Throughout Day
+   - Notice small pleasures
+   - Acknowledge helpers
+   - Appreciate body/health
+   - Find beauty in ordinary
+
+3. Evening Reflection
+   - Review day's gifts
+   - Write three gratitudes
+   - Feel the contentment
+   - Rest in appreciation
+
+## Benefits
+
+- Increases happiness
+- Builds resilience
+- Enhances relationships
+- Deepens presence
+
+Remember: Gratitude turns what we have into enough.`,
+    category: ExerciseCategory.NARVARO,
+    userId: "admin",
+    createdAt: "2024-03-21T11:00:00Z",
+    updatedAt: "2024-03-21T11:00:00Z",
+    mediaIds: ["64"],
+    order: 58
+  },
+  {
+    id: "59",
+    title: "Self-Story Exploration",
+    content: `
+# Self-Story Exploration Exercise
+
+Examine and gain perspective on personal narratives.
+
+## Practice Steps
+
+1. Story Awareness
+   - Notice self-stories
+   - Write them down
+   - Observe their impact
+   - Notice their origin
+
+2. Story Investigation
+   - Is it always true?
+   - Who taught this story?
+   - Does it serve now?
+   - What's another view?
+
+3. Story Flexibility
+   - Try new perspectives
+   - Write alternate stories
+   - Hold them lightly
+   - Notice freedom
+
+## Key Points
+
+- Stories are not facts
+- We can hold them lightly
+- New stories possible
+- Freedom in flexibility
+
+Remember: You are the author, not the story.`,
+    category: ExerciseCategory.OPPENHET,
+    userId: "admin",
+    createdAt: "2024-03-21T11:01:00Z",
+    updatedAt: "2024-03-21T11:01:00Z",
+    mediaIds: ["65"],
+    order: 59
+  },
+  {
+    id: "60",
+    title: "Values Obstacles",
+    content: `
+# Values Obstacles Exercise
+
+Work skillfully with barriers to valued living.
+
+## Practice Guide
+
+1. Identify Obstacles
+   - Internal barriers
+   - External challenges
+   - Limiting beliefs
+   - Resource constraints
+
+2. Explore Impact
+   - How they block values
+   - Emotional effects
+   - Behavioral impact
+   - Cost assessment
+
+3. Workable Responses
+   - Accept what's present
+   - Focus on influence
+   - Take small steps
+   - Build resources
+
+## Implementation
+
+- Start with one area
+- Be specific
+- Track progress
+- Celebrate steps
+
+Remember: Obstacles are part of the journey, not roadblocks.`,
+    category: ExerciseCategory.ENGAGEMANG,
+    userId: "admin",
+    createdAt: "2024-03-21T11:02:00Z",
+    updatedAt: "2024-03-21T11:02:00Z",
+    mediaIds: ["66"],
+    order: 60
+  },
+  {
+    id: "61",
+    title: "Mindful Touch",
+    content: `
+# Mindful Touch Exercise
+
+Develop presence through tactile awareness.
+
+## Practice Steps
+
+1. Object Exploration
+   - Choose small object
+   - Feel texture/temperature
+   - Notice details
+   - Explore with curiosity
+
+2. Environmental Touch
+   - Notice contact points
+   - Feel air on skin
+   - Experience textures
+   - Sense temperature
+
+3. Movement Touch
+   - Walking sensation
+   - Hand movements
+   - Face touching
+   - Body awareness
+
+## Integration
+
+- Daily activities
+- Different textures
+- Various temperatures
+- Multiple surfaces
+
+Remember: Touch connects us directly to present experience.`,
+    category: ExerciseCategory.NARVARO,
+    userId: "admin",
+    createdAt: "2024-03-21T11:03:00Z",
+    updatedAt: "2024-03-21T11:03:00Z",
+    mediaIds: ["67"],
+    order: 61
+  },
+  {
+    id: "62",
+    title: "Mind Theater",
+    content: `
+# Mind Theater Defusion Exercise
+
+View thoughts as a theatrical performance.
+
+## Practice Guide
+
+1. Setting the Stage
+   - Imagine theater stage
+   - You're in audience
+   - Thoughts are actors
+   - Mind is director
+
+2. The Performance
+   - Watch thoughts perform
+   - Notice the drama
+   - See costumes/props
+   - Hear the dialogue
+
+3. Audience Perspective
+   - Stay in your seat
+   - No need to join in
+   - Just watch the show
+   - Notice your response
+
+## Key Points
+
+- You are the audience
+- Thoughts are performers
+- No need to believe
+- Enjoy the show
+
+Remember: Life is the theater, thoughts are the play.`,
+    category: ExerciseCategory.OPPENHET,
+    userId: "admin",
+    createdAt: "2024-03-21T11:04:00Z",
+    updatedAt: "2024-03-21T11:04:00Z",
+    mediaIds: ["68"],
+    order: 62
+  },
+  {
+    id: "63",
+    title: "Values Legacy",
+    content: `
+# Values Legacy Exercise
+
+Explore the lasting impact of living your values.
+
+## Practice Steps
+
+1. Future Vision
+   - Imagine future impact
+   - Consider influence
+   - See ripple effects
+   - Feel connection
+
+2. Areas of Impact
+   - Family/Friends
+   - Community
+   - Work/Career
+   - Environment
+   - Future generations
+
+3. Action Planning
+   - Daily choices
+   - Key moments
+   - Important decisions
+   - Relationship building
+
+## Integration
+
+- Regular review
+- Adjust actions
+- Share with others
+- Document journey
+
+Remember: Today's values shape tomorrow's legacy.`,
+    category: ExerciseCategory.ENGAGEMANG,
+    userId: "admin",
+    createdAt: "2024-03-21T11:05:00Z",
+    updatedAt: "2024-03-21T11:05:00Z",
+    mediaIds: ["69"],
+    order: 63
+  },
+  {
+    id: "64",
+    title: "Acceptance Garden",
+    content: `
+# Acceptance Garden Exercise
+
+Use gardening metaphor for cultivating acceptance.
+
+## Practice Guide
+
+1. The Garden
+   - Life experiences as plants
+   - Emotions as weather
+   - Thoughts as seasons
+   - You as the gardener
+
+2. Cultivation
+   - Notice what grows
+   - Accept all weather
+   - Work with seasons
+   - Tend with care
+
+3. Garden Wisdom
+   - Everything cycles
+   - Growth takes time
+   - Weeds are normal
+   - Beauty in diversity
+
+## Key Points
+
+- Accept all growth
+- Patient attention
+- Gentle tending
+- Natural cycles
+
+Remember: Like a garden, life flourishes with acceptance.`,
+    category: ExerciseCategory.OPPENHET,
+    userId: "admin",
+    createdAt: "2024-03-21T11:06:00Z",
+    updatedAt: "2024-03-21T11:06:00Z",
+    mediaIds: ["70"],
+    order: 64
   }
 ].map(e => ({
   ...e,

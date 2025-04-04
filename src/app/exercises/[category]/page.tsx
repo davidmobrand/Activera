@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { mockDb, ExerciseCategory } from '@/lib/mockData'
-import { ExerciseView } from '@/components/exercises/ExerciseView'
+import { ExerciseList } from '@/components/exercises/ExerciseList'
+import NotLoggedIn from '@/components/NotLoggedIn'
 
 const validCategories = Object.values(ExerciseCategory)
 type Category = typeof validCategories[number]
@@ -15,7 +16,9 @@ interface Props {
 
 export default async function CategoryPage({ params }: Props) {
   const session = await getServerSession(authOptions)
-  if (!session?.user?.id) return notFound()
+  if (!session?.user?.id) {
+    return <NotLoggedIn />
+  }
 
   const category = params.category.toUpperCase() as ExerciseCategory
   if (!validCategories.includes(category)) {
@@ -23,8 +26,6 @@ export default async function CategoryPage({ params }: Props) {
   }
 
   const exercises = mockDb.findExercisesByCategory(category)
-  const progress = mockDb.findExerciseProgress(session.user.id)
-  const progressMap = new Map(progress.map(p => [p.exerciseId, p.completed]))
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -32,21 +33,7 @@ export default async function CategoryPage({ params }: Props) {
         {category.charAt(0) + category.slice(1).toLowerCase()} Exercises
       </h1>
 
-      <div className="space-y-8">
-        {exercises.map(exercise => (
-          <ExerciseView
-            key={exercise.id}
-            exercise={exercise}
-            initialProgress={progressMap.get(exercise.id) || false}
-          />
-        ))}
-
-        {exercises.length === 0 && (
-          <p className="text-gray-600 text-center py-8">
-            No exercises found in this category.
-          </p>
-        )}
-      </div>
+      <ExerciseList exercises={exercises} category={category} />
     </div>
   )
 } 

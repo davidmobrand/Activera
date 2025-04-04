@@ -42,6 +42,7 @@ export async function updateProgress(exerciseId: string, completed: boolean): Pr
         exerciseId,
         completed,
         notes: '',
+        startedAt: new Date(),
         completedAt: completed ? new Date() : undefined
       })
     }

@@ -37,6 +37,7 @@ export async function POST(request: NextRequest) {
       exerciseId,
       completed,
       notes,
+      startedAt: new Date(),
       completedAt: completed ? new Date() : undefined
     })
 

@@ -46,9 +46,7 @@ interface MockDb {
 
   // Media functions
   findMediaByExerciseId: typeof findMediaByExerciseId;
-  createMedia: {
-    (data: { exerciseId: string; type: MediaType; url: string; name: string; }): Media;
-  };
+  createMedia: (data: CreateMedia) => Media;
   deleteMedia: typeof deleteMedia;
   getExerciseMedia: typeof getExerciseMedia;
 

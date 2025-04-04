@@ -50,11 +50,11 @@ export const ExerciseProgressSchema = z.object({
 // Input Validation Schemas
 export const CreateUserSchema = UserSchema.omit({ id: true, createdAt: true, updatedAt: true });
 export const CreateExerciseSchema = ExerciseSchema.omit({ id: true, createdAt: true, updatedAt: true });
-export const CreateMediaSchema = MediaSchema.pick({ 
-  exerciseId: true,
-  type: true,
-  url: true,
-  name: true
+export const CreateMediaSchema = z.object({
+  exerciseId: z.string(),
+  type: z.enum([MediaType.IMAGE, MediaType.AUDIO]),
+  url: z.string().url(),
+  name: z.string().min(1)
 });
 export const CreateExerciseProgressSchema = ExerciseProgressSchema.omit({ id: true });
 

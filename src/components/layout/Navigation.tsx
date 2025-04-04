@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
-import { ExerciseCategory } from '@/lib/types'
+import { ExerciseCategoryEnum } from '@/lib/types'
 import { LanguageSelector } from '@/components/LanguageSelector'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 
@@ -21,11 +21,11 @@ export function Navigation() {
 
   // Only show admin links if user is admin
   const menuItems = [
-    { href: '/dashboard', label: 'Dashboard' },
+    { href: '/dashboard', label: t.common('dashboard') },
     ...(isAdmin
       ? [
-          { href: '/admin/exercises', label: 'Manage Exercises' },
-          { href: '/admin/users', label: 'Manage Users' },
+          { href: '/admin/exercises', label: t.common('manageExercises') },
+          { href: '/admin/users', label: t.common('manageUsers') },
         ]
       : [
           { href: '/exercises/oppenhet', label: t.category('OPPENHET').name },
@@ -63,7 +63,7 @@ export function Navigation() {
           <div className="flex items-center">
             <span className="text-sm text-gray-500 mr-4">
               {session.user?.name || session.user?.email}
-              {isAdmin && ' (Admin)'}
+              {isAdmin && ` (${t.common('admin')})`}
             </span>
             <LanguageSelector />
             <div className="ml-4">
@@ -72,7 +72,7 @@ export function Navigation() {
                 size="sm"
                 onClick={() => signOut({ callbackUrl: '/login' })}
               >
-                Sign out
+                {t.common('signOut')}
               </Button>
             </div>
           </div>

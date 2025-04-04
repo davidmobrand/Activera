@@ -1,9 +1,11 @@
 import { useLanguage } from './LanguageContext';
 import { categories } from './categories';
 import { exercises } from './exercises';
+import { common } from './common';
 
 type CategoryKey = keyof typeof categories;
 type ExerciseKey = keyof typeof exercises;
+type CommonKey = keyof typeof common.en;
 
 export function useTranslation() {
   const { language } = useLanguage();
@@ -38,6 +40,14 @@ export function useTranslation() {
         title: exercise[language].title,
         content: exercise[language].content,
       };
+    },
+    common: (key: CommonKey) => {
+      const translation = common[language][key];
+      if (!translation) {
+        console.warn(`Common translation key not found: ${String(key)}`);
+        return String(key);
+      }
+      return translation;
     },
   };
 

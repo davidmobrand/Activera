@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth'
 import { mockDb } from '@/lib/mockData'
 import { ExerciseList } from '@/components/exercises/ExerciseList'
 import NotLoggedIn from '@/components/NotLoggedIn'
-import { ExerciseCategory, ExerciseCategoryDisplay } from '@/lib/types'
+import { ExerciseCategory, ExerciseCategoryDisplay, ExerciseCategoryDescription } from '@/lib/types'
 
 const validCategories = Object.values(ExerciseCategory)
 type Category = typeof validCategories[number]
@@ -36,7 +36,12 @@ export default async function ExercisesPage({ params }: Props) {
   const exercises = await mockDb.findExercisesByCategory(category)
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">{ExerciseCategoryDisplay[category]}</h1>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-4">{ExerciseCategoryDisplay[category]}</h1>
+        <p className="text-gray-600 text-lg leading-relaxed">
+          {ExerciseCategoryDescription[category]}
+        </p>
+      </div>
       <ExerciseList exercises={exercises} category={category} />
     </div>
   )

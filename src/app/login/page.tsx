@@ -12,25 +12,28 @@ export default function LoginPage() {
   const { data: session, status } = useSession()
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isRedirecting, setIsRedirecting] = useState(false)
 
+  // Debug session state
   useEffect(() => {
-    console.log('[Login] Initial render - Status:', status)
-    console.log('[Login] Initial render - Session:', session)
-  }, [])
-
-  useEffect(() => {
-    console.log('[Login] Status changed:', status)
+    console.log('[Login] Status:', status)
     console.log('[Login] Session:', session)
+  }, [status, session])
 
-    if (status === 'authenticated') {
+  // Handle authenticated state
+  useEffect(() => {
+    if (status === 'authenticated' && !isRedirecting) {
+      setIsRedirecting(true)
       const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
       console.log('[Login] Authenticated, redirecting to:', callbackUrl)
-      router.push(callbackUrl)
+      router.replace(callbackUrl)
     }
-  }, [status, session, router, searchParams])
+  }, [status, session, router, searchParams, isRedirecting])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    if (isLoading || isRedirecting) return
+
     setIsLoading(true)
     setError('')
 
@@ -48,32 +51,41 @@ export default function LoginPage() {
 
       console.log('[Login] Sign in result:', result)
 
-      if (result?.error) {
+      if (!result) {
+        throw new Error('Sign in failed - no result returned')
+      }
+
+      if (result.error) {
         console.log('[Login] Sign in error:', result.error)
         setError('Invalid email or password')
         setIsLoading(false)
+        return
       }
+
+      // Success - let the useEffect handle redirection
+      console.log('[Login] Sign in successful')
     } catch (error) {
       console.error('[Login] Sign in error:', error)
       setError('An error occurred. Please try again.')
       setIsLoading(false)
+      setIsRedirecting(false)
     }
   }
 
+  // Show loading state while checking session
   if (status === 'loading') {
-    console.log('[Login] Rendering loading state')
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
+          <p className="text-gray-600">Checking session...</p>
         </div>
       </div>
     )
   }
 
-  if (status === 'authenticated') {
-    console.log('[Login] Rendering authenticated state')
+  // Show redirecting state after successful login
+  if (isRedirecting || status === 'authenticated') {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -84,7 +96,7 @@ export default function LoginPage() {
     )
   }
 
-  console.log('[Login] Rendering login form')
+  // Show login form
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -103,6 +115,7 @@ export default function LoginPage() {
               autoComplete="email"
               required
               error={error}
+              disabled={isLoading || isRedirecting}
             />
             <Input
               label="Password"
@@ -111,15 +124,16 @@ export default function LoginPage() {
               type="password"
               autoComplete="current-password"
               required
+              disabled={isLoading || isRedirecting}
             />
           </div>
 
           <Button
             type="submit"
             className="w-full"
-            disabled={isLoading}
+            disabled={isLoading || isRedirecting}
           >
-            {isLoading ? 'Signing in...' : 'Sign in'}
+            {isLoading ? 'Signing in...' : isRedirecting ? 'Redirecting...' : 'Sign in'}
           </Button>
           {error && (
             <p className="mt-2 text-sm text-red-600">{error}</p>

@@ -28,6 +28,8 @@ import {
   updateExerciseProgress
 } from './exerciseProgress';
 
+import type { CreateMedia } from '../validation';
+
 export * from './users';
 export * from './media';
 export * from './exercises';
@@ -44,7 +46,7 @@ export const mockDb = {
 
   // Media functions
   findMediaByExerciseId,
-  createMedia,
+  createMedia: createMedia as (data: CreateMedia) => ReturnType<typeof createMedia>,
   deleteMedia,
   getExerciseMedia,
 

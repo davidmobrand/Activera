@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { mockDb, MediaType } from '@/lib/mockData'
+import { mockDb } from '@/lib/mockData'
+import { MediaType } from '@/lib/types'
+import type { CreateMedia } from '@/lib/validation'
 
 interface Props {
   params: {

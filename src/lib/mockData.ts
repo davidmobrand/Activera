@@ -226,6 +226,118 @@ export const mediaFiles: Media[] = [
     url: '/assets/exercises/images/values-in-action.jpg',
     name: 'Values in Action',
     createdAt: new Date('2024-01-25').toISOString()
+  },
+  {
+    id: '15',
+    exerciseId: '12',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/self-compassion.jpg',
+    name: 'Self-Compassion Practice',
+    createdAt: new Date('2024-01-26').toISOString()
+  },
+  {
+    id: '16',
+    exerciseId: '13',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/gratitude-journal.jpg',
+    name: 'Gratitude Journaling',
+    createdAt: new Date('2024-01-27').toISOString()
+  },
+  {
+    id: '17',
+    exerciseId: '14',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/mindful-eating.jpg',
+    name: 'Mindful Eating Practice',
+    createdAt: new Date('2024-01-28').toISOString()
+  },
+  {
+    id: '18',
+    exerciseId: '15',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/values-tree.jpg',
+    name: 'Values Tree Visualization',
+    createdAt: new Date('2024-01-29').toISOString()
+  },
+  {
+    id: '19',
+    exerciseId: '16',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/observer-self.jpg',
+    name: 'Observer Self Exercise',
+    createdAt: new Date('2024-01-30').toISOString()
+  },
+  {
+    id: '20',
+    exerciseId: '17',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/willingness.jpg',
+    name: 'Willingness Practice',
+    createdAt: new Date('2024-01-31').toISOString()
+  },
+  {
+    id: '21',
+    exerciseId: '18',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/values-bullseye.jpg',
+    name: 'Values Bullseye',
+    createdAt: new Date('2024-02-01').toISOString()
+  },
+  {
+    id: '22',
+    exerciseId: '19',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/mindful-movement.jpg',
+    name: 'Mindful Movement',
+    createdAt: new Date('2024-02-02').toISOString()
+  },
+  {
+    id: '23',
+    exerciseId: '20',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/acceptance-diary.jpg',
+    name: 'Acceptance Diary',
+    createdAt: new Date('2024-02-03').toISOString()
+  },
+  {
+    id: '24',
+    exerciseId: '21',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/body-awareness.jpg',
+    name: 'Body Awareness Exercise',
+    createdAt: new Date('2024-02-04').toISOString()
+  },
+  {
+    id: '25',
+    exerciseId: '22',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/values-letter.jpg',
+    name: 'Values Letter Writing',
+    createdAt: new Date('2024-02-05').toISOString()
+  },
+  {
+    id: '26',
+    exerciseId: '23',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/mindful-listening.jpg',
+    name: 'Mindful Listening Practice',
+    createdAt: new Date('2024-02-06').toISOString()
+  },
+  {
+    id: '27',
+    exerciseId: '24',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/self-story.jpg',
+    name: 'Self-as-Story Exercise',
+    createdAt: new Date('2024-02-07').toISOString()
+  },
+  {
+    id: '28',
+    exerciseId: '25',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/values-mirror.jpg',
+    name: 'Values Mirror Exercise',
+    createdAt: new Date('2024-02-08').toISOString()
   }
 ];
 
@@ -523,6 +635,483 @@ export const exercises: Exercise[] = [
     updatedAt: new Date('2024-01-25'),
     mediaIds: ['14'],
     order: 3
+  },
+  {
+    id: '12',
+    title: 'Self-Compassion Break',
+    content: `
+      <h2>Self-Compassion Break</h2>
+      <p>A brief practice to cultivate self-compassion in difficult moments.</p>
+      <img src="/assets/exercises/images/self-compassion.jpg" alt="Self-Compassion Practice" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Acknowledge your difficult moment: "This is a moment of suffering"</li>
+        <li>Recognize our shared human experience: "Suffering is a part of life"</li>
+        <li>Offer yourself kindness: Place a hand on your heart and say:
+          <ul>
+            <li>"May I be kind to myself"</li>
+            <li>"May I accept this moment as it is"</li>
+            <li>"May I give myself the compassion I need"</li>
+          </ul>
+        </li>
+        <li>Take a few deep breaths and feel the warmth of your hand</li>
+      </ol>
+      <p class="bg-gray-50 p-4 rounded-lg">Remember: Self-compassion is not self-indulgence; it's a skill that can be developed with practice.</p>
+    `,
+    category: ExerciseCategory.OPPENHET,
+    userId: '1',
+    createdAt: new Date('2024-01-26'),
+    updatedAt: new Date('2024-01-26'),
+    mediaIds: ['15'],
+    order: 5
+  },
+  {
+    id: '13',
+    title: 'Gratitude Journal',
+    content: `
+      <h2>Gratitude Journaling Practice</h2>
+      <p>Develop appreciation and presence through daily gratitude practice.</p>
+      <img src="/assets/exercises/images/gratitude-journal.jpg" alt="Gratitude Journaling" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Find a quiet moment at the start or end of your day</li>
+        <li>Write down three things you're grateful for:
+          <ul>
+            <li>One thing about yourself</li>
+            <li>One thing about someone else</li>
+            <li>One thing about your environment</li>
+          </ul>
+        </li>
+        <li>For each item, write why it matters to you</li>
+        <li>Notice any feelings that arise as you write</li>
+      </ol>
+      <p class="text-gray-600 italic">Tip: Focus on specific experiences rather than general statements.</p>
+    `,
+    category: ExerciseCategory.NARVARO,
+    userId: '1',
+    createdAt: new Date('2024-01-27'),
+    updatedAt: new Date('2024-01-27'),
+    mediaIds: ['16'],
+    order: 5
+  },
+  {
+    id: '14',
+    title: 'Mindful Eating',
+    content: `
+      <h2>Mindful Eating Exercise</h2>
+      <p>Transform a daily activity into a mindfulness practice.</p>
+      <img src="/assets/exercises/images/mindful-eating.jpg" alt="Mindful Eating Practice" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Choose a small piece of food (e.g., a raisin or nut)</li>
+        <li>Examine it as if you've never seen it before:
+          <ul>
+            <li>Notice its color, texture, and shape</li>
+            <li>Feel its weight in your hand</li>
+            <li>Observe any scents or aromas</li>
+          </ul>
+        </li>
+        <li>Place it in your mouth without chewing:
+          <ul>
+            <li>Notice the sensation on your tongue</li>
+            <li>Observe any taste or texture changes</li>
+          </ul>
+        </li>
+        <li>Chew slowly and mindfully</li>
+        <li>Notice the entire experience of eating and swallowing</li>
+      </ol>
+      <p class="bg-gray-50 p-4 rounded-lg">Practice this with one bite at the start of each meal to develop mindful eating habits.</p>
+    `,
+    category: ExerciseCategory.NARVARO,
+    userId: '1',
+    createdAt: new Date('2024-01-28'),
+    updatedAt: new Date('2024-01-28'),
+    mediaIds: ['17'],
+    order: 6
+  },
+  {
+    id: '15',
+    title: 'Values Tree',
+    content: `
+      <h2>Values Tree Visualization</h2>
+      <p>Visualize your values as a growing, living system.</p>
+      <img src="/assets/exercises/images/values-tree.jpg" alt="Values Tree Visualization" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Draw or imagine a large tree:
+          <ul>
+            <li>Roots represent your core values</li>
+            <li>Trunk represents your strengths</li>
+            <li>Branches represent life areas</li>
+            <li>Leaves represent specific actions</li>
+          </ul>
+        </li>
+        <li>For each root (value), write why it matters</li>
+        <li>Connect branches to relevant values</li>
+        <li>Add new leaves (actions) regularly</li>
+      </ol>
+      <p class="text-gray-600 italic">Your values tree is always growing and changing, just like you.</p>
+    `,
+    category: ExerciseCategory.ENGAGEMANG,
+    userId: '1',
+    createdAt: new Date('2024-01-29'),
+    updatedAt: new Date('2024-01-29'),
+    mediaIds: ['18'],
+    order: 4
+  },
+  {
+    id: '16',
+    title: 'Observer Self',
+    content: `
+      <h2>Observer Self Exercise</h2>
+      <p>Connect with your observing self - the part that notices all experience.</p>
+      <img src="/assets/exercises/images/observer-self.jpg" alt="Observer Self Exercise" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Find a comfortable position and close your eyes</li>
+        <li>Notice your thoughts passing by</li>
+        <li>Ask yourself:
+          <ul>
+            <li>Who is doing the noticing?</li>
+            <li>Can you observe the observer?</li>
+            <li>Notice that you are not your thoughts</li>
+          </ul>
+        </li>
+        <li>Expand awareness to include:
+          <ul>
+            <li>Physical sensations</li>
+            <li>Emotions</li>
+            <li>Sounds in the environment</li>
+          </ul>
+        </li>
+      </ol>
+      <p class="bg-gray-50 p-4 rounded-lg">You are not your thoughts, emotions, or sensations - you are the one who observes them.</p>
+    `,
+    category: ExerciseCategory.OPPENHET,
+    userId: '1',
+    createdAt: new Date('2024-01-30'),
+    updatedAt: new Date('2024-01-30'),
+    mediaIds: ['19'],
+    order: 6
+  },
+  {
+    id: '17',
+    title: 'Willingness Gauge',
+    content: `
+      <h2>Willingness Gauge Exercise</h2>
+      <p>Develop psychological flexibility through willingness practice.</p>
+      <img src="/assets/exercises/images/willingness.jpg" alt="Willingness Practice" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Identify a challenging situation</li>
+        <li>Rate your willingness (0-10) to:
+          <ul>
+            <li>Experience difficult emotions</li>
+            <li>Have uncomfortable thoughts</li>
+            <li>Feel physical sensations</li>
+          </ul>
+        </li>
+        <li>Notice what affects your willingness</li>
+        <li>Practice increasing willingness by:
+          <ul>
+            <li>Taking small steps</li>
+            <li>Acknowledging resistance</li>
+            <li>Connecting with values</li>
+          </ul>
+        </li>
+      </ol>
+      <p class="text-gray-600 italic">Willingness is not about wanting - it's about being open to experience.</p>
+    `,
+    category: ExerciseCategory.OPPENHET,
+    userId: '1',
+    createdAt: new Date('2024-01-31'),
+    updatedAt: new Date('2024-01-31'),
+    mediaIds: ['20'],
+    order: 7
+  },
+  {
+    id: '18',
+    title: 'Values Bullseye',
+    content: `
+      <h2>Values Bullseye Exercise</h2>
+      <p>Assess and improve alignment between your actions and values.</p>
+      <img src="/assets/exercises/images/values-bullseye.jpg" alt="Values Bullseye" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Draw a bullseye with four rings</li>
+        <li>Choose four life domains:
+          <ul>
+            <li>Work/Education</li>
+            <li>Relationships</li>
+            <li>Personal Growth</li>
+            <li>Health/Self-Care</li>
+          </ul>
+        </li>
+        <li>For each domain, mark where your actions fall:
+          <ul>
+            <li>Center: Perfect alignment with values</li>
+            <li>Outer rings: Less alignment</li>
+          </ul>
+        </li>
+        <li>Create action plans to move closer to center</li>
+      </ol>
+      <p class="bg-gray-50 p-4 rounded-lg">Regular practice helps track progress and maintain value-aligned living.</p>
+    `,
+    category: ExerciseCategory.ENGAGEMANG,
+    userId: '1',
+    createdAt: new Date('2024-02-01'),
+    updatedAt: new Date('2024-02-01'),
+    mediaIds: ['21'],
+    order: 5
+  },
+  {
+    id: '19',
+    title: 'Mindful Movement',
+    content: `
+      <h2>Mindful Movement Practice</h2>
+      <p>Bring awareness to everyday movements and physical sensations.</p>
+      <img src="/assets/exercises/images/mindful-movement.jpg" alt="Mindful Movement" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Choose a simple movement (e.g., arm raise)</li>
+        <li>Move extremely slowly, noticing:
+          <ul>
+            <li>Muscle tension and release</li>
+            <li>Balance shifts</li>
+            <li>Joint sensations</li>
+          </ul>
+        </li>
+        <li>Explore different movements:
+          <ul>
+            <li>Stretching</li>
+            <li>Walking</li>
+            <li>Hand gestures</li>
+          </ul>
+        </li>
+        <li>Notice the space between movements</li>
+      </ol>
+      <p class="text-gray-600 italic">Every movement is an opportunity for mindfulness practice.</p>
+    `,
+    category: ExerciseCategory.NARVARO,
+    userId: '1',
+    createdAt: new Date('2024-02-02'),
+    updatedAt: new Date('2024-02-02'),
+    mediaIds: ['22'],
+    order: 7
+  },
+  {
+    id: '20',
+    title: 'Acceptance Diary',
+    content: `
+      <h2>Acceptance Diary Practice</h2>
+      <p>Track and develop your acceptance skills over time.</p>
+      <img src="/assets/exercises/images/acceptance-diary.jpg" alt="Acceptance Diary" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Each day, record:
+          <ul>
+            <li>Challenging situations</li>
+            <li>Your initial reaction</li>
+            <li>Attempts to control/avoid</li>
+            <li>Moments of acceptance</li>
+          </ul>
+        </li>
+        <li>Notice patterns in:
+          <ul>
+            <li>What you tend to resist</li>
+            <li>What helps you accept</li>
+            <li>Effects of acceptance vs. control</li>
+          </ul>
+        </li>
+        <li>Practice expanding acceptance</li>
+      </ol>
+      <p class="bg-gray-50 p-4 rounded-lg">Acceptance doesn't mean liking or wanting - it means acknowledging what is.</p>
+    `,
+    category: ExerciseCategory.OPPENHET,
+    userId: '1',
+    createdAt: new Date('2024-02-03'),
+    updatedAt: new Date('2024-02-03'),
+    mediaIds: ['23'],
+    order: 8
+  },
+  {
+    id: '21',
+    title: 'Body Awareness Scan',
+    content: `
+      <h2>Body Awareness Scan Exercise</h2>
+      <p>Develop deeper connection with physical sensations and body awareness.</p>
+      <img src="/assets/exercises/images/body-awareness.jpg" alt="Body Awareness Exercise" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Lie down or sit comfortably</li>
+        <li>Systematically scan your body:
+          <ul>
+            <li>Start with your toes</li>
+            <li>Move up through each body part</li>
+            <li>End at the top of your head</li>
+          </ul>
+        </li>
+        <li>For each area:
+          <ul>
+            <li>Notice any sensations present</li>
+            <li>Observe without trying to change anything</li>
+            <li>Include temperature, pressure, movement</li>
+          </ul>
+        </li>
+        <li>If you notice tension, simply acknowledge it</li>
+      </ol>
+      <p class="bg-gray-50 p-4 rounded-lg">This practice helps develop body awareness and presence in daily life.</p>
+    `,
+    category: ExerciseCategory.NARVARO,
+    userId: '1',
+    createdAt: new Date('2024-02-04'),
+    updatedAt: new Date('2024-02-04'),
+    mediaIds: ['24'],
+    order: 8
+  },
+  {
+    id: '22',
+    title: 'Values Letter',
+    content: `
+      <h2>Values Letter Writing Exercise</h2>
+      <p>Write a letter to yourself about your values and aspirations.</p>
+      <img src="/assets/exercises/images/values-letter.jpg" alt="Values Letter Writing" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Choose a future date (e.g., 1 year from now)</li>
+        <li>Write a letter to yourself describing:
+          <ul>
+            <li>The values you want to embody</li>
+            <li>How you've lived these values</li>
+            <li>Challenges you've overcome</li>
+          </ul>
+        </li>
+        <li>Include specific examples of:
+          <ul>
+            <li>Actions you've taken</li>
+            <li>Changes you've made</li>
+            <li>Growth you've experienced</li>
+          </ul>
+        </li>
+        <li>Seal and date the letter</li>
+      </ol>
+      <p class="text-gray-600 italic">This letter serves as both inspiration and accountability.</p>
+    `,
+    category: ExerciseCategory.ENGAGEMANG,
+    userId: '1',
+    createdAt: new Date('2024-02-05'),
+    updatedAt: new Date('2024-02-05'),
+    mediaIds: ['25'],
+    order: 6
+  },
+  {
+    id: '23',
+    title: 'Mindful Listening',
+    content: `
+      <h2>Mindful Listening Practice</h2>
+      <p>Transform ordinary sounds into opportunities for presence.</p>
+      <img src="/assets/exercises/images/mindful-listening.jpg" alt="Mindful Listening Practice" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Find a comfortable position</li>
+        <li>Close your eyes and listen:
+          <ul>
+            <li>Notice the closest sounds</li>
+            <li>Expand to middle-distance sounds</li>
+            <li>Include the farthest sounds you can hear</li>
+          </ul>
+        </li>
+        <li>For each sound:
+          <ul>
+            <li>Notice its quality (pitch, volume, duration)</li>
+            <li>Observe without labeling or judging</li>
+            <li>Notice the spaces between sounds</li>
+          </ul>
+        </li>
+        <li>Include all sounds in your awareness</li>
+      </ol>
+      <p class="bg-gray-50 p-4 rounded-lg">Every sound becomes an invitation to presence.</p>
+    `,
+    category: ExerciseCategory.NARVARO,
+    userId: '1',
+    createdAt: new Date('2024-02-06'),
+    updatedAt: new Date('2024-02-06'),
+    mediaIds: ['26'],
+    order: 9
+  },
+  {
+    id: '24',
+    title: 'Self-as-Story',
+    content: `
+      <h2>Self-as-Story Exercise</h2>
+      <p>Explore and gain perspective on the stories we tell about ourselves.</p>
+      <img src="/assets/exercises/images/self-story.jpg" alt="Self-as-Story Exercise" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Write down a challenging self-story:
+          <ul>
+            <li>"I am [limitation/belief]"</li>
+            <li>"I always/never [behavior]"</li>
+            <li>"I can't [action/goal]"</li>
+          </ul>
+        </li>
+        <li>Examine the story:
+          <ul>
+            <li>When did this story start?</li>
+            <li>Who taught you this story?</li>
+            <li>How has it served/limited you?</li>
+          </ul>
+        </li>
+        <li>Create distance by adding:
+          <ul>
+            <li>"I'm having the thought that..."</li>
+            <li>"My mind is telling me..."</li>
+            <li>"I notice I'm believing..."</li>
+          </ul>
+        </li>
+      </ol>
+      <p class="text-gray-600 italic">You are not your stories - you are the storyteller.</p>
+    `,
+    category: ExerciseCategory.OPPENHET,
+    userId: '1',
+    createdAt: new Date('2024-02-07'),
+    updatedAt: new Date('2024-02-07'),
+    mediaIds: ['27'],
+    order: 9
+  },
+  {
+    id: '25',
+    title: 'Values Mirror',
+    content: `
+      <h2>Values Mirror Exercise</h2>
+      <p>Reflect on how your daily actions mirror your core values.</p>
+      <img src="/assets/exercises/images/values-mirror.jpg" alt="Values Mirror Exercise" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Choose one core value</li>
+        <li>Throughout the day, notice:
+          <ul>
+            <li>Actions that reflect this value</li>
+            <li>Opportunities to express it</li>
+            <li>Moments you moved away from it</li>
+          </ul>
+        </li>
+        <li>Evening reflection:
+          <ul>
+            <li>How did you embody this value?</li>
+            <li>What made it easier/harder?</li>
+            <li>What will you do differently tomorrow?</li>
+          </ul>
+        </li>
+      </ol>
+      <p class="bg-gray-50 p-4 rounded-lg">Your values are like a mirror - they reflect who you want to be.</p>
+    `,
+    category: ExerciseCategory.ENGAGEMANG,
+    userId: '1',
+    createdAt: new Date('2024-02-08'),
+    updatedAt: new Date('2024-02-08'),
+    mediaIds: ['28'],
+    order: 7
   }
 ].map(e => ({
   ...e,

@@ -45,7 +45,7 @@ export async function POST(
       ? `https://example.com/images-${Date.now()}.jpg`
       : `https://example.com/audio-${Date.now()}.mp3`
 
-    const createMediaData: CreateMedia = {
+    const createMediaData = {
       exerciseId: params.id,
       type,
       url: mockUrl,

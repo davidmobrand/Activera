@@ -18,7 +18,12 @@ const categoryLabels = {
 }
 
 export default function Dashboard() {
-  const { data: session, status } = useSession()
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      window.location.href = '/login'
+    },
+  })
   const router = useRouter()
   const [progress, setProgress] = useState<CategoryProgress[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -27,14 +32,11 @@ export default function Dashboard() {
     console.log('Dashboard session status:', status)
     console.log('Dashboard session data:', session)
     
-    if (status === 'unauthenticated') {
-      console.log('Redirecting to login...')
-      router.replace('/login')
-    } else if (status === 'authenticated') {
+    if (status === 'authenticated') {
       console.log('Fetching progress...')
       fetchProgress()
     }
-  }, [status, router, session])
+  }, [status, session])
 
   async function fetchProgress() {
     try {
@@ -82,14 +84,10 @@ export default function Dashboard() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
+          <p className="text-gray-600">Loading dashboard...</p>
         </div>
       </div>
     )
-  }
-
-  if (status === 'unauthenticated') {
-    return null
   }
 
   return (

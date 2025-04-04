@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { signIn, useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 
 export default function LoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { data: session, status } = useSession()
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
@@ -17,9 +18,10 @@ export default function LoginPage() {
     console.log('Session data:', session)
     if (status === 'authenticated') {
       console.log('Redirecting to dashboard...')
-      router.replace('/dashboard')
+      const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
+      window.location.href = callbackUrl
     }
-  }, [status, router, session])
+  }, [status, router, session, searchParams])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -36,6 +38,7 @@ export default function LoginPage() {
         email,
         password,
         redirect: false,
+        callbackUrl: '/dashboard'
       })
 
       console.log('Sign in result:', result)
@@ -45,7 +48,7 @@ export default function LoginPage() {
         return
       }
 
-      // Don't redirect here, let the useEffect handle it
+      // Redirection will be handled by useEffect
     } catch (error) {
       console.error('Sign in error:', error)
       setError('An error occurred. Please try again.')
@@ -57,7 +60,10 @@ export default function LoginPage() {
   if (status === 'loading') {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
       </div>
     )
   }
@@ -65,7 +71,10 @@ export default function LoginPage() {
   if (status === 'authenticated') {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div>Redirecting to dashboard...</div>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
+          <p className="text-gray-600">Redirecting to dashboard...</p>
+        </div>
       </div>
     )
   }

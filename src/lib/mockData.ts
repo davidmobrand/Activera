@@ -351,7 +351,10 @@ export const findUsers = () => {
   return users;
 };
 
-export const getExerciseMedia = (exerciseId: string) => {
+export const getExerciseMedia = (exerciseId: string | string[]) => {
+  if (Array.isArray(exerciseId)) {
+    return mediaFiles.filter(media => exerciseId.includes(media.exerciseId));
+  }
   return mediaFiles.filter(media => media.exerciseId === exerciseId);
 };
 

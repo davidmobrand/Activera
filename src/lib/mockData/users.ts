@@ -8,7 +8,7 @@ export const users: User[] = [
     id: '1',
     name: 'Admin User',
     email: 'admin@activera.com',
-    password: '$2a$10$mockHashedPasswordForAdmin',
+    password: 'admin123',
     role: UserRole.ADMIN,
     createdAt: '2024-01-01T00:00:00Z',
     updatedAt: '2024-01-01T00:00:00Z'
@@ -17,7 +17,7 @@ export const users: User[] = [
     id: '2',
     name: 'Test Client',
     email: 'client@example.com',
-    password: '$2a$10$mockHashedPasswordForClient',
+    password: 'client123',
     role: UserRole.CLIENT,
     createdAt: '2024-01-01T00:00:00Z',
     updatedAt: '2024-01-01T00:00:00Z'

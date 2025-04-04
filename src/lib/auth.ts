@@ -13,35 +13,36 @@ export const authOptions: AuthOptions = {
       async authorize(credentials) {
         try {
           if (!credentials?.email || !credentials?.password) {
-            console.log('[Auth] Missing credentials')
-            return null
+            console.error('[Auth] Missing credentials:', { email: !!credentials?.email, password: !!credentials?.password })
+            throw new Error('Please provide both email and password')
           }
 
           console.log('[Auth] Attempting login with email:', credentials.email)
 
           const user = await mockDb.users.findByEmail(credentials.email)
-          console.log('[Auth] Found user:', user ? { ...user, password: undefined } : null)
           
           if (!user) {
-            console.log('[Auth] User not found')
-            return null
+            console.error('[Auth] User not found:', credentials.email)
+            throw new Error('Invalid email or password')
           }
 
           // In a real application, you would hash the password and compare hashes
           if (user.password !== credentials.password) {
-            console.log('[Auth] Invalid password')
-            return null
+            console.error('[Auth] Invalid password for user:', credentials.email)
+            throw new Error('Invalid email or password')
           }
 
-          console.log('[Auth] Login successful')
+          console.log('[Auth] Login successful for user:', { id: user.id, email: user.email, role: user.role })
+          
           return {
             id: user.id,
             email: user.email,
             role: user.role,
+            name: user.name
           }
         } catch (error) {
-          console.error('[Auth] Error during authentication:', error)
-          return null
+          console.error('[Auth] Authentication error:', error)
+          throw error
         }
       }
     })
@@ -50,6 +51,7 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role
+        token.name = user.name
       }
       return token
     },
@@ -57,15 +59,18 @@ export const authOptions: AuthOptions = {
       if (token && session.user) {
         session.user.id = token.sub as string
         session.user.role = token.role as string
+        session.user.name = token.name as string
       }
       return session
     }
   },
   pages: {
     signIn: '/login',
+    error: '/login'
   },
   session: {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
+  debug: process.env.NODE_ENV === 'development'
 } 

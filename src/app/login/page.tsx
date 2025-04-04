@@ -21,6 +21,12 @@ export default function LoginPage() {
       const email = formData.get('email') as string
       const password = formData.get('password') as string
 
+      if (!email || !password) {
+        setError('Please provide both email and password')
+        setIsLoading(false)
+        return
+      }
+
       console.log('[Login] Attempting sign in:', { email })
 
       const result = await signIn('credentials', {
@@ -31,7 +37,13 @@ export default function LoginPage() {
 
       console.log('[Login] Sign in result:', result)
 
-      if (result?.error) {
+      if (!result) {
+        setError('An unexpected error occurred')
+        setIsLoading(false)
+        return
+      }
+
+      if (result.error) {
         setError(result.error)
         setIsLoading(false)
         return

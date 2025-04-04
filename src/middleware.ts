@@ -54,4 +54,3 @@ export const config = {
     '/((?!api|_next|static|favicon.ico|sitemap.xml).*)',
   ],
 } 
-} 

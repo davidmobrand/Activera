@@ -146,6 +146,86 @@ export const mediaFiles: Media[] = [
     url: '/assets/exercises/audio/zen-meditation.mp3',
     name: 'Zen Meditation Sounds',
     createdAt: new Date('2024-01-16').toISOString()
+  },
+  {
+    id: '5',
+    exerciseId: '3',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/five-senses.jpg',
+    name: 'Five Senses Mindfulness Illustration',
+    createdAt: new Date('2024-01-17').toISOString()
+  },
+  {
+    id: '6',
+    exerciseId: '4',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/stream-leaves.jpg',
+    name: 'Peaceful Stream with Floating Leaves',
+    createdAt: new Date('2024-01-18').toISOString()
+  },
+  {
+    id: '7',
+    exerciseId: '5',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/compass-values.jpg',
+    name: 'Compass with Core Values',
+    createdAt: new Date('2024-01-19').toISOString()
+  },
+  {
+    id: '8',
+    exerciseId: '6',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/mindful-walking.jpg',
+    name: 'Person Walking Mindfully in Nature',
+    createdAt: new Date('2024-01-20').toISOString()
+  },
+  {
+    id: '9',
+    exerciseId: '7',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/emotional-awareness.jpg',
+    name: 'Emotional Awareness Illustration',
+    createdAt: new Date('2024-01-21').toISOString()
+  },
+  {
+    id: '10',
+    exerciseId: '8',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/action-plan.jpg',
+    name: 'Action Planning and Goal Setting',
+    createdAt: new Date('2024-01-22').toISOString()
+  },
+  {
+    id: '11',
+    exerciseId: '9',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/mountain-meditation.jpg',
+    name: 'Mountain Meditation Scene',
+    createdAt: new Date('2024-01-23').toISOString()
+  },
+  {
+    id: '12',
+    exerciseId: '9',
+    type: MediaType.AUDIO,
+    url: '/assets/exercises/audio/mountain-meditation.mp3',
+    name: 'Mountain Meditation Guidance',
+    createdAt: new Date('2024-01-23').toISOString()
+  },
+  {
+    id: '13',
+    exerciseId: '10',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/defusion.jpg',
+    name: 'Thought Defusion Exercise',
+    createdAt: new Date('2024-01-24').toISOString()
+  },
+  {
+    id: '14',
+    exerciseId: '11',
+    type: MediaType.IMAGE,
+    url: '/assets/exercises/images/values-in-action.jpg',
+    name: 'Values in Action',
+    createdAt: new Date('2024-01-25').toISOString()
   }
 ];
 
@@ -224,7 +304,7 @@ export const exercises: Exercise[] = [
     userId: '1',
     createdAt: new Date('2024-01-03'),
     updatedAt: new Date('2024-01-03'),
-    mediaIds: [],
+    mediaIds: ['5'],
     order: 2
   },
   {
@@ -247,7 +327,7 @@ export const exercises: Exercise[] = [
     userId: '1',
     createdAt: new Date('2024-01-04'),
     updatedAt: new Date('2024-01-04'),
-    mediaIds: [],
+    mediaIds: ['6'],
     order: 2
   },
   {
@@ -276,7 +356,7 @@ export const exercises: Exercise[] = [
     userId: '1',
     createdAt: new Date('2024-01-05'),
     updatedAt: new Date('2024-01-05'),
-    mediaIds: [],
+    mediaIds: ['7'],
     order: 1
   },
   {
@@ -300,7 +380,7 @@ export const exercises: Exercise[] = [
     userId: '1',
     createdAt: new Date('2024-01-06'),
     updatedAt: new Date('2024-01-06'),
-    mediaIds: [],
+    mediaIds: ['8'],
     order: 3
   },
   {
@@ -324,7 +404,7 @@ export const exercises: Exercise[] = [
     userId: '1',
     createdAt: new Date('2024-01-07'),
     updatedAt: new Date('2024-01-07'),
-    mediaIds: [],
+    mediaIds: ['9'],
     order: 3
   },
   {
@@ -354,8 +434,95 @@ export const exercises: Exercise[] = [
     userId: '1',
     createdAt: new Date('2024-01-08'),
     updatedAt: new Date('2024-01-08'),
-    mediaIds: [],
+    mediaIds: ['10'],
     order: 2
+  },
+  {
+    id: '9',
+    title: 'Mountain Meditation',
+    content: `
+      <h2>Mountain Meditation</h2>
+      <p>A powerful meditation practice using the metaphor of a mountain to cultivate stability and presence.</p>
+      <img src="/assets/exercises/images/mountain-meditation.jpg" alt="Mountain Meditation Scene" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Find a comfortable seated position</li>
+        <li>Visualize a majestic mountain, solid and unmoving</li>
+        <li>Feel your body becoming as stable as the mountain</li>
+        <li>Notice how the mountain remains still through all weather and seasons</li>
+        <li>Connect with the mountain's qualities of stability and strength</li>
+      </ol>
+      <p>Listen to the guided mountain meditation:</p>
+      <audio controls src="/assets/exercises/audio/mountain-meditation.mp3" class="w-full mb-4"></audio>
+      <p class="text-gray-600 italic">Just as the mountain remains stable through changing weather, you can remain centered through changing experiences.</p>
+    `,
+    category: ExerciseCategory.NARVARO,
+    userId: '1',
+    createdAt: new Date('2024-01-23'),
+    updatedAt: new Date('2024-01-23'),
+    mediaIds: ['11', '12'],
+    order: 4
+  },
+  {
+    id: '10',
+    title: 'Thought Defusion',
+    content: `
+      <h2>Thought Defusion Exercise</h2>
+      <p>Learn to create distance from unhelpful thoughts and see them for what they are - just thoughts.</p>
+      <img src="/assets/exercises/images/defusion.jpg" alt="Thought Defusion Exercise" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Notice a challenging thought</li>
+        <li>Add the phrase "I'm having the thought that..." before it</li>
+        <li>Now add "I notice I'm having the thought that..."</li>
+        <li>Observe how this creates space between you and the thought</li>
+        <li>Try other defusion techniques:
+          <ul>
+            <li>Sing the thought to a familiar tune</li>
+            <li>Say it in a cartoon character's voice</li>
+            <li>Watch thoughts like cars passing by</li>
+          </ul>
+        </li>
+      </ol>
+      <p class="text-gray-600 italic">Remember: The goal is not to get rid of thoughts, but to change your relationship with them.</p>
+    `,
+    category: ExerciseCategory.OPPENHET,
+    userId: '1',
+    createdAt: new Date('2024-01-24'),
+    updatedAt: new Date('2024-01-24'),
+    mediaIds: ['13'],
+    order: 4
+  },
+  {
+    id: '11',
+    title: 'Values in Action',
+    content: `
+      <h2>Values in Action Exercise</h2>
+      <p>Transform your values into concrete daily actions and build a meaningful life.</p>
+      <img src="/assets/exercises/images/values-in-action.jpg" alt="Values in Action" class="w-full rounded-lg shadow-lg mb-6" />
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Choose one of your core values</li>
+        <li>Create a "Values Menu":
+          <ul>
+            <li>Tiny actions (1-2 minutes)</li>
+            <li>Small actions (5-10 minutes)</li>
+            <li>Medium actions (30 minutes)</li>
+            <li>Large actions (1 hour or more)</li>
+          </ul>
+        </li>
+        <li>Select one action from each category</li>
+        <li>Schedule these actions in your calendar</li>
+        <li>Track your progress and celebrate small wins</li>
+      </ol>
+      <p class="bg-gray-50 p-4 rounded-lg">Pro tip: Start with tiny actions and build up gradually. Success breeds success!</p>
+    `,
+    category: ExerciseCategory.ENGAGEMANG,
+    userId: '1',
+    createdAt: new Date('2024-01-25'),
+    updatedAt: new Date('2024-01-25'),
+    mediaIds: ['14'],
+    order: 3
   }
 ].map(e => ({
   ...e,

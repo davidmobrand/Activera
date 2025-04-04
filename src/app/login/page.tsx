@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
@@ -11,6 +11,15 @@ export default function LoginPage() {
   const { data: session, status } = useSession()
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
+  const [hasRedirected, setHasRedirected] = useState(false)
+
+  const handleRedirect = useCallback(() => {
+    if (status === 'authenticated' && !hasRedirected) {
+      console.log('[Login] User is authenticated, redirecting to dashboard via window.location')
+      setHasRedirected(true)
+      window.location.href = '/dashboard'
+    }
+  }, [status, hasRedirected])
 
   // Debug session state changes
   useEffect(() => {
@@ -20,14 +29,12 @@ export default function LoginPage() {
         user: session.user,
         expires: session.expires
       } : null,
+      hasRedirected,
       timestamp: new Date().toISOString()
     })
 
-    if (status === 'authenticated') {
-      console.log('[Login] User is authenticated, redirecting to dashboard')
-      router.replace('/dashboard')
-    }
-  }, [session, status, router])
+    handleRedirect()
+  }, [session, status, handleRedirect, hasRedirected])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -63,7 +70,9 @@ export default function LoginPage() {
         timestamp: new Date().toISOString()
       })
 
-      if (!result?.ok) {
+      if (result?.ok) {
+        handleRedirect()
+      } else {
         setError('Invalid email or password')
       }
     } catch (error) {
@@ -74,7 +83,7 @@ export default function LoginPage() {
     }
   }
 
-  if (status === 'loading' || status === 'authenticated') {
+  if (status === 'loading' || hasRedirected) {
     console.log('[Login] Rendering loading/redirect state')
     return (
       <div className="flex items-center justify-center min-h-screen">

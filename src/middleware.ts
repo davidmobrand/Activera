@@ -21,113 +21,39 @@ export default withAuth(
   function middleware(req) {
     const token = req.nextauth.token
     const path = req.nextUrl.pathname
-    const timestamp = new Date().toISOString()
 
     console.log('[Middleware] Processing request:', {
-      timestamp,
       path,
       hasToken: !!token,
       tokenDetails: token ? {
-        sub: token.sub,
         role: token.role,
-        email: token.email,
-        exp: token.exp,
-        iat: token.iat
-      } : null,
-      method: req.method,
-      headers: {
-        referer: req.headers.get('referer'),
-        cookie: req.headers.get('cookie') ? 'present' : 'absent',
-        authorization: req.headers.get('authorization') ? 'present' : 'absent'
-      },
-      url: {
-        full: req.url,
-        pathname: req.nextUrl.pathname,
-        search: req.nextUrl.search
-      }
+        email: token.email
+      } : null
     })
 
     // Always allow API routes and static files
     if (path.startsWith('/api/') || path.startsWith('/_next/') || path === '/favicon.ico') {
-      console.log('[Middleware] Skipping auth check for:', {
-        path,
-        timestamp
-      })
       return NextResponse.next()
-    }
-
-    const dashboardUrl = new URL('/dashboard', req.url)
-    const loginUrl = new URL('/login', req.url)
-
-    // If on login page and has token, redirect to dashboard
-    if (path === '/login' && token) {
-      console.log('[Middleware] Redirecting authenticated user from login:', {
-        userId: token.sub,
-        role: token.role,
-        timestamp,
-        destination: dashboardUrl.toString()
-      })
-      return createRedirectResponse(dashboardUrl.toString(), req, 'authenticated_user_on_login')
-    }
-
-    // If no token and not on login page, redirect to login
-    if (!token && path !== '/login') {
-      console.log('[Middleware] Redirecting unauthenticated user to login:', {
-        path,
-        timestamp,
-        referer: req.headers.get('referer'),
-        destination: loginUrl.toString()
-      })
-      loginUrl.searchParams.set('callbackUrl', path)
-      return createRedirectResponse(loginUrl.toString(), req, 'unauthenticated_user')
     }
 
     // If trying to access admin routes without admin role
     if (path.startsWith('/admin') && token?.role !== 'ADMIN') {
-      console.log('[Middleware] Blocking non-admin access:', {
-        path,
-        userRole: token?.role,
-        userId: token?.sub,
-        timestamp,
-        destination: dashboardUrl.toString()
-      })
-      return createRedirectResponse(dashboardUrl.toString(), req, 'unauthorized_admin_access')
+      console.log('[Middleware] Blocking non-admin access')
+      return NextResponse.redirect(new URL('/dashboard', req.url))
     }
 
-    console.log('[Middleware] Allowing request:', {
-      path,
-      userId: token?.sub,
-      role: token?.role,
-      timestamp
-    })
     return NextResponse.next()
   },
   {
     callbacks: {
       authorized: ({ token, req }) => {
-        console.log('[Middleware] Authorization check:', {
-          hasToken: !!token,
-          tokenDetails: token ? {
-            sub: token.sub,
-            role: token.role,
-            email: token.email,
-            exp: token.exp,
-            iat: token.iat
-          } : null,
-          path: req?.nextUrl?.pathname,
-          timestamp: new Date().toISOString()
-        })
-        // Allow login page without authentication
-        if (req.nextUrl.pathname === '/login') {
-          return true
+        // Only require auth for admin routes
+        if (req.nextUrl.pathname.startsWith('/admin')) {
+          return !!token
         }
-        // Require authentication for all other pages
-        return !!token
+        return true
       }
-    },
-    pages: {
-      signIn: '/login',
-    },
+    }
   }
 )
 

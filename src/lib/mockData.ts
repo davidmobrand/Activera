@@ -12,8 +12,8 @@ export interface User {
   email: string;
   password: string;
   role: UserRole;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 // Exercise Types and Data
@@ -31,8 +31,8 @@ export type Exercise = {
   content: string;
   category: ExerciseCategory;
   userId: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   mediaIds: string[];
   order: number;
 };
@@ -73,8 +73,8 @@ export const users: User[] = [
     email: 'admin@activera.com',
     password: '$2a$10$mockHashedPasswordForAdmin',
     role: UserRole.ADMIN,
-    createdAt: new Date('2024-01-01'),
-    updatedAt: new Date('2024-01-01')
+    createdAt: '2024-01-01T00:00:00Z',
+    updatedAt: '2024-01-01T00:00:00Z'
   },
   {
     id: '2',
@@ -82,8 +82,8 @@ export const users: User[] = [
     email: 'client@example.com',
     password: '$2a$10$mockHashedPasswordForClient',
     role: UserRole.CLIENT,
-    createdAt: new Date('2024-01-01'),
-    updatedAt: new Date('2024-01-01')
+    createdAt: '2024-01-01T00:00:00Z',
+    updatedAt: '2024-01-01T00:00:00Z'
   },
   {
     id: '3',
@@ -91,8 +91,8 @@ export const users: User[] = [
     email: 'sarah@example.com',
     password: '$2a$10$mockHashedPassword',
     role: UserRole.CLIENT,
-    createdAt: new Date('2024-02-15'),
-    updatedAt: new Date('2024-02-15')
+    createdAt: '2024-02-15T00:00:00Z',
+    updatedAt: '2024-02-15T00:00:00Z'
   },
   {
     id: '4',
@@ -100,8 +100,8 @@ export const users: User[] = [
     email: 'michael@example.com',
     password: '$2a$10$mockHashedPassword',
     role: UserRole.CLIENT,
-    createdAt: new Date('2024-03-01'),
-    updatedAt: new Date('2024-03-01')
+    createdAt: '2024-03-01T00:00:00Z',
+    updatedAt: '2024-03-01T00:00:00Z'
   },
   {
     id: '5',
@@ -109,13 +109,13 @@ export const users: User[] = [
     email: 'emma@example.com',
     password: '$2a$10$mockHashedPassword',
     role: UserRole.CLIENT,
-    createdAt: new Date('2024-03-15'),
-    updatedAt: new Date('2024-03-15')
+    createdAt: '2024-03-15T00:00:00Z',
+    updatedAt: '2024-03-15T00:00:00Z'
   }
 ];
 
 // Mock Media Files
-export const mediaFiles = [
+export const mediaFiles: Media[] = [
   {
     id: '1',
     exerciseId: '1',
@@ -371,7 +371,7 @@ export const mediaFiles = [
   {
     id: "29",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/mindful-breathing-practice.jpg",
     name: "Mindful Breathing Practice",
     createdAt: "2024-03-20T10:00:00Z",
@@ -380,7 +380,7 @@ export const mediaFiles = [
   {
     id: "30",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/values-compass.jpg",
     name: "Values Compass Exercise",
     createdAt: "2024-03-20T10:01:00Z",
@@ -389,7 +389,7 @@ export const mediaFiles = [
   {
     id: "31",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/acceptance-mountain.jpg",
     name: "Acceptance Mountain",
     createdAt: "2024-03-20T10:02:00Z",
@@ -398,7 +398,7 @@ export const mediaFiles = [
   {
     id: "32",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/mindful-walking.jpg",
     name: "Mindful Walking Practice",
     createdAt: "2024-03-20T10:03:00Z",
@@ -407,7 +407,7 @@ export const mediaFiles = [
   {
     id: "33",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/values-action-plan.jpg",
     name: "Values Action Plan",
     createdAt: "2024-03-20T10:04:00Z",
@@ -416,7 +416,7 @@ export const mediaFiles = [
   {
     id: "34",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/defusion-exercise.jpg",
     name: "Defusion Exercise",
     createdAt: "2024-03-20T11:00:00Z",
@@ -425,7 +425,7 @@ export const mediaFiles = [
   {
     id: "35",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/self-compassion-meditation.jpg",
     name: "Self-Compassion Meditation",
     createdAt: "2024-03-20T11:01:00Z",
@@ -434,7 +434,7 @@ export const mediaFiles = [
   {
     id: "36",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/values-exploration.jpg",
     name: "Values Exploration",
     createdAt: "2024-03-20T11:02:00Z",
@@ -443,7 +443,7 @@ export const mediaFiles = [
   {
     id: "37",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/mindful-emotions.jpg",
     name: "Mindful Emotions",
     createdAt: "2024-03-20T11:03:00Z",
@@ -452,7 +452,7 @@ export const mediaFiles = [
   {
     id: "38",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/acceptance-practice.jpg",
     name: "Acceptance Practice",
     createdAt: "2024-03-20T11:04:00Z",
@@ -461,7 +461,7 @@ export const mediaFiles = [
   {
     id: "39",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/values-clarification.jpg",
     name: "Values Clarification Exercise",
     createdAt: "2024-03-20T12:00:00Z",
@@ -470,7 +470,7 @@ export const mediaFiles = [
   {
     id: "40",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/committed-action.jpg",
     name: "Committed Action Practice",
     createdAt: "2024-03-20T12:01:00Z",
@@ -479,7 +479,7 @@ export const mediaFiles = [
   {
     id: "41",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/mindful-goals.jpg",
     name: "Mindful Goals Setting",
     createdAt: "2024-03-20T12:02:00Z",
@@ -488,7 +488,7 @@ export const mediaFiles = [
   {
     id: "42",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/values-obstacles.jpg",
     name: "Values Obstacles Exercise",
     createdAt: "2024-03-20T12:03:00Z",
@@ -497,7 +497,7 @@ export const mediaFiles = [
   {
     id: "43",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/life-compass.jpg",
     name: "Life Compass Exercise",
     createdAt: "2024-03-20T12:04:00Z",
@@ -506,7 +506,7 @@ export const mediaFiles = [
   {
     id: "44",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/body-scan.jpg",
     name: "Body Scan Meditation",
     createdAt: "2024-03-20T13:00:00Z",
@@ -515,7 +515,7 @@ export const mediaFiles = [
   {
     id: "45",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/mindful-eating.jpg",
     name: "Mindful Eating Exercise",
     createdAt: "2024-03-20T13:01:00Z",
@@ -524,7 +524,7 @@ export const mediaFiles = [
   {
     id: "46",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/sound-awareness.jpg",
     name: "Sound Awareness Practice",
     createdAt: "2024-03-20T13:02:00Z",
@@ -533,7 +533,7 @@ export const mediaFiles = [
   {
     id: "47",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/mindful-movement.jpg",
     name: "Mindful Movement Exercise",
     createdAt: "2024-03-20T13:03:00Z",
@@ -542,7 +542,7 @@ export const mediaFiles = [
   {
     id: "48",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/present-moment.jpg",
     name: "Present Moment Exercise",
     createdAt: "2024-03-20T13:04:00Z",
@@ -551,7 +551,7 @@ export const mediaFiles = [
   {
     id: "49",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/thought-train.jpg",
     name: "Thought Train Exercise",
     createdAt: "2024-03-20T14:00:00Z",
@@ -560,7 +560,7 @@ export const mediaFiles = [
   {
     id: "50",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/radio-metaphor.jpg",
     name: "Radio Metaphor Exercise",
     createdAt: "2024-03-20T14:01:00Z",
@@ -569,7 +569,7 @@ export const mediaFiles = [
   {
     id: "51",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/values-diary.jpg",
     name: "Values Diary Exercise",
     createdAt: "2024-03-20T14:02:00Z",
@@ -578,7 +578,7 @@ export const mediaFiles = [
   {
     id: "52",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/life-roles.jpg",
     name: "Life Roles Exercise",
     createdAt: "2024-03-20T14:03:00Z",
@@ -587,7 +587,7 @@ export const mediaFiles = [
   {
     id: "53",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/thought-defusion.jpg",
     name: "Thought Defusion Exercise",
     createdAt: "2024-03-20T14:04:00Z",
@@ -596,7 +596,7 @@ export const mediaFiles = [
   {
     id: "54",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/breathing-space.jpg",
     name: "Three-Minute Breathing Space",
     createdAt: "2024-03-21T10:00:00Z",
@@ -605,7 +605,7 @@ export const mediaFiles = [
   {
     id: "55",
     exerciseId: "",
-    type: "AUDIO",
+    type: MediaType.AUDIO,
     url: "/audio/breathing-space-guide.mp3",
     name: "Breathing Space Guidance",
     createdAt: "2024-03-21T10:00:00Z",
@@ -614,7 +614,7 @@ export const mediaFiles = [
   {
     id: "56",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/loving-kindness.jpg",
     name: "Loving-Kindness Meditation",
     createdAt: "2024-03-21T10:01:00Z",
@@ -623,7 +623,7 @@ export const mediaFiles = [
   {
     id: "57",
     exerciseId: "",
-    type: "AUDIO",
+    type: MediaType.AUDIO,
     url: "/audio/loving-kindness-guide.mp3",
     name: "Loving-Kindness Guidance",
     createdAt: "2024-03-21T10:01:00Z",
@@ -632,7 +632,7 @@ export const mediaFiles = [
   {
     id: "58",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/values-exploration.jpg",
     name: "Values Life Areas",
     createdAt: "2024-03-21T10:02:00Z",
@@ -641,7 +641,7 @@ export const mediaFiles = [
   {
     id: "59",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/defusion-clouds.jpg",
     name: "Clouds in the Sky Exercise",
     createdAt: "2024-03-21T10:03:00Z",
@@ -650,7 +650,7 @@ export const mediaFiles = [
   {
     id: "60",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/mindful-stretching.jpg",
     name: "Mindful Stretching",
     createdAt: "2024-03-21T10:04:00Z",
@@ -659,7 +659,7 @@ export const mediaFiles = [
   {
     id: "61",
     exerciseId: "",
-    type: "AUDIO",
+    type: MediaType.AUDIO,
     url: "/audio/mindful-stretching-guide.mp3",
     name: "Stretching Guidance",
     createdAt: "2024-03-21T10:04:00Z",
@@ -668,7 +668,7 @@ export const mediaFiles = [
   {
     id: "62",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/values-vision.jpg",
     name: "Values Vision Board",
     createdAt: "2024-03-21T10:05:00Z",
@@ -677,7 +677,7 @@ export const mediaFiles = [
   {
     id: "63",
     exerciseId: "",
-    type: "IMAGE",
+    type: MediaType.IMAGE,
     url: "/images/acceptance-waves.jpg",
     name: "Acceptance Waves",
     createdAt: "2024-03-21T10:06:00Z",
@@ -749,9 +749,10 @@ export const mediaFiles = [
 ].map(e => ({
   ...e,
   id: String(e.id),
-  createdAt: new Date(e.createdAt),
-  updatedAt: new Date(e.updatedAt)
-})) as Media[];
+  type: e.type as MediaType,
+  createdAt: new Date(e.createdAt).toISOString(),
+  updatedAt: new Date(e.updatedAt).toISOString()
+}));
 
 // Mock Exercises
 export const exercises: Exercise[] = [
@@ -776,8 +777,8 @@ export const exercises: Exercise[] = [
     `,
     category: ExerciseCategory.NARVARO,
     userId: '1',
-    createdAt: new Date('2024-01-01'),
-    updatedAt: new Date('2024-01-01'),
+    createdAt: '2024-01-01T00:00:00Z',
+    updatedAt: '2024-01-01T00:00:00Z',
     mediaIds: ['1', '2'],
     order: 1
   },
@@ -802,8 +803,8 @@ export const exercises: Exercise[] = [
     `,
     category: ExerciseCategory.OPPENHET,
     userId: '1',
-    createdAt: new Date('2024-01-02'),
-    updatedAt: new Date('2024-01-02'),
+    createdAt: '2024-01-02T00:00:00Z',
+    updatedAt: '2024-01-02T00:00:00Z',
     mediaIds: ['3', '4'],
     order: 1
   },
@@ -826,8 +827,8 @@ export const exercises: Exercise[] = [
     `,
     category: ExerciseCategory.NARVARO,
     userId: '1',
-    createdAt: new Date('2024-01-03'),
-    updatedAt: new Date('2024-01-03'),
+    createdAt: '2024-01-03T00:00:00Z',
+    updatedAt: '2024-01-03T00:00:00Z',
     mediaIds: ['5'],
     order: 2
   },
@@ -892,8 +893,8 @@ Remember: The goal is to observe thoughts, not eliminate them.`,
     `,
     category: ExerciseCategory.ENGAGEMANG,
     userId: '1',
-    createdAt: new Date('2024-01-05'),
-    updatedAt: new Date('2024-01-05'),
+    createdAt: '2024-01-05T00:00:00Z',
+    updatedAt: '2024-01-05T00:00:00Z',
     mediaIds: ['7'],
     order: 1
   },
@@ -2774,8 +2775,9 @@ Remember: Like a garden, life flourishes with acceptance.`,
 ].map(e => ({
   ...e,
   id: String(e.id),
-  createdAt: new Date(e.createdAt),
-  updatedAt: new Date(e.updatedAt)
+  createdAt: typeof e.createdAt === 'string' ? e.createdAt : new Date(e.createdAt).toISOString(),
+  updatedAt: typeof e.updatedAt === 'string' ? e.updatedAt : new Date(e.updatedAt).toISOString(),
+  category: e.category as ExerciseCategory
 }));
 
 // Mock Exercise Progress
@@ -2872,11 +2874,12 @@ export const findUsers = () => {
 };
 
 export const createUser = (data: Omit<User, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const now = new Date().toISOString();
   const newUser = {
     ...data,
     id: String(users.length + 1),
-    createdAt: new Date(),
-    updatedAt: new Date()
+    createdAt: now,
+    updatedAt: now
   };
   users.push(newUser);
   return newUser;

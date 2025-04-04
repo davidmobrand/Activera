@@ -29,7 +29,7 @@ export default function Dashboard() {
     
     if (status === 'unauthenticated') {
       console.log('No session found, redirecting to login...')
-      router.push('/login')
+      router.replace('/login')
       return
     }
 
@@ -80,7 +80,29 @@ export default function Dashboard() {
     }
   }
 
-  if (status === 'loading' || isLoading) {
+  if (status === 'loading') {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (status === 'unauthenticated') {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
+          <p className="text-gray-600">Redirecting to login...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -89,10 +111,6 @@ export default function Dashboard() {
         </div>
       </div>
     )
-  }
-
-  if (status === 'unauthenticated') {
-    return null
   }
 
   return (

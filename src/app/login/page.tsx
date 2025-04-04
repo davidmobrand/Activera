@@ -22,7 +22,12 @@ export default function LoginPage() {
       } : null,
       timestamp: new Date().toISOString()
     })
-  }, [session, status])
+
+    if (status === 'authenticated') {
+      console.log('[Login] User is authenticated, redirecting to dashboard')
+      router.replace('/dashboard')
+    }
+  }, [session, status, router])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -49,7 +54,7 @@ export default function LoginPage() {
       const result = await signIn('credentials', {
         email,
         password,
-        redirect: true,
+        redirect: false,
         callbackUrl: '/dashboard'
       })
 
@@ -57,20 +62,27 @@ export default function LoginPage() {
         result,
         timestamp: new Date().toISOString()
       })
+
+      if (!result?.ok) {
+        setError('Invalid email or password')
+      }
     } catch (error) {
       console.error('[Login] Error during sign in:', error)
       setError('An error occurred. Please try again.')
+    } finally {
       setIsLoading(false)
     }
   }
 
-  if (status === 'loading') {
-    console.log('[Login] Rendering loading state')
+  if (status === 'loading' || status === 'authenticated') {
+    console.log('[Login] Rendering loading/redirect state')
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
+          <p className="text-gray-600">
+            {status === 'loading' ? 'Loading...' : 'Redirecting to dashboard...'}
+          </p>
         </div>
       </div>
     )

@@ -13,6 +13,8 @@ export const common = {
     next: 'Next',
     complete: 'Complete',
     completed: 'Completed',
+    welcome: 'Welcome',
+    adminDashboard: 'Admin Dashboard',
   },
   sv: {
     dashboard: 'Dashboard',
@@ -28,5 +30,7 @@ export const common = {
     next: 'Nästa',
     complete: 'Slutför',
     completed: 'Slutförd',
+    welcome: 'Välkommen',
+    adminDashboard: 'Admin Dashboard',
   },
 } as const; 

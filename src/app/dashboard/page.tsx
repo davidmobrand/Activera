@@ -3,9 +3,12 @@
 import { useSession } from 'next-auth/react'
 import NotLoggedIn from '@/components/NotLoggedIn'
 import Link from 'next/link'
+import { useTranslation } from '@/lib/i18n/useTranslation'
+import { ExerciseCategoryEnum } from '@/lib/types'
 
 export default function DashboardPage() {
   const { data: session, status } = useSession()
+  const { t } = useTranslation()
 
   if (status === 'loading') {
     return (
@@ -21,21 +24,18 @@ export default function DashboardPage() {
 
   const categories = [
     {
-      name: 'Närvaro',
+      key: ExerciseCategoryEnum.NARVARO,
       slug: 'narvaro',
-      description: 'Mindfulness exercises to develop present moment awareness',
       color: 'bg-blue-100 text-blue-800'
     },
     {
-      name: 'Öppenhet',
+      key: ExerciseCategoryEnum.OPPENHET,
       slug: 'oppenhet',
-      description: 'Openness exercises to work with thoughts and emotions',
       color: 'bg-green-100 text-green-800'
     },
     {
-      name: 'Engagemang',
+      key: ExerciseCategoryEnum.ENGAGEMANG,
       slug: 'engagemang',
-      description: 'Engagement exercises to connect with your values',
       color: 'bg-purple-100 text-purple-800'
     }
   ]
@@ -44,7 +44,7 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          Welcome, {session.user?.name || session.user?.email}
+          {t.common('welcome')}, {session.user?.name || session.user?.email}
         </h1>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -56,9 +56,9 @@ export default function DashboardPage() {
             >
               <div className="bg-white shadow rounded-lg p-6 hover:shadow-lg transition-shadow">
                 <div className={`inline-block px-3 py-1 rounded-full text-sm font-semibold mb-4 ${category.color}`}>
-                  {category.name}
+                  {t.category(category.key).name}
                 </div>
-                <p className="text-gray-600">{category.description}</p>
+                <p className="text-gray-600">{t.category(category.key).description}</p>
               </div>
             </Link>
           ))}
@@ -66,19 +66,19 @@ export default function DashboardPage() {
 
         {session.user?.role === 'ADMIN' && (
           <div className="bg-white shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">Admin Dashboard</h2>
+            <h2 className="text-xl font-semibold mb-4">{t.common('adminDashboard')}</h2>
             <div className="space-y-2">
               <Link 
                 href="/admin/exercises"
                 className="block text-blue-600 hover:text-blue-800"
               >
-                Manage Exercises
+                {t.common('manageExercises')}
               </Link>
               <Link 
                 href="/admin/users"
                 className="block text-blue-600 hover:text-blue-800"
               >
-                Manage Users
+                {t.common('manageUsers')}
               </Link>
             </div>
           </div>

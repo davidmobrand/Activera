@@ -12,7 +12,7 @@ export default function LoginPage() {
   const { data: session, status } = useSession()
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
-  const [redirectAttempts, setRedirectAttempts] = useState(0)
+  const [hasRedirected, setHasRedirected] = useState(false)
 
   // Debug session object in detail
   useEffect(() => {
@@ -35,67 +35,20 @@ export default function LoginPage() {
     } : null,
     error,
     isLoading,
+    hasRedirected,
     currentUrl: typeof window !== 'undefined' ? window.location.href : 'SSR',
-    searchParams: searchParams ? Object.fromEntries(searchParams.entries()) : {},
-    redirectAttempts
+    searchParams: searchParams ? Object.fromEntries(searchParams.entries()) : {}
   })
 
   useEffect(() => {
-    console.log('[Login] Session effect triggered:', {
-      status,
-      hasSession: !!session,
-      sessionExpiry: session?.expires,
-      error,
-      isLoading,
-      redirectAttempts
-    })
-
-    if (status === 'authenticated') {
-      console.log('[Login] Authenticated, preparing redirect')
+    if (status === 'authenticated' && !hasRedirected) {
+      console.log('[Login] Authenticated and not yet redirected, initiating redirect')
+      setHasRedirected(true)
       
-      // Add delay to ensure session is fully established
-      setTimeout(() => {
-        try {
-          console.log('[Login] Executing redirect to dashboard')
-          setRedirectAttempts(prev => prev + 1)
-          
-          // Force a hard navigation
-          if (redirectAttempts >= 2) {
-            console.log('[Login] Multiple redirect attempts detected, forcing hard navigation')
-            window.location.href = '/dashboard'
-            return
-          }
-
-          router.push('/dashboard')
-          console.log('[Login] Soft redirect initiated via router.push')
-          
-          // Add a fallback redirect
-          setTimeout(() => {
-            if (window.location.pathname === '/login') {
-              console.log('[Login] Still on login page after redirect attempt, forcing navigation')
-              window.location.href = '/dashboard'
-            }
-          }, 1000)
-        } catch (e) {
-          console.error('[Login] Redirect failed:', e)
-        }
-      }, 500)
+      // Use window.location for a hard redirect
+      window.location.href = '/dashboard'
     }
-  }, [status, session, router, error, isLoading, redirectAttempts])
-
-  // Monitor URL changes
-  useEffect(() => {
-    const handleRouteChange = () => {
-      console.log('[Login] URL changed:', {
-        pathname: window.location.pathname,
-        search: window.location.search,
-        href: window.location.href
-      })
-    }
-
-    window.addEventListener('popstate', handleRouteChange)
-    return () => window.removeEventListener('popstate', handleRouteChange)
-  }, [])
+  }, [status, hasRedirected])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -149,8 +102,6 @@ export default function LoginPage() {
 
       if (result.ok) {
         console.log('[Login] Sign in successful, session update expected')
-        // Reset redirect attempts on new login
-        setRedirectAttempts(0)
       }
     } catch (error) {
       console.error('[Login] Sign in error:', error)
@@ -160,18 +111,6 @@ export default function LoginPage() {
       setIsLoading(false)
     }
   }
-
-  // Log state changes with timestamps
-  useEffect(() => {
-    console.log('[Login] State changed:', {
-      error,
-      isLoading,
-      status,
-      hasSession: !!session,
-      timestamp: new Date().toISOString(),
-      pathname: typeof window !== 'undefined' ? window.location.pathname : 'SSR'
-    })
-  }, [error, isLoading, status, session])
 
   if (status === 'loading') {
     console.log('[Login] Rendering loading state')
@@ -192,8 +131,7 @@ export default function LoginPage() {
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
           <p className="text-gray-600">
-            Session authenticated ({redirectAttempts} redirect attempts)...
-            {redirectAttempts >= 2 ? ' Forcing navigation...' : ' Redirecting...'}
+            Session authenticated, redirecting to dashboard...
           </p>
         </div>
       </div>

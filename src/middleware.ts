@@ -1,91 +1,74 @@
 import { withAuth } from 'next-auth/middleware'
 import { NextResponse } from 'next/server'
 
+// Helper function to create redirect response with logging
+function createRedirectResponse(url: string, req: Request, reason: string) {
+  const response = NextResponse.redirect(url)
+  console.log('[Middleware] Creating redirect:', {
+    from: req.url,
+    to: url,
+    reason,
+    timestamp: new Date().toISOString()
+  })
+  return response
+}
+
 export default withAuth(
   function middleware(req) {
     const token = req.nextauth.token
     const path = req.nextUrl.pathname
     const timestamp = new Date().toISOString()
 
-    console.log('[Middleware] Request started:', {
+    console.log('[Middleware] Processing request:', {
       timestamp,
       path,
       hasToken: !!token,
       role: token?.role,
-      url: req.url,
       method: req.method,
       headers: {
         referer: req.headers.get('referer'),
-        userAgent: req.headers.get('user-agent')
+        cookie: req.headers.get('cookie') ? 'present' : 'absent'
       }
     })
 
     // Always allow API routes and static files
     if (path.startsWith('/api/') || path.startsWith('/_next/') || path === '/favicon.ico') {
-      console.log('[Middleware] Allowing API/static route:', {
-        path,
-        timestamp,
-        type: path.startsWith('/api/') ? 'api' : 'static'
-      })
+      console.log('[Middleware] Skipping auth check for:', path)
       return NextResponse.next()
     }
 
+    const dashboardUrl = new URL('/dashboard', req.url)
+    const loginUrl = new URL('/login', req.url)
+
     // If on login page and has token, redirect to dashboard
     if (path === '/login' && token) {
-      console.log('[Middleware] Authenticated user on login page:', {
-        timestamp,
+      console.log('[Middleware] Redirecting authenticated user from login:', {
         userId: token.sub,
-        role: token.role,
-        redirectTo: '/dashboard'
+        role: token.role
       })
-      const response = NextResponse.redirect(new URL('/dashboard', req.url))
-      console.log('[Middleware] Redirect response created:', {
-        timestamp,
-        status: response.status,
-        redirectUrl: response.headers.get('location')
-      })
-      return response
+      return createRedirectResponse(dashboardUrl.toString(), req, 'authenticated_user_on_login')
     }
 
     // If no token and not on login page, redirect to login
     if (!token && path !== '/login') {
-      console.log('[Middleware] Unauthenticated access attempt:', {
-        timestamp,
+      console.log('[Middleware] Redirecting unauthenticated user to login:', {
         path,
-        headers: {
-          referer: req.headers.get('referer')
-        },
-        redirectTo: '/login'
+        referer: req.headers.get('referer')
       })
-      const response = NextResponse.redirect(new URL('/login', req.url))
-      console.log('[Middleware] Redirect response created:', {
-        timestamp,
-        status: response.status,
-        redirectUrl: response.headers.get('location')
-      })
-      return response
+      return createRedirectResponse(loginUrl.toString(), req, 'unauthenticated_user')
     }
 
     // If trying to access admin routes without admin role
     if (path.startsWith('/admin') && token?.role !== 'ADMIN') {
-      console.log('[Middleware] Unauthorized admin access attempt:', {
-        timestamp,
+      console.log('[Middleware] Blocking non-admin access:', {
         path,
         userRole: token?.role,
-        userId: token?.sub,
-        redirectTo: '/dashboard'
+        userId: token?.sub
       })
-      const response = NextResponse.redirect(new URL('/dashboard', req.url))
-      console.log('[Middleware] Redirect response created:', {
-        timestamp,
-        status: response.status,
-        redirectUrl: response.headers.get('location')
-      })
-      return response
+      return createRedirectResponse(dashboardUrl.toString(), req, 'unauthorized_admin_access')
     }
 
-    console.log('[Middleware] Request allowed:', {
-      timestamp,
+    console.log('[Middleware] Allowing request:', {
       path,
       userId: token?.sub,
       role: token?.role
@@ -94,16 +77,14 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: ({ token }) => {
-        const timestamp = new Date().toISOString()
-        console.log('[Middleware] Authorization check:', {
-          timestamp,
+      authorized: ({ token, req }) => {
+        console.log('[Middleware] Auth check:', {
           hasToken: !!token,
           tokenId: token?.sub,
           role: token?.role,
-          expires: token?.exp ? new Date((token.exp as number) * 1000).toISOString() : null
+          path: req?.nextUrl?.pathname,
+          timestamp: new Date().toISOString()
         })
-        // Let the middleware function handle the logic
         return true
       }
     },

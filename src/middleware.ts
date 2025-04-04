@@ -36,10 +36,17 @@ export default withAuth(
       return NextResponse.next()
     }
 
-    // If trying to access admin routes without admin role
-    if (path.startsWith('/admin') && token?.role !== 'ADMIN') {
-      console.log('[Middleware] Blocking non-admin access')
-      return NextResponse.redirect(new URL('/dashboard', req.url))
+    // If trying to access admin routes without admin role or without being authenticated
+    if (path.startsWith('/admin')) {
+      if (!token) {
+        const loginUrl = new URL('/login', req.url)
+        loginUrl.searchParams.set('callbackUrl', req.url)
+        return NextResponse.redirect(loginUrl)
+      }
+      
+      if (token.role !== 'ADMIN') {
+        return NextResponse.redirect(new URL('/dashboard', req.url))
+      }
     }
 
     return NextResponse.next()
@@ -47,10 +54,11 @@ export default withAuth(
   {
     callbacks: {
       authorized: ({ token, req }) => {
-        // Only require auth for admin routes
+        // For admin routes, require admin role
         if (req.nextUrl.pathname.startsWith('/admin')) {
-          return !!token
+          return token?.role === 'ADMIN'
         }
+        // For other routes, no auth required
         return true
       }
     }

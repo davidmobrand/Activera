@@ -9,12 +9,13 @@ export function Navigation() {
   const pathname = usePathname()
   const { data: session, status } = useSession()
 
-  // Don't render anything if not authenticated
-  if (!session) return null
+  // Don't render anything if loading or not authenticated
+  if (status === 'loading' || !session) return null
 
   const isAdmin = session.user?.role === 'ADMIN'
   const isActive = (path: string) => pathname === path
 
+  // Only show admin links if user is admin
   const menuItems = [
     { href: '/dashboard', label: 'Dashboard' },
     ...(isAdmin
@@ -58,6 +59,7 @@ export function Navigation() {
           <div className="flex items-center">
             <span className="text-sm text-gray-500 mr-4">
               {session.user?.name || session.user?.email}
+              {isAdmin && ' (Admin)'}
             </span>
             <Button
               variant="outline"

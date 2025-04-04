@@ -37,7 +37,8 @@ export function ExerciseView({
     }
   }
 
-  const media = mockDb.getExerciseMedia(exercise.mediaIds)
+  // Get media for all IDs in the exercise
+  const media = mockDb.findMediaByExerciseId(exercise.mediaIds)
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">

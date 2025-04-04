@@ -282,7 +282,10 @@ export const exerciseProgress: ExerciseProgress[] = [
 ];
 
 // Mock Database Functions
-export const findMediaByExerciseId = (exerciseId: string) => {
+export const findMediaByExerciseId = (exerciseId: string | string[]) => {
+  if (Array.isArray(exerciseId)) {
+    return mediaFiles.filter(media => exerciseId.includes(media.exerciseId));
+  }
   return mediaFiles.filter(media => media.exerciseId === exerciseId);
 };
 

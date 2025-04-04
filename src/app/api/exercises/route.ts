@@ -1,28 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { mockDb, Exercise } from '@/lib/mockData'
+import { mockDb, exercises, Exercise } from '@/lib/mockData'
 
 export async function GET() {
-  try {
-    // Get exercises using the findExercises function
-    const exercises = mockDb.findExercises()
-    
-    // Map exercises to ensure we're returning the correct format
-    const formattedExercises = exercises.map(exercise => ({
-      id: exercise.id,
-      title: exercise.title,
-      content: exercise.content,
-      category: exercise.category,
-      userId: exercise.userId,
-      createdAt: exercise.createdAt,
-      updatedAt: exercise.updatedAt,
-      media: mockDb.getExerciseMedia(exercise.id)
-    }))
+  const session = await getServerSession(authOptions)
+  
+  console.log('[API] Exercises GET - Session:', session)
 
-    return NextResponse.json(formattedExercises)
+  try {
+    const exercises = mockDb.findExercises()
+    console.log('[API] Exercises GET - Success:', { count: exercises.length })
+    return NextResponse.json(exercises)
   } catch (error) {
-    console.error('Error fetching exercises:', error)
+    console.error('[API] Exercises GET - Error:', error)
     return NextResponse.json(
       { error: 'Failed to fetch exercises' },
       { status: 500 }
@@ -32,25 +23,43 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions)
-  if (!session?.user?.id || session.user.role !== 'ADMIN') {
+  
+  console.log('[API] Exercises POST - Session:', session)
+
+  if (!session?.user || session.user.role !== 'ADMIN') {
+    console.log('[API] Exercises POST - Unauthorized access attempt')
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
   try {
     const data = await request.json()
-    const newExercise = {
-      id: Math.random().toString(),
-      ...data,
+    
+    // Validate required fields
+    if (!data.title || !data.content || !data.category) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      )
+    }
+
+    // Create new exercise
+    const newExercise: Exercise = {
+      id: String(exercises.length + 1),
+      title: data.title,
+      content: data.content,
+      category: data.category,
       userId: session.user.id,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      mediaIds: [],
+      order: data.order || exercises.length + 1
     }
-    
-    // In a real app, we would save to database
-    // For now, just return the mock exercise
+
+    exercises.push(newExercise)
+    console.log('[API] Exercises POST - Created exercise:', newExercise)
     return NextResponse.json(newExercise)
   } catch (error) {
-    console.error('Error creating exercise:', error)
+    console.error('[API] Exercises POST - Error:', error)
     return NextResponse.json(
       { error: 'Failed to create exercise' },
       { status: 500 }

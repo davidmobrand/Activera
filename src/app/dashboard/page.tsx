@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 interface CategoryProgress {
@@ -17,12 +18,17 @@ const categoryLabels = {
 }
 
 export default function Dashboard() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
+  const router = useRouter()
   const [progress, setProgress] = useState<CategoryProgress[]>([])
 
   useEffect(() => {
-    fetchProgress()
-  }, [])
+    if (status === 'unauthenticated') {
+      router.push('/login')
+    } else if (status === 'authenticated') {
+      fetchProgress()
+    }
+  }, [status, router])
 
   async function fetchProgress() {
     try {
@@ -30,6 +36,10 @@ export default function Dashboard() {
         fetch('/api/exercises'),
         fetch('/api/progress'),
       ])
+
+      if (!exercisesRes.ok || !progressRes.ok) {
+        throw new Error('Failed to fetch data')
+      }
 
       const exercises = await exercisesRes.json()
       const progressData = await progressRes.json()
@@ -53,6 +63,18 @@ export default function Dashboard() {
     } catch (error) {
       console.error('Failed to fetch progress:', error)
     }
+  }
+
+  if (status === 'loading') {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+      </div>
+    )
+  }
+
+  if (status === 'unauthenticated') {
+    return null
   }
 
   return (

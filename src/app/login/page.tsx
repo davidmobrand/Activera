@@ -1,15 +1,22 @@
 'use client'
 
-import { useState } from 'react'
-import { signIn } from 'next-auth/react'
+import { useState, useEffect } from 'react'
+import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 
 export default function LoginPage() {
   const router = useRouter()
+  const { status } = useSession()
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push('/dashboard')
+    }
+  }, [status, router])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -39,6 +46,14 @@ export default function LoginPage() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  if (status === 'loading' || status === 'authenticated') {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+      </div>
+    )
   }
 
   return (

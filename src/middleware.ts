@@ -5,35 +5,35 @@ export default withAuth(
   function middleware(req) {
     const token = req.nextauth.token
     const path = req.nextUrl.pathname
-    const isApiRoute = path.startsWith('/api/')
-    const isLoginPage = path === '/login'
-    const isPublicRoute = isApiRoute || isLoginPage || path.startsWith('/_next') || path === '/favicon.ico'
 
-    console.log('[Middleware] Route check:', {
-      path,
-      isApiRoute,
-      isLoginPage,
-      isPublicRoute,
-      hasToken: !!token,
-      userRole: token?.role,
-    })
-
-    // Allow public routes and authenticated users
-    if (isPublicRoute || token) {
-      console.log('[Middleware] Allowing access')
+    // Always allow API routes and static files
+    if (path.startsWith('/api/') || path.startsWith('/_next/') || path === '/favicon.ico') {
       return NextResponse.next()
     }
 
-    // Redirect to login if no token
-    console.log('[Middleware] No token found, redirecting to login')
-    return NextResponse.redirect(new URL('/login', req.url))
+    // If on login page and has token, redirect to dashboard
+    if (path === '/login' && token) {
+      return NextResponse.redirect(new URL('/dashboard', req.url))
+    }
+
+    // If no token and not on login page, redirect to login
+    if (!token && path !== '/login') {
+      return NextResponse.redirect(new URL('/login', req.url))
+    }
+
+    // If trying to access admin routes without admin role
+    if (path.startsWith('/admin') && token?.role !== 'ADMIN') {
+      return NextResponse.redirect(new URL('/dashboard', req.url))
+    }
+
+    return NextResponse.next()
   },
   {
     callbacks: {
-      authorized: ({ token, req }) => {
-        // Allow the middleware function to handle the logic
+      authorized: ({ token }) => {
+        // Let the middleware function handle the logic
         return true
-      },
+      }
     },
     pages: {
       signIn: '/login',
@@ -53,4 +53,5 @@ export const config = {
      */
     '/((?!api|_next|static|favicon.ico|sitemap.xml).*)',
   ],
+} 
 } 

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
-import { Exercise } from '@/lib/mockData'
+import { Exercise, mockDb } from '@/lib/mockData'
 
 interface ExerciseViewProps {
   exercise: Exercise
@@ -37,6 +37,8 @@ export function ExerciseView({
     }
   }
 
+  const media = mockDb.getExerciseMedia(exercise.mediaIds)
+
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <h2 className="text-2xl font-bold text-gray-800 mb-4">{exercise.title}</h2>
@@ -46,10 +48,10 @@ export function ExerciseView({
       />
 
       {/* Display media if available */}
-      {exercise.media.length > 0 && (
+      {media.length > 0 && (
         <div className="mb-6 space-y-4">
           {/* Display images */}
-          {exercise.media.filter(m => m.type === 'IMAGE').map(image => (
+          {media.filter(m => m.type === 'IMAGE').map(image => (
             <div key={image.id}>
               <img
                 src={image.url}
@@ -60,7 +62,7 @@ export function ExerciseView({
           ))}
           
           {/* Display audio */}
-          {exercise.media.filter(m => m.type === 'AUDIO').map(audio => (
+          {media.filter(m => m.type === 'AUDIO').map(audio => (
             <div key={audio.id}>
               <audio controls src={audio.url} className="w-full" />
             </div>

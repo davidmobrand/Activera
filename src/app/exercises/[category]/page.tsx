@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { mockDb } from '@/lib/mockData'
+import { mockDb, ExerciseCategory } from '@/lib/mockData'
 import { ExerciseView } from '@/components/exercises/ExerciseView'
 
-const validCategories = ['OPPENHET', 'NARVARO', 'ENGAGEMANG'] as const
+const validCategories = Object.values(ExerciseCategory)
 type Category = typeof validCategories[number]
 
 interface Props {
@@ -17,8 +17,8 @@ export default async function CategoryPage({ params }: Props) {
   const session = await getServerSession(authOptions)
   if (!session?.user?.id) return notFound()
 
-  const category = params.category.toUpperCase()
-  if (!validCategories.includes(category as Category)) {
+  const category = params.category.toUpperCase() as ExerciseCategory
+  if (!validCategories.includes(category)) {
     return notFound()
   }
 

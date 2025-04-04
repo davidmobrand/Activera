@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 import { mockDb, Exercise } from '@/lib/mockData'
 
 export async function GET() {
@@ -17,7 +17,7 @@ export async function GET() {
       userId: exercise.userId,
       createdAt: exercise.createdAt,
       updatedAt: exercise.updatedAt,
-      media: exercise.media
+      media: mockDb.getExerciseMedia(exercise.mediaIds)
     }))
 
     return NextResponse.json(formattedExercises)

@@ -33,7 +33,7 @@ export type Exercise = {
   userId: string;
   createdAt: Date;
   updatedAt: Date;
-  media: string[];
+  mediaIds: string[];
 };
 
 // Media Types and Data
@@ -169,11 +169,11 @@ export const exercises: Exercise[] = [
       <audio controls src="/assets/exercises/audio/calm-meditation.mp3"></audio>
       <p>Practice this exercise for 5-10 minutes daily to develop mindfulness.</p>
     `,
-    category: 'NARVARO' as const,
+    category: ExerciseCategory.NARVARO,
     userId: '1',
     createdAt: new Date('2024-01-01'),
     updatedAt: new Date('2024-01-01'),
-    media: ['1', '2']
+    mediaIds: ['1', '2']
   },
   {
     id: '2',
@@ -194,11 +194,11 @@ export const exercises: Exercise[] = [
       <audio controls src="/assets/exercises/audio/zen-meditation.mp3"></audio>
       <p>Take 15-20 minutes to complete this practice.</p>
     `,
-    category: 'OPPENHET' as const,
+    category: ExerciseCategory.OPPENHET,
     userId: '1',
     createdAt: new Date('2024-01-02'),
     updatedAt: new Date('2024-01-02'),
-    media: ['3', '4']
+    mediaIds: ['3', '4']
   },
   {
     id: '3',
@@ -212,11 +212,11 @@ export const exercises: Exercise[] = [
       </ul>
       <p>Spend at least 5 minutes writing your responses.</p>
     `,
-    category: 'OPPENHET' as const,
+    category: ExerciseCategory.OPPENHET,
     userId: '1',
     createdAt: new Date('2024-01-03'),
     updatedAt: new Date('2024-01-03'),
-    media: []
+    mediaIds: []
   },
   {
     id: '4',
@@ -231,11 +231,11 @@ export const exercises: Exercise[] = [
       </ol>
       <p>Take 15-20 minutes for this exercise.</p>
     `,
-    category: 'ENGAGEMANG' as const,
+    category: ExerciseCategory.ENGAGEMANG,
     userId: '1',
     createdAt: new Date('2024-01-04'),
     updatedAt: new Date('2024-01-04'),
-    media: []
+    mediaIds: []
   },
   {
     id: '5',
@@ -250,15 +250,15 @@ export const exercises: Exercise[] = [
       </ol>
       <p>Take 10 minutes for this exercise.</p>
     `,
-    category: 'OPPENHET' as const,
+    category: ExerciseCategory.OPPENHET,
     userId: '1',
     createdAt: new Date('2024-01-05'),
     updatedAt: new Date('2024-01-05'),
-    media: []
+    mediaIds: []
   }
 ].map(e => ({
   ...e,
-  media: mediaFiles.filter(m => m.exerciseId === e.id).map(m => m.id)
+  mediaIds: e.mediaIds.map(id => mediaFiles.find(m => m.id === id)?.id || '')
 }));
 
 // Mock Exercise Progress
@@ -266,7 +266,7 @@ export const exerciseProgress: ExerciseProgress[] = [
   {
     id: '1',
     userId: '2',
-    exerciseId: '1',
+    exerciseId: 'mindful-breathing',
     completed: true,
     notes: 'This was very helpful for reducing stress.',
     startedAt: new Date('2024-01-01'),
@@ -275,7 +275,7 @@ export const exerciseProgress: ExerciseProgress[] = [
   {
     id: '2',
     userId: '2',
-    exerciseId: '2',
+    exerciseId: 'accepting-emotions',
     completed: true,
     notes: 'Found it challenging but rewarding.',
     startedAt: new Date('2024-01-15'),
@@ -284,7 +284,7 @@ export const exerciseProgress: ExerciseProgress[] = [
   {
     id: '3',
     userId: '3',
-    exerciseId: '1',
+    exerciseId: 'mindful-breathing',
     completed: true,
     notes: 'Really helped with anxiety.',
     startedAt: new Date('2024-02-15'),
@@ -293,7 +293,7 @@ export const exerciseProgress: ExerciseProgress[] = [
   {
     id: '4',
     userId: '3',
-    exerciseId: '2',
+    exerciseId: 'body-scan',
     completed: true,
     notes: 'Felt more relaxed afterward.',
     startedAt: new Date('2024-02-20'),
@@ -302,7 +302,7 @@ export const exerciseProgress: ExerciseProgress[] = [
   {
     id: '5',
     userId: '4',
-    exerciseId: '4',
+    exerciseId: 'values-exploration',
     completed: true,
     notes: 'Helped clarify my priorities.',
     startedAt: new Date('2024-03-01'),
@@ -311,7 +311,7 @@ export const exerciseProgress: ExerciseProgress[] = [
   {
     id: '6',
     userId: '4',
-    exerciseId: '3',
+    exerciseId: 'committed-action',
     completed: false,
     notes: 'Working on implementing changes.',
     startedAt: new Date('2024-03-10')
@@ -319,7 +319,7 @@ export const exerciseProgress: ExerciseProgress[] = [
   {
     id: '7',
     userId: '5',
-    exerciseId: '5',
+    exerciseId: 'self-compassion',
     completed: true,
     notes: 'This practice was transformative.',
     startedAt: new Date('2024-03-15'),
@@ -328,102 +328,116 @@ export const exerciseProgress: ExerciseProgress[] = [
   {
     id: '8',
     userId: '5',
-    exerciseId: '3',
+    exerciseId: 'defusion-techniques',
     completed: false,
     notes: 'Still practicing these techniques.',
     startedAt: new Date('2024-03-20')
   }
 ];
 
-// Update the MockDb interface
-export type MockDb = {
-  media: Media[];
-  exercises: Exercise[];
-  exerciseProgress: ExerciseProgress[];
-  users: User[];
-  findMediaByExerciseId: (exerciseId: string) => Media[];
-  findExercises: () => Exercise[];
-  findExerciseById: (id: string) => Exercise | undefined;
-  findExercisesByCategory: (category: ExerciseCategory) => Exercise[];
-  findExerciseProgress: (userId: string) => ExerciseProgress[];
-  findUsers: () => User[];
-  findUserById: (id: string) => User | undefined;
-  createMedia: (media: Omit<Media, 'id' | 'createdAt'>) => Media;
-  deleteMedia: (id: string) => void;
-  createExerciseProgress: (data: {
-    userId: string;
-    exerciseId: string;
-    completed: boolean;
-    notes?: string;
-    completedAt?: Date;
-  }) => ExerciseProgress;
-};
-
 // Mock Database Implementation
-export const mockDb: MockDb = {
+export function findMediaByExerciseId(exerciseId: string): Media[] {
+  return mediaFiles.filter(media => media.exerciseId === exerciseId);
+}
+
+export function createMedia(media: Omit<Media, 'id' | 'createdAt'>): Media {
+  const newMedia: Media = {
+    ...media,
+    id: Math.random().toString(36).substring(7),
+    createdAt: new Date().toISOString()
+  };
+  mediaFiles.push(newMedia);
+  return newMedia;
+}
+
+export function deleteMedia(id: string): void {
+  const index = mediaFiles.findIndex(media => media.id === id);
+  if (index !== -1) {
+    mediaFiles.splice(index, 1);
+  }
+}
+
+export function createExerciseProgress(data: {
+  userId: string;
+  exerciseId: string;
+  completed: boolean;
+  notes?: string;
+  completedAt?: Date;
+}): ExerciseProgress {
+  const newProgress: ExerciseProgress = {
+    id: Math.random().toString(36).substring(7),
+    userId: data.userId,
+    exerciseId: data.exerciseId,
+    completed: data.completed,
+    notes: data.notes,
+    startedAt: new Date(),
+    completedAt: data.completedAt
+  };
+  exerciseProgress.push(newProgress);
+  return newProgress;
+}
+
+export function findExerciseById(id: string): Exercise | undefined {
+  return exercises.find(exercise => exercise.id === id);
+}
+
+export function findExercises(): Exercise[] {
+  return exercises;
+}
+
+export function findExerciseProgress(userId: string): ExerciseProgress[] {
+  return exerciseProgress.filter(progress => progress.userId === userId);
+}
+
+export function findUserById(id: string): User | undefined {
+  return users.find(user => user.id === id);
+}
+
+export function findUsers(): User[] {
+  return users;
+}
+
+export function findExercisesByCategory(category: ExerciseCategory): Exercise[] {
+  return exercises.filter(exercise => exercise.category === category);
+}
+
+export function updateExerciseProgress(id: string, data: { completed: boolean; completedAt?: Date }): ExerciseProgress {
+  const index = exerciseProgress.findIndex(progress => progress.id === id);
+  if (index === -1) {
+    throw new Error('Exercise progress not found');
+  }
+  
+  const updatedProgress = {
+    ...exerciseProgress[index],
+    ...data
+  };
+  exerciseProgress[index] = updatedProgress;
+  return updatedProgress;
+}
+
+export function getExerciseMedia(mediaIds: string[]): Media[] {
+  return mediaFiles.filter(media => mediaIds.includes(media.id));
+}
+
+export function findUserByEmail(email: string): User | undefined {
+  return users.find(user => user.email === email);
+}
+
+// Export a namespace object with all functions and data
+export const mockDb = {
   media: mediaFiles,
   exercises,
-  exerciseProgress,
-  users,
-
-  findMediaByExerciseId(exerciseId: string): Media[] {
-    return this.media.filter(m => m.exerciseId === exerciseId);
-  },
-
-  findExercises(): Exercise[] {
-    return this.exercises;
-  },
-
-  findExerciseById(id: string): Exercise | undefined {
-    return this.exercises.find(e => e.id === id);
-  },
-
-  findExercisesByCategory(category: ExerciseCategory): Exercise[] {
-    return this.exercises.filter(e => e.category === category);
-  },
-
-  findExerciseProgress(userId: string): ExerciseProgress[] {
-    return this.exerciseProgress.filter(p => p.userId === userId);
-  },
-
-  findUsers(): User[] {
-    return this.users;
-  },
-
-  findUserById(id: string): User | undefined {
-    return this.users.find(u => u.id === id);
-  },
-
-  createMedia(media: Omit<Media, 'id' | 'createdAt'>): Media {
-    const newMedia = {
-      ...media,
-      id: String(this.media.length + 1),
-      createdAt: new Date().toISOString()
-    };
-    this.media.push(newMedia);
-    return newMedia;
-  },
-
-  deleteMedia(id: string): void {
-    const index = this.media.findIndex(m => m.id === id);
-    if (index !== -1) {
-      this.media.splice(index, 1);
-    }
-  },
-
-  createExerciseProgress(data: {
-    userId: string;
-    exerciseId: string;
-    completed: boolean;
-    notes?: string;
-    completedAt?: Date;
-  }): ExerciseProgress {
-    const newProgress: ExerciseProgress = {
-      id: String(this.exerciseProgress.length + 1),
-      startedAt: new Date(),
-      ...data
-    };
-    this.exerciseProgress.push(newProgress);
-    return newProgress;
-  }
-}; 
+  findMediaByExerciseId,
+  createMedia,
+  deleteMedia,
+  createExerciseProgress,
+  findExerciseById,
+  findExercises,
+  findExerciseProgress,
+  findUserById,
+  findUsers,
+  findExercisesByCategory,
+  updateExerciseProgress,
+  getExerciseMedia,
+  findUserByEmail
+} as const;

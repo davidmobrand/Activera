@@ -3,9 +3,14 @@
 import { useSession, signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { Button } from './Button'
+import { Session } from 'next-auth'
 
-export function Navbar() {
-  const { data: session } = useSession()
+interface NavbarProps {
+  session: Session | null;
+}
+
+export function Navbar({ session }: NavbarProps) {
+  const isAdmin = session?.user?.role === 'ADMIN'
 
   return (
     <nav className="bg-white shadow-md">
@@ -20,7 +25,7 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center">
-            {session?.user?.role === 'ADMIN' && (
+            {session && (
               <>
                 <Link href="/admin/exercises" className="text-gray-600 hover:text-gray-900 px-3 py-2">
                   Manage Exercises

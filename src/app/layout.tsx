@@ -1,16 +1,16 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import AuthProvider from '@/components/AuthProvider'
-import { Navbar } from '@/components/ui/Navbar'
 import { getServerSession } from 'next-auth'
-import { authOptions } from './api/auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
+import { Navbar } from '@/components/ui/Navbar'
+import { SessionProvider } from '@/components/providers/SessionProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'ACTivera',
-  description: 'ACT therapy exercises platform',
+  title: 'ACTivera - Exercise Progress Tracking',
+  description: 'Track your mindfulness and ACT exercises',
 }
 
 export default async function RootLayout({
@@ -23,12 +23,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider>
-          {session && <Navbar />}
-          <main className="min-h-screen bg-gray-50">
+        <SessionProvider>
+          <Navbar session={session} />
+          <main className="container mx-auto px-4 py-8">
             {children}
           </main>
-        </AuthProvider>
+        </SessionProvider>
       </body>
     </html>
   )

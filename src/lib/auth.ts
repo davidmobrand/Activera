@@ -1,7 +1,6 @@
 import { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { compare } from 'bcrypt'
-import { mockDb } from './mockData'
+import { mockDb } from '@/lib/mockData'
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -19,42 +18,45 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          return null
+          throw new Error('Missing credentials')
         }
 
-        const user = mockDb.findUser(credentials.email)
-
+        const user = mockDb.findUserByEmail(credentials.email)
+        
         if (!user) {
-          return null
+          throw new Error('No user found')
         }
 
-        const isPasswordValid = await compare(credentials.password, user.password)
+        // For development, accept hardcoded passwords
+        const isValidPassword = 
+          (credentials.password === 'admin123' && user.email === 'admin@activera.com') ||
+          (credentials.password === 'client123' && user.email === 'client@example.com')
 
-        if (!isPasswordValid) {
-          return null
+        if (!isValidPassword) {
+          throw new Error('Invalid password')
         }
 
         return {
           id: user.id,
           email: user.email,
           name: user.name,
-          role: user.role,
+          role: user.role
         }
       }
     })
   ],
   callbacks: {
     async session({ session, token }) {
-      if (token && session.user) {
-        session.user.id = token.id as string
-        session.user.role = token.role as string
+      if (session.user) {
+        session.user.role = token.role
+        session.user.id = token.id
       }
       return session
     },
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id
         token.role = user.role
+        token.id = user.id
       }
       return token
     }

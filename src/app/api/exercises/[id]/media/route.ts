@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { mockDb } from '@/lib/mockData'
+import { mockDb, MediaType } from '@/lib/mockData'
 
 interface Props {
   params: {
@@ -9,30 +9,42 @@ interface Props {
   }
 }
 
-export async function POST(request: NextRequest, { params }: Props) {
-  const session = await getServerSession(authOptions)
-  if (!session?.user?.id || session.user.role !== 'ADMIN') {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
+export async function POST(
+  request: NextRequest,
+  { params }: Props
+) {
   try {
-    const formData = await request.formData()
-    const file = formData.get('file') as File
-    const type = formData.get('type') as 'IMAGE' | 'AUDIO'
-
-    if (!file) {
-      return NextResponse.json(
-        { error: 'No file provided' },
-        { status: 400 }
-      )
+    const session = await getServerSession(authOptions)
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Mock file upload - in a real app, we would upload to a storage service
-    const mockUrl = type === 'IMAGE' 
-      ? `https://placekitten.com/800/400?${Date.now()}`
+    const formData = await request.formData()
+    const file = formData.get('file') as File
+    
+    if (!file) {
+      return NextResponse.json({ error: 'No file uploaded' }, { status: 400 })
+    }
+
+    // Determine media type based on file type
+    const type = file.type.startsWith('image/')
+      ? MediaType.IMAGE
+      : file.type.startsWith('audio/')
+      ? MediaType.AUDIO
+      : null
+
+    if (!type) {
+      return NextResponse.json({ error: 'Invalid file type' }, { status: 400 })
+    }
+
+    // In a real app, we would upload the file to a storage service
+    // For now, we'll just create a mock URL
+    const mockUrl = type === MediaType.IMAGE
+      ? `https://example.com/images-${Date.now()}.jpg`
       : `https://example.com/audio-${Date.now()}.mp3`
 
-    const media = mockDb.createMedia(params.id, {
+    const media = mockDb.createMedia({
+      exerciseId: params.id,
       type,
       url: mockUrl,
       name: file.name
@@ -66,32 +78,28 @@ export async function GET(request: NextRequest, { params }: Props) {
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: Props) {
-  const session = await getServerSession(authOptions)
-  if (!session?.user?.id || session.user.role !== 'ADMIN') {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
+export async function DELETE(
+  request: NextRequest,
+  { params }: Props
+) {
   try {
+    const session = await getServerSession(authOptions)
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
     const { searchParams } = new URL(request.url)
     const mediaId = searchParams.get('mediaId')
 
     if (!mediaId) {
       return NextResponse.json(
-        { error: 'No media ID provided' },
+        { error: 'Media ID is required' },
         { status: 400 }
       )
     }
 
-    const success = mockDb.deleteMedia(params.id, mediaId)
-    if (!success) {
-      return NextResponse.json(
-        { error: 'Media not found' },
-        { status: 404 }
-      )
-    }
-
-    return new NextResponse(null, { status: 204 })
+    mockDb.deleteMedia(mediaId)
+    return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Error deleting media:', error)
     return NextResponse.json(

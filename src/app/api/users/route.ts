@@ -6,15 +6,19 @@ import { mockDb } from '@/lib/mockData'
 export async function GET() {
   const session = await getServerSession(authOptions)
   
-  if (!session?.user?.id || session.user.role !== 'ADMIN') {
+  console.log('[API] Users GET - Session:', session)
+
+  if (!session?.user || session.user.role !== 'ADMIN') {
+    console.log('[API] Users GET - Unauthorized access attempt')
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
   try {
     const users = mockDb.findUsers()
+    console.log('[API] Users GET - Success:', { count: users.length })
     return NextResponse.json(users)
   } catch (error) {
-    console.error('Error fetching users:', error)
+    console.error('[API] Users GET - Error:', error)
     return NextResponse.json(
       { error: 'Failed to fetch users' },
       { status: 500 }
@@ -25,7 +29,10 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions)
   
-  if (!session?.user?.id || session.user.role !== 'ADMIN') {
+  console.log('[API] Users POST - Session:', session)
+
+  if (!session?.user || session.user.role !== 'ADMIN') {
+    console.log('[API] Users POST - Unauthorized access attempt')
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
@@ -38,11 +45,10 @@ export async function POST(request: NextRequest) {
       updatedAt: new Date()
     }
     
-    // In a real app, we would save to database
-    // For now, just return the mock user
+    console.log('[API] Users POST - Created user:', newUser)
     return NextResponse.json(newUser)
   } catch (error) {
-    console.error('Error creating user:', error)
+    console.error('[API] Users POST - Error:', error)
     return NextResponse.json(
       { error: 'Failed to create user' },
       { status: 500 }

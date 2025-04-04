@@ -266,178 +266,93 @@ export const exerciseProgress: ExerciseProgress[] = [
   {
     id: '1',
     userId: '2',
-    exerciseId: 'mindful-breathing',
+    exerciseId: '1',
     completed: true,
-    notes: 'This was very helpful for reducing stress.',
-    startedAt: new Date('2024-01-01'),
-    completedAt: new Date('2024-01-01')
-  },
-  {
-    id: '2',
-    userId: '2',
-    exerciseId: 'accepting-emotions',
-    completed: true,
-    notes: 'Found it challenging but rewarding.',
+    notes: 'Felt very relaxed after this session',
     startedAt: new Date('2024-01-15'),
     completedAt: new Date('2024-01-15')
   },
   {
-    id: '3',
-    userId: '3',
-    exerciseId: 'mindful-breathing',
-    completed: true,
-    notes: 'Really helped with anxiety.',
-    startedAt: new Date('2024-02-15'),
-    completedAt: new Date('2024-02-15')
-  },
-  {
-    id: '4',
-    userId: '3',
-    exerciseId: 'body-scan',
-    completed: true,
-    notes: 'Felt more relaxed afterward.',
-    startedAt: new Date('2024-02-20'),
-    completedAt: new Date('2024-02-20')
-  },
-  {
-    id: '5',
-    userId: '4',
-    exerciseId: 'values-exploration',
-    completed: true,
-    notes: 'Helped clarify my priorities.',
-    startedAt: new Date('2024-03-01'),
-    completedAt: new Date('2024-03-01')
-  },
-  {
-    id: '6',
-    userId: '4',
-    exerciseId: 'committed-action',
+    id: '2',
+    userId: '2',
+    exerciseId: '2',
     completed: false,
-    notes: 'Working on implementing changes.',
-    startedAt: new Date('2024-03-10')
-  },
-  {
-    id: '7',
-    userId: '5',
-    exerciseId: 'self-compassion',
-    completed: true,
-    notes: 'This practice was transformative.',
-    startedAt: new Date('2024-03-15'),
-    completedAt: new Date('2024-03-15')
-  },
-  {
-    id: '8',
-    userId: '5',
-    exerciseId: 'defusion-techniques',
-    completed: false,
-    notes: 'Still practicing these techniques.',
-    startedAt: new Date('2024-03-20')
+    startedAt: new Date('2024-01-16')
   }
 ];
 
-// Mock Database Implementation
-export function findMediaByExerciseId(exerciseId: string): Media[] {
-  return mediaFiles.filter(media => media.exerciseId === exerciseId);
-}
-
-export function createMedia(media: Omit<Media, 'id' | 'createdAt'>): Media {
-  const newMedia: Media = {
-    ...media,
-    id: Math.random().toString(36).substring(7),
-    createdAt: new Date().toISOString()
-  };
-  mediaFiles.push(newMedia);
-  return newMedia;
-}
-
-export function deleteMedia(id: string): void {
-  const index = mediaFiles.findIndex(media => media.id === id);
-  if (index !== -1) {
-    mediaFiles.splice(index, 1);
-  }
-}
-
-export function createExerciseProgress(data: {
-  userId: string;
-  exerciseId: string;
-  completed: boolean;
-  notes?: string;
-  completedAt?: Date;
-}): ExerciseProgress {
-  const newProgress: ExerciseProgress = {
-    id: Math.random().toString(36).substring(7),
-    userId: data.userId,
-    exerciseId: data.exerciseId,
-    completed: data.completed,
-    notes: data.notes,
-    startedAt: new Date(),
-    completedAt: data.completedAt
-  };
-  exerciseProgress.push(newProgress);
-  return newProgress;
-}
-
-export function findExerciseById(id: string): Exercise | undefined {
-  return exercises.find(exercise => exercise.id === id);
-}
-
-export function findExercises(): Exercise[] {
-  return exercises;
-}
-
-export function findExerciseProgress(userId: string): ExerciseProgress[] {
-  return exerciseProgress.filter(progress => progress.userId === userId);
-}
-
-export function findUserById(id: string): User | undefined {
-  return users.find(user => user.id === id);
-}
-
-export function findUsers(): User[] {
-  return users;
-}
-
-export function findExercisesByCategory(category: ExerciseCategory): Exercise[] {
-  return exercises.filter(exercise => exercise.category === category);
-}
-
-export function updateExerciseProgress(id: string, data: { completed: boolean; completedAt?: Date }): ExerciseProgress {
-  const index = exerciseProgress.findIndex(progress => progress.id === id);
-  if (index === -1) {
-    throw new Error('Exercise progress not found');
-  }
-  
-  const updatedProgress = {
-    ...exerciseProgress[index],
-    ...data
-  };
-  exerciseProgress[index] = updatedProgress;
-  return updatedProgress;
-}
-
-export function getExerciseMedia(mediaIds: string[]): Media[] {
-  return mediaFiles.filter(media => mediaIds.includes(media.id));
-}
-
-export function findUserByEmail(email: string): User | undefined {
-  return users.find(user => user.email === email);
-}
-
-// Export a namespace object with all functions and data
+// Mock Database Functions
 export const mockDb = {
-  media: mediaFiles,
-  exercises,
-  findMediaByExerciseId,
-  createMedia,
-  deleteMedia,
-  createExerciseProgress,
-  findExerciseById,
-  findExercises,
-  findExerciseProgress,
-  findUserById,
-  findUsers,
-  findExercisesByCategory,
-  updateExerciseProgress,
-  getExerciseMedia,
-  findUserByEmail
-} as const;
+  findMediaByExerciseId: (exerciseId: string) => {
+    return mediaFiles.filter(media => media.exerciseId === exerciseId);
+  },
+
+  createMedia: (media: Omit<Media, 'id' | 'createdAt'>) => {
+    const newMedia = {
+      ...media,
+      id: String(mediaFiles.length + 1),
+      createdAt: new Date().toISOString()
+    };
+    mediaFiles.push(newMedia);
+    return newMedia;
+  },
+
+  deleteMedia: (id: string) => {
+    const index = mediaFiles.findIndex(media => media.id === id);
+    if (index !== -1) {
+      mediaFiles.splice(index, 1);
+      return true;
+    }
+    return false;
+  },
+
+  findExerciseById: (id: string) => {
+    return exercises.find(exercise => exercise.id === id);
+  },
+
+  findExercises: () => {
+    return exercises;
+  },
+
+  findExercisesByCategory: (category: ExerciseCategory) => {
+    return exercises.filter(exercise => exercise.category === category);
+  },
+
+  findExerciseProgress: (userId: string) => {
+    return exerciseProgress.filter(progress => progress.userId === userId);
+  },
+
+  createExerciseProgress: (progress: Omit<ExerciseProgress, 'id'>) => {
+    const newProgress = {
+      ...progress,
+      id: String(exerciseProgress.length + 1)
+    };
+    exerciseProgress.push(newProgress);
+    return newProgress;
+  },
+
+  updateExerciseProgress: (id: string, data: Partial<ExerciseProgress>) => {
+    const index = exerciseProgress.findIndex(progress => progress.id === id);
+    if (index !== -1) {
+      exerciseProgress[index] = { ...exerciseProgress[index], ...data };
+      return exerciseProgress[index];
+    }
+    return null;
+  },
+
+  findUserById: (id: string) => {
+    return users.find(user => user.id === id);
+  },
+
+  findUserByEmail: (email: string) => {
+    return users.find(user => user.email === email);
+  },
+
+  findUsers: () => {
+    return users;
+  },
+
+  getExerciseMedia: (exerciseId: string) => {
+    return mediaFiles.filter(media => media.exerciseId === exerciseId);
+  }
+};

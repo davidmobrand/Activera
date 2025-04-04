@@ -1,15 +1,16 @@
 'use client'
 
 import { Exercise } from '@/lib/types'
-import { useLanguage, Language } from '@/lib/hooks/useLanguage'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+import type { Language } from '@/lib/i18n/types'
 
 interface ExerciseDetailProps {
   exercise: Exercise
 }
 
 export function ExerciseDetail({ exercise }: ExerciseDetailProps) {
-  const { currentLanguage } = useLanguage()
-  const translation = exercise.translations[currentLanguage as Language]
+  const { language } = useLanguage()
+  const translation = exercise.translations[language]
 
   return (
     <div className="bg-white shadow-lg rounded-lg p-8">

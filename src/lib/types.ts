@@ -1,4 +1,4 @@
-import { Language } from './hooks/useLanguage'
+import { Language } from './i18n/types'
 
 export enum UserRole {
   ADMIN = 'ADMIN',

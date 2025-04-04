@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { Exercise, ExerciseCategoryEnum } from '@/lib/types'
-import { useLanguage, Language } from '@/lib/hooks/useLanguage'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+import type { Language } from '@/lib/i18n/types'
 
 interface ExerciseListProps {
   exercises: Exercise[]
@@ -10,7 +11,7 @@ interface ExerciseListProps {
 }
 
 export function ExerciseList({ exercises, category }: ExerciseListProps) {
-  const { currentLanguage } = useLanguage()
+  const { language } = useLanguage()
 
   return (
     <div className="space-y-4">
@@ -22,7 +23,7 @@ export function ExerciseList({ exercises, category }: ExerciseListProps) {
         >
           <div className="bg-white shadow rounded-lg p-6 hover:shadow-lg transition-shadow">
             <h2 className="text-xl font-semibold text-gray-900 mb-2">
-              {exercise.translations[currentLanguage as Language].title}
+              {exercise.translations[language].title}
             </h2>
             <div className="flex justify-between items-center">
               <span className="text-sm text-gray-500">

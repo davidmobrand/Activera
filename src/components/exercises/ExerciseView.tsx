@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Exercise, Media, MediaType } from '@/lib/types'
 import { mockDb } from '@/lib/mockData'
-import { useLanguage } from '@/lib/hooks/useLanguage'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 interface ExerciseViewProps {
   exercise: Exercise
@@ -15,7 +15,7 @@ interface ExerciseViewProps {
 
 export function ExerciseView({ exercise, onComplete }: ExerciseViewProps) {
   const router = useRouter()
-  const { currentLanguage } = useLanguage()
+  const { language } = useLanguage()
   const [media, setMedia] = useState<Media[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -58,7 +58,7 @@ export function ExerciseView({ exercise, onComplete }: ExerciseViewProps) {
     )
   }
 
-  const translation = exercise.translations[currentLanguage]
+  const translation = exercise.translations[language]
 
   return (
     <div className="space-y-6">

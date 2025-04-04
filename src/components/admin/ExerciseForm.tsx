@@ -6,7 +6,8 @@ import { Editor } from '@tinymce/tinymce-react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Exercise, Media } from '@/lib/types'
-import { Language } from '@/lib/hooks/useLanguage'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+import type { Language } from '@/lib/i18n/types'
 import type { Editor as TinyMCEEditor } from 'tinymce'
 
 interface ExerciseFormProps {
@@ -23,8 +24,8 @@ interface FilePickerMeta {
 
 export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
   const router = useRouter()
+  const { language, setLanguage } = useLanguage()
   const [exercise, setExercise] = useState(initialExercise)
-  const [currentLanguage, setCurrentLanguage] = useState<Language>('en')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isUploading, setIsUploading] = useState(false)
@@ -118,8 +119,8 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
       ...exercise,
       translations: {
         ...exercise.translations,
-        [currentLanguage]: {
-          ...exercise.translations[currentLanguage],
+        [language]: {
+          ...exercise.translations[language],
           [field]: value
         }
       }
@@ -131,15 +132,15 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
       <div className="flex gap-4 mb-4">
         <Button
           type="button"
-          onClick={() => setCurrentLanguage('en')}
-          variant={currentLanguage === 'en' ? 'primary' : 'secondary'}
+          onClick={() => setLanguage('en')}
+          variant={language === 'en' ? 'primary' : 'secondary'}
         >
           English
         </Button>
         <Button
           type="button"
-          onClick={() => setCurrentLanguage('sv')}
-          variant={currentLanguage === 'sv' ? 'primary' : 'secondary'}
+          onClick={() => setLanguage('sv')}
+          variant={language === 'sv' ? 'primary' : 'secondary'}
         >
           Swedish
         </Button>
@@ -151,7 +152,7 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
         </label>
         <input
           type="text"
-          value={exercise.translations[currentLanguage].title}
+          value={exercise.translations[language].title}
           onChange={(e) => updateTranslation('title', e.target.value)}
           className="w-full rounded-md border border-gray-300 px-4 py-2"
           required
@@ -184,7 +185,7 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
             onInit={(_evt: unknown, editor: TinyMCEEditor) => {
               editorRef.current = editor
             }}
-            value={exercise.translations[currentLanguage].content}
+            value={exercise.translations[language].content}
             onEditorChange={(content: string) => updateTranslation('content', content)}
             init={{
               height: '100%',

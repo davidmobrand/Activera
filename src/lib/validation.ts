@@ -50,7 +50,7 @@ export const ExerciseProgressSchema = z.object({
 // Input Validation Schemas
 export const CreateUserSchema = UserSchema.omit({ id: true, createdAt: true, updatedAt: true });
 export const CreateExerciseSchema = ExerciseSchema.omit({ id: true, createdAt: true, updatedAt: true });
-export const CreateMediaSchema = MediaSchema.omit({ id: true, createdAt: true });
+export const CreateMediaSchema = MediaSchema.omit({ id: true, createdAt: true, updatedAt: true });
 export const CreateExerciseProgressSchema = ExerciseProgressSchema.omit({ id: true });
 
 // Update Validation Schemas

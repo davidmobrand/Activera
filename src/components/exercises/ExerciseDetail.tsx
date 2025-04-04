@@ -1,3 +1,5 @@
+'use client'
+
 import { Exercise } from '@/lib/types'
 import { useLanguage, Language } from '@/lib/hooks/useLanguage'
 

@@ -18,7 +18,7 @@ export default async function ExercisePage({ params }: Props) {
     return <NotLoggedIn />
   }
 
-  const exercise = mockDb.findExerciseById(params.id)
+  const exercise = await mockDb.exercises.findById(params.id)
   if (!exercise || exercise.category.toLowerCase() !== params.category.toLowerCase()) {
     return notFound()
   }

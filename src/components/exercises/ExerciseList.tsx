@@ -1,12 +1,17 @@
+'use client'
+
 import Link from 'next/link'
-import { Exercise } from '@/lib/types'
+import { Exercise, ExerciseCategoryEnum } from '@/lib/types'
+import { useLanguage, Language } from '@/lib/hooks/useLanguage'
 
 interface ExerciseListProps {
   exercises: Exercise[]
-  category: string
+  category: ExerciseCategoryEnum
 }
 
 export function ExerciseList({ exercises, category }: ExerciseListProps) {
+  const { currentLanguage } = useLanguage()
+
   return (
     <div className="space-y-4">
       {exercises.map((exercise) => (
@@ -17,7 +22,7 @@ export function ExerciseList({ exercises, category }: ExerciseListProps) {
         >
           <div className="bg-white shadow rounded-lg p-6 hover:shadow-lg transition-shadow">
             <h2 className="text-xl font-semibold text-gray-900 mb-2">
-              {exercise.title}
+              {exercise.translations[currentLanguage as Language].title}
             </h2>
             <div className="flex justify-between items-center">
               <span className="text-sm text-gray-500">

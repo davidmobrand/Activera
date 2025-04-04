@@ -13,7 +13,7 @@ export async function GET(
       return new Response('Unauthorized', { status: 401 })
     }
 
-    const exercise = await mockDb.findExerciseById(params.id)
+    const exercise = await mockDb.exercises.findById(params.id)
     if (!exercise) {
       return new Response('Exercise not found', { status: 404 })
     }
@@ -35,7 +35,7 @@ export async function PUT(
       return new Response('Unauthorized', { status: 401 })
     }
 
-    const exercise = await mockDb.findExerciseById(params.id)
+    const exercise = await mockDb.exercises.findById(params.id)
     if (!exercise) {
       return new Response('Exercise not found', { status: 404 })
     }
@@ -46,7 +46,7 @@ export async function PUT(
     }
 
     const data = await request.json()
-    const updatedExercise = await mockDb.updateExercise(params.id, data)
+    const updatedExercise = await mockDb.exercises.update(params.id, data)
     if (!updatedExercise) {
       return new Response('Failed to update exercise', { status: 500 })
     }
@@ -68,7 +68,7 @@ export async function DELETE(
       return new Response('Unauthorized', { status: 401 })
     }
 
-    const exercise = await mockDb.findExerciseById(params.id)
+    const exercise = await mockDb.exercises.findById(params.id)
     if (!exercise) {
       return new Response('Exercise not found', { status: 404 })
     }
@@ -78,11 +78,7 @@ export async function DELETE(
       return new Response('Unauthorized', { status: 401 })
     }
 
-    const success = await mockDb.deleteExercise(params.id)
-    if (!success) {
-      return new Response('Failed to delete exercise', { status: 500 })
-    }
-
+    await mockDb.exercises.delete(params.id)
     return new Response(null, { status: 204 })
   } catch (error) {
     console.error('Error deleting exercise:', error)

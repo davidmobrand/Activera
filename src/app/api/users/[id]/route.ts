@@ -13,7 +13,7 @@ export async function GET(
       return new Response('Unauthorized', { status: 401 })
     }
 
-    const user = await mockDb.findUserById(params.id)
+    const user = await mockDb.users.findById(params.id)
     if (!user) {
       return new Response('User not found', { status: 404 })
     }
@@ -40,7 +40,7 @@ export async function PUT(
       return new Response('Unauthorized', { status: 401 })
     }
 
-    const user = await mockDb.findUserById(params.id)
+    const user = await mockDb.users.findById(params.id)
     if (!user) {
       return new Response('User not found', { status: 404 })
     }
@@ -51,12 +51,7 @@ export async function PUT(
     }
 
     const data = await request.json()
-    const updatedUser = await mockDb.updateUser(params.id, data)
-
-    if (!updatedUser) {
-      return new Response('Failed to update user', { status: 500 })
-    }
-
+    const updatedUser = await mockDb.users.update(params.id, data)
     return Response.json(updatedUser)
   } catch (error) {
     console.error('Error updating user:', error)
@@ -79,11 +74,12 @@ export async function DELETE(
       return new Response('Unauthorized', { status: 401 })
     }
 
-    const success = await mockDb.deleteUser(params.id)
-    if (!success) {
+    const user = await mockDb.users.findById(params.id)
+    if (!user) {
       return new Response('User not found', { status: 404 })
     }
 
+    await mockDb.users.delete(params.id)
     return new Response(null, { status: 204 })
   } catch (error) {
     console.error('Error deleting user:', error)

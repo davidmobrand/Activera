@@ -1,13 +1,13 @@
 import { z } from 'zod';
-import { UserRole, ExerciseCategory, MediaType } from './types';
+import { UserRole, ExerciseCategoryEnum, MediaType } from './types';
 
 // User Validation
 export const UserSchema = z.object({
   id: z.string(),
-  name: z.string().optional(),
+  name: z.string().min(1),
   email: z.string().email(),
   password: z.string().min(8),
-  role: z.enum([UserRole.ADMIN, UserRole.CLIENT]),
+  role: z.nativeEnum(UserRole),
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime()
 });
@@ -26,7 +26,7 @@ const TranslationsSchema = z.object({
 export const ExerciseSchema = z.object({
   id: z.string(),
   translations: TranslationsSchema,
-  category: z.nativeEnum(ExerciseCategory),
+  category: z.nativeEnum(ExerciseCategoryEnum),
   userId: z.string(),
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime(),

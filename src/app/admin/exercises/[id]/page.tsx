@@ -16,7 +16,7 @@ export default async function EditExercisePage({ params }: Props) {
     redirect('/login')
   }
 
-  const exercise = mockDb.findExerciseById(params.id)
+  const exercise = await mockDb.exercises.findById(params.id)
   if (!exercise) {
     return notFound()
   }
@@ -24,7 +24,7 @@ export default async function EditExercisePage({ params }: Props) {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-gray-900 mb-8">
-        Edit Exercise: {exercise.title}
+        Edit Exercise: {exercise.translations.en.title}
       </h1>
 
       <ExerciseForm exercise={exercise} />

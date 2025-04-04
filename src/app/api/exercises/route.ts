@@ -1,20 +1,24 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { Exercise, ExerciseCategory, UserRole } from '@/lib/types'
+import { ExerciseCategoryEnum, UserRole } from '@/lib/types'
 import { mockDb } from '@/lib/mockData'
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session?.user?.id) {
-      return new Response('Unauthorized', { status: 401 })
+    const searchParams = request.nextUrl.searchParams
+    const category = searchParams.get('category') as ExerciseCategoryEnum | null
+
+    if (category) {
+      const exercises = await mockDb.exercises.findByCategory(category)
+      return NextResponse.json(exercises)
     }
 
-    const exercises = await mockDb.findExercisesByCategory(ExerciseCategory.NARVARO)
-    return Response.json(exercises)
+    const exercises = await mockDb.exercises.findByCategory(ExerciseCategoryEnum.NARVARO)
+    return NextResponse.json(exercises)
   } catch (error) {
     console.error('Error fetching exercises:', error)
-    return new Response('Internal Server Error', { status: 500 })
+    return NextResponse.json({ error: 'Failed to fetch exercises' }, { status: 500 })
   }
 }
 
@@ -26,11 +30,7 @@ export async function POST(request: Request) {
     }
 
     const data = await request.json()
-    const exercise = await mockDb.createExercise({
-      ...data,
-      userId: session.user.id
-    })
-
+    const exercise = await mockDb.exercises.create(data)
     return Response.json(exercise)
   } catch (error) {
     console.error('Error creating exercise:', error)
@@ -40,28 +40,14 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session?.user?.id || session.user.role !== UserRole.ADMIN) {
-      return new Response('Unauthorized', { status: 401 })
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+    if (!id) {
+      return new Response('Missing exercise ID', { status: 400 })
     }
 
     const data = await request.json()
-    const { id } = data
-
-    if (!id) {
-      return new Response('Exercise ID is required', { status: 400 })
-    }
-
-    const exercise = await mockDb.findExerciseById(id)
-    if (!exercise) {
-      return new Response('Exercise not found', { status: 404 })
-    }
-
-    const updatedExercise = await mockDb.updateExercise(id, data)
-    if (!updatedExercise) {
-      return new Response('Failed to update exercise', { status: 500 })
-    }
-
+    const updatedExercise = await mockDb.exercises.update(id, data)
     return Response.json(updatedExercise)
   } catch (error) {
     console.error('Error updating exercise:', error)

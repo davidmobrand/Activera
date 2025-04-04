@@ -1,4 +1,4 @@
-import { Exercise, ExerciseCategory } from '../types';
+import { Exercise, ExerciseCategoryEnum } from '@/lib/types';
 import { CreateExerciseSchema, ExerciseSchema, UpdateExerciseSchema } from '../validation';
 import type { CreateExercise } from '../validation';
 
@@ -10,42 +10,64 @@ export const exercises: Exercise[] = [
       en: {
         title: 'Mindful Breathing',
         content: `
-          <h2>Mindful Breathing Exercise</h2>
-          <p>This simple yet powerful mindfulness exercise helps you stay present and centered.</p>
-          <h3>Instructions:</h3>
+          <h2>Introduction</h2>
+          <p>Mindful breathing is a fundamental meditation practice that helps you stay present and focused.</p>
+          
+          <h2>Instructions</h2>
           <ol>
-            <li>Find a comfortable sitting position</li>
+            <li>Find a comfortable position</li>
             <li>Close your eyes or maintain a soft gaze</li>
-            <li>Focus your attention on your breathing</li>
-            <li>Observe the sensation of breathing without trying to change it</li>
-            <li>When your mind wanders, gently bring attention back to the breath</li>
+            <li>Focus on your natural breath</li>
+            <li>Notice the sensations of breathing</li>
+            <li>When your mind wanders, gently return to the breath</li>
           </ol>
-          <p>Practice this exercise for 5-10 minutes daily to develop mindfulness.</p>
-        `,
+          
+          <h2>Duration</h2>
+          <p>Start with 5 minutes and gradually increase to 15-20 minutes.</p>
+          
+          <h2>Benefits</h2>
+          <ul>
+            <li>Reduces stress and anxiety</li>
+            <li>Improves focus and concentration</li>
+            <li>Enhances emotional regulation</li>
+            <li>Promotes relaxation</li>
+          </ul>
+        `
       },
       sv: {
         title: 'Medveten Andning',
         content: `
-          <h2>Övning i Medveten Andning</h2>
-          <p>Denna enkla men kraftfulla mindfulness-övning hjälper dig att vara närvarande och centrerad.</p>
-          <h3>Instruktioner:</h3>
+          <h2>Introduktion</h2>
+          <p>Medveten andning är en grundläggande meditationsövning som hjälper dig att vara närvarande och fokuserad.</p>
+          
+          <h2>Instruktioner</h2>
           <ol>
-            <li>Hitta en bekväm sittande position</li>
-            <li>Blunda eller håll en mjuk blick</li>
-            <li>Fokusera din uppmärksamhet på din andning</li>
-            <li>Observera känslan av att andas utan att försöka förändra den</li>
-            <li>När dina tankar vandrar, för varsamt tillbaka uppmärksamheten till andningen</li>
+            <li>Hitta en bekväm position</li>
+            <li>Blunda eller behåll en mjuk blick</li>
+            <li>Fokusera på din naturliga andning</li>
+            <li>Uppmärksamma andningens förnimmelser</li>
+            <li>När dina tankar vandrar, återgå varsamt till andningen</li>
           </ol>
-          <p>Öva denna övning 5-10 minuter dagligen för att utveckla mindfulness.</p>
-        `,
-      },
+          
+          <h2>Varaktighet</h2>
+          <p>Börja med 5 minuter och öka gradvis till 15-20 minuter.</p>
+          
+          <h2>Fördelar</h2>
+          <ul>
+            <li>Minskar stress och ångest</li>
+            <li>Förbättrar fokus och koncentration</li>
+            <li>Förbättrar emotionell reglering</li>
+            <li>Främjar avslappning</li>
+          </ul>
+        `
+      }
     },
-    category: ExerciseCategory.NARVARO,
+    category: ExerciseCategoryEnum.NARVARO,
     userId: '1',
-    createdAt: new Date('2024-01-01').toISOString(),
-    updatedAt: new Date('2024-01-01').toISOString(),
-    mediaIds: ['1', '2'],
-    order: 1,
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z',
+    mediaIds: [],
+    order: 1
   },
   {
     id: '2',
@@ -53,42 +75,64 @@ export const exercises: Exercise[] = [
       en: {
         title: 'Body Scan',
         content: `
-          <h2>Body Scan Exercise</h2>
-          <p>A guided exercise to increase awareness of your body and release physical tension.</p>
-          <h3>Instructions:</h3>
+          <h2>Introduction</h2>
+          <p>The body scan is a practice that helps you develop awareness of physical sensations and release tension.</p>
+          
+          <h2>Instructions</h2>
           <ol>
-            <li>Lie on your back in a comfortable position</li>
-            <li>Start by bringing attention to your toes</li>
-            <li>Slowly move your attention through the entire body</li>
-            <li>Observe all sensations without judgment</li>
-            <li>End by feeling the body as a whole</li>
+            <li>Lie down in a comfortable position</li>
+            <li>Close your eyes</li>
+            <li>Bring attention to your toes</li>
+            <li>Gradually move attention up through your body</li>
+            <li>Notice any sensations without judgment</li>
           </ol>
-          <p>This exercise takes about 20 minutes and can be done before bedtime for better sleep.</p>
-        `,
+          
+          <h2>Duration</h2>
+          <p>15-30 minutes is recommended.</p>
+          
+          <h2>Benefits</h2>
+          <ul>
+            <li>Improves body awareness</li>
+            <li>Reduces physical tension</li>
+            <li>Enhances relaxation</li>
+            <li>Helps with sleep</li>
+          </ul>
+        `
       },
       sv: {
         title: 'Kroppsskanning',
         content: `
-          <h2>Övning i Kroppsskanning</h2>
-          <p>En guidad övning för att öka medvetenheten om din kropp och släppa fysisk spänning.</p>
-          <h3>Instruktioner:</h3>
+          <h2>Introduktion</h2>
+          <p>Kroppsskanningen är en övning som hjälper dig att utveckla medvetenhet om fysiska förnimmelser och släppa spänningar.</p>
+          
+          <h2>Instruktioner</h2>
           <ol>
-            <li>Ligg på rygg i en bekväm position</li>
-            <li>Börja med att uppmärksamma dina tår</li>
-            <li>Flytta långsamt uppmärksamheten genom hela kroppen</li>
-            <li>Observera alla förnimmelser utan att döma</li>
-            <li>Avsluta med att känna hela kroppen som en helhet</li>
+            <li>Lägg dig i en bekväm position</li>
+            <li>Blunda</li>
+            <li>Rikta uppmärksamheten mot dina tår</li>
+            <li>Flytta gradvis uppmärksamheten uppåt genom kroppen</li>
+            <li>Notera alla förnimmelser utan att döma</li>
           </ol>
-          <p>Denna övning tar cirka 20 minuter och kan göras före sänggående för bättre sömn.</p>
-        `,
-      },
+          
+          <h2>Varaktighet</h2>
+          <p>15-30 minuter rekommenderas.</p>
+          
+          <h2>Fördelar</h2>
+          <ul>
+            <li>Förbättrar kroppsmedvetenhet</li>
+            <li>Minskar fysiska spänningar</li>
+            <li>Ökar avslappning</li>
+            <li>Hjälper till med sömn</li>
+          </ul>
+        `
+      }
     },
-    category: ExerciseCategory.NARVARO,
+    category: ExerciseCategoryEnum.NARVARO,
     userId: '1',
-    createdAt: new Date('2024-01-02').toISOString(),
-    updatedAt: new Date('2024-01-02').toISOString(),
-    mediaIds: ['3', '4'],
-    order: 2,
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z',
+    mediaIds: [],
+    order: 2
   },
   {
     id: '3',
@@ -96,41 +140,63 @@ export const exercises: Exercise[] = [
       en: {
         title: 'Five Senses Exercise',
         content: `
-          <h2>Five Senses Awareness Exercise</h2>
-          <p>An exercise to ground yourself in the present moment through your senses.</p>
-          <h3>Notice:</h3>
+          <h2>Introduction</h2>
+          <p>This exercise helps ground you in the present moment by engaging all your senses.</p>
+          
+          <h2>Instructions</h2>
+          <ol>
+            <li>Notice 5 things you can see</li>
+            <li>Notice 4 things you can touch</li>
+            <li>Notice 3 things you can hear</li>
+            <li>Notice 2 things you can smell</li>
+            <li>Notice 1 thing you can taste</li>
+          </ol>
+          
+          <h2>Duration</h2>
+          <p>5-10 minutes is typical.</p>
+          
+          <h2>Benefits</h2>
           <ul>
-            <li>5 things you can see</li>
-            <li>4 things you can feel</li>
-            <li>3 things you can hear</li>
-            <li>2 things you can smell</li>
-            <li>1 thing you can taste</li>
+            <li>Grounds you in the present</li>
+            <li>Reduces anxiety</li>
+            <li>Improves mindfulness</li>
+            <li>Can be done anywhere</li>
           </ul>
-          <p>Use this exercise when you feel overwhelmed or need to ground yourself in the present moment.</p>
-        `,
+        `
       },
       sv: {
         title: 'Fem Sinnen Övning',
         content: `
-          <h2>Fem Sinnen Medvetenhetsövning</h2>
-          <p>En övning för att förankra dig i nuet genom dina sinnen.</p>
-          <h3>Notera:</h3>
+          <h2>Introduktion</h2>
+          <p>Denna övning hjälper dig att förankra dig i nuet genom att engagera alla dina sinnen.</p>
+          
+          <h2>Instruktioner</h2>
+          <ol>
+            <li>Notera 5 saker du kan se</li>
+            <li>Notera 4 saker du kan känna</li>
+            <li>Notera 3 saker du kan höra</li>
+            <li>Notera 2 saker du kan lukta</li>
+            <li>Notera 1 sak du kan smaka</li>
+          </ol>
+          
+          <h2>Varaktighet</h2>
+          <p>5-10 minuter är vanligt.</p>
+          
+          <h2>Fördelar</h2>
           <ul>
-            <li>5 saker du kan se</li>
-            <li>4 saker du kan känna</li>
-            <li>3 saker du kan höra</li>
-            <li>2 saker du kan lukta</li>
-            <li>1 sak du kan smaka</li>
+            <li>Förankrar dig i nuet</li>
+            <li>Minskar ångest</li>
+            <li>Förbättrar mindfulness</li>
+            <li>Kan göras var som helst</li>
           </ul>
-          <p>Använd denna övning när du känner dig överväldigad eller behöver grunda dig i nuet.</p>
-        `,
-      },
+        `
+      }
     },
-    category: ExerciseCategory.NARVARO,
+    category: ExerciseCategoryEnum.NARVARO,
     userId: '1',
-    createdAt: '2024-01-03T00:00:00Z',
-    updatedAt: '2024-01-03T00:00:00Z',
-    mediaIds: ['5'],
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z',
+    mediaIds: [],
     order: 3
   },
   {
@@ -139,40 +205,64 @@ export const exercises: Exercise[] = [
       en: {
         title: 'Thoughts as Leaves',
         content: `
-          <h2>Exercise: Thoughts as Leaves on a Stream</h2>
-          <p>A metaphorical exercise to practice observing thoughts without getting caught up in them.</p>
-          <h3>Instructions:</h3>
+          <h2>Introduction</h2>
+          <p>This exercise helps you practice observing your thoughts without getting caught up in them.</p>
+          
+          <h2>Instructions</h2>
           <ol>
-            <li>Imagine a calm stream with leaves floating by</li>
-            <li>As thoughts arise, place them on the leaves</li>
-            <li>Watch as the leaves carrying your thoughts float away</li>
-            <li>Return to the stream when you notice you've gotten caught up in a thought</li>
+            <li>Imagine sitting by a stream</li>
+            <li>Picture leaves floating by</li>
+            <li>Place each thought on a leaf</li>
+            <li>Watch the thoughts float away</li>
+            <li>Return to watching the stream</li>
           </ol>
-          <p>This exercise helps you create distance from your thoughts and see them as mental events rather than facts.</p>
-        `,
+          
+          <h2>Duration</h2>
+          <p>10-15 minutes is recommended.</p>
+          
+          <h2>Benefits</h2>
+          <ul>
+            <li>Develops cognitive defusion</li>
+            <li>Reduces thought attachment</li>
+            <li>Increases psychological flexibility</li>
+            <li>Enhances mindfulness</li>
+          </ul>
+        `
       },
       sv: {
         title: 'Tankar som Löv',
         content: `
-          <h2>Övning: Tankar som Löv på en Ström</h2>
-          <p>En metaforisk övning för att öva på att observera tankar utan att fastna i dem.</p>
-          <h3>Instruktioner:</h3>
+          <h2>Introduktion</h2>
+          <p>Denna övning hjälper dig att öva på att observera dina tankar utan att fastna i dem.</p>
+          
+          <h2>Instruktioner</h2>
           <ol>
-            <li>Föreställ dig en lugn ström med löv som flyter förbi</li>
-            <li>När tankar dyker upp, placera dem på löven</li>
-            <li>Observera hur löven med dina tankar flyter iväg</li>
-            <li>Återvänd till strömmen när du märker att du fastnat i en tanke</li>
+            <li>Föreställ dig att du sitter vid en bäck</li>
+            <li>Visualisera löv som flyter förbi</li>
+            <li>Placera varje tanke på ett löv</li>
+            <li>Se tankarna flyta iväg</li>
+            <li>Återgå till att titta på strömmen</li>
           </ol>
-          <p>Denna övning hjälper dig att skapa distans till dina tankar och se dem som mentala händelser snarare än fakta.</p>
-        `,
-      },
+          
+          <h2>Varaktighet</h2>
+          <p>10-15 minuter rekommenderas.</p>
+          
+          <h2>Fördelar</h2>
+          <ul>
+            <li>Utvecklar kognitiv defusion</li>
+            <li>Minskar tankefixering</li>
+            <li>Ökar psykologisk flexibilitet</li>
+            <li>Förbättrar mindfulness</li>
+          </ul>
+        `
+      }
     },
-    category: ExerciseCategory.OPPENHET,
+    category: ExerciseCategoryEnum.OPPENHET,
     userId: '1',
-    createdAt: '2024-01-04T00:00:00Z',
-    updatedAt: '2024-01-04T00:00:00Z',
-    mediaIds: ['6'],
-    order: 1
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z',
+    mediaIds: [],
+    order: 4
   },
   {
     id: '5',
@@ -180,40 +270,64 @@ export const exercises: Exercise[] = [
       en: {
         title: 'Values Compass',
         content: `
-          <h2>Values Compass Exercise</h2>
-          <p>An exercise to explore and clarify your personal values.</p>
-          <h3>Steps:</h3>
+          <h2>Introduction</h2>
+          <p>The Values Compass helps you identify and clarify your personal values to guide meaningful action.</p>
+          
+          <h2>Instructions</h2>
           <ol>
-            <li>Identify important life areas (family, work, health, etc.)</li>
-            <li>Reflect on what matters within each area</li>
-            <li>Write down concrete actions that reflect these values</li>
-            <li>Evaluate how well your life aligns with your values</li>
+            <li>List important life areas</li>
+            <li>Reflect on what matters most</li>
+            <li>Rate current alignment</li>
+            <li>Identify action steps</li>
+            <li>Commit to small changes</li>
           </ol>
-          <p>Use this compass regularly to stay on course in life.</p>
-        `,
+          
+          <h2>Duration</h2>
+          <p>30-45 minutes for initial exercise.</p>
+          
+          <h2>Benefits</h2>
+          <ul>
+            <li>Clarifies personal values</li>
+            <li>Guides decision-making</li>
+            <li>Increases life satisfaction</li>
+            <li>Motivates meaningful action</li>
+          </ul>
+        `
       },
       sv: {
-        title: 'Värderingskompass',
+        title: 'Värdekompass',
         content: `
-          <h2>Värderingskompass Övning</h2>
-          <p>En övning för att utforska och förtydliga dina personliga värderingar.</p>
-          <h3>Steg:</h3>
+          <h2>Introduktion</h2>
+          <p>Värdekompassen hjälper dig att identifiera och förtydliga dina personliga värderingar för att vägleda meningsfull handling.</p>
+          
+          <h2>Instruktioner</h2>
           <ol>
-            <li>Identifiera viktiga livsområden (familj, arbete, hälsa, etc.)</li>
-            <li>Reflektera över vad som är viktigt inom varje område</li>
-            <li>Skriv ner konkreta handlingar som speglar dessa värderingar</li>
-            <li>Utvärdera hur väl ditt liv stämmer överens med dina värderingar</li>
+            <li>Lista viktiga livsområden</li>
+            <li>Reflektera över vad som betyder mest</li>
+            <li>Bedöm nuvarande överensstämmelse</li>
+            <li>Identifiera handlingssteg</li>
+            <li>Förbind dig till små förändringar</li>
           </ol>
-          <p>Använd denna kompass regelbundet för att hålla dig på rätt kurs i livet.</p>
-        `,
-      },
+          
+          <h2>Varaktighet</h2>
+          <p>30-45 minuter för initial övning.</p>
+          
+          <h2>Fördelar</h2>
+          <ul>
+            <li>Förtydligar personliga värderingar</li>
+            <li>Vägleder beslutsfattande</li>
+            <li>Ökar livstillfredsställelse</li>
+            <li>Motiverar meningsfull handling</li>
+          </ul>
+        `
+      }
     },
-    category: ExerciseCategory.ENGAGEMANG,
+    category: ExerciseCategoryEnum.ENGAGEMANG,
     userId: '1',
-    createdAt: '2024-01-05T00:00:00Z',
-    updatedAt: '2024-01-05T00:00:00Z',
-    mediaIds: ['7'],
-    order: 1
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z',
+    mediaIds: [],
+    order: 5
   },
   {
     id: '6',
@@ -221,81 +335,129 @@ export const exercises: Exercise[] = [
       en: {
         title: 'Mindful Walking',
         content: `
-          <h2>Mindful Walking Exercise</h2>
-          <p>An exercise in being fully present while walking.</p>
-          <h3>Focus Points:</h3>
+          <h2>Introduction</h2>
+          <p>Mindful walking combines physical movement with present-moment awareness.</p>
+          
+          <h2>Instructions</h2>
           <ol>
-            <li>Feel each step against the ground</li>
-            <li>Notice balance and body movements</li>
-            <li>Pay attention to surroundings with all senses</li>
-            <li>Observe thoughts as they come and go</li>
+            <li>Choose a quiet path</li>
+            <li>Walk at a natural pace</li>
+            <li>Notice the sensation of walking</li>
+            <li>Feel each step fully</li>
+            <li>Return attention when it wanders</li>
           </ol>
-          <p>Start with 5-10 minutes and gradually increase. Can be done anywhere, indoors or outdoors.</p>
-        `,
+          
+          <h2>Duration</h2>
+          <p>10-20 minutes is recommended.</p>
+          
+          <h2>Benefits</h2>
+          <ul>
+            <li>Combines exercise with mindfulness</li>
+            <li>Improves body awareness</li>
+            <li>Reduces stress</li>
+            <li>Can be done anywhere</li>
+          </ul>
+        `
       },
       sv: {
         title: 'Medveten Promenad',
         content: `
-          <h2>Övning i Medveten Promenad</h2>
-          <p>En övning i att vara fullt närvarande medan du går.</p>
-          <h3>Fokuspunkter:</h3>
+          <h2>Introduktion</h2>
+          <p>Medveten promenad kombinerar fysisk rörelse med närvaro i nuet.</p>
+          
+          <h2>Instruktioner</h2>
           <ol>
-            <li>Känn varje steg mot marken</li>
-            <li>Notera balansen och kroppens rörelser</li>
-            <li>Uppmärksamma omgivningen med alla sinnen</li>
-            <li>Observera tankar som kommer och går</li>
+            <li>Välj en lugn sträcka</li>
+            <li>Gå i naturlig takt</li>
+            <li>Uppmärksamma känslan av att gå</li>
+            <li>Känn varje steg fullt ut</li>
+            <li>Återför uppmärksamheten när den vandrar</li>
           </ol>
-          <p>Börja med 5-10 minuter och öka gradvis. Kan göras var som helst, inomhus eller utomhus.</p>
-        `,
-      },
+          
+          <h2>Varaktighet</h2>
+          <p>10-20 minuter rekommenderas.</p>
+          
+          <h2>Fördelar</h2>
+          <ul>
+            <li>Kombinerar motion med mindfulness</li>
+            <li>Förbättrar kroppsmedvetenhet</li>
+            <li>Minskar stress</li>
+            <li>Kan göras var som helst</li>
+          </ul>
+        `
+      }
     },
-    category: ExerciseCategory.NARVARO,
+    category: ExerciseCategoryEnum.NARVARO,
     userId: '1',
-    createdAt: '2024-01-06T00:00:00Z',
-    updatedAt: '2024-01-06T00:00:00Z',
-    mediaIds: ['8'],
-    order: 4
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z',
+    mediaIds: [],
+    order: 6
   },
   {
     id: '7',
     translations: {
       en: {
-        title: 'Emotion Mapping',
+        title: 'Acceptance of Emotions',
         content: `
-          <h2>Emotion Mapping Exercise</h2>
-          <p>An exercise to increase your emotional awareness and acceptance.</p>
-          <h3>Process:</h3>
+          <h2>Introduction</h2>
+          <p>This exercise helps you practice accepting emotions without trying to change them.</p>
+          
+          <h2>Instructions</h2>
           <ol>
-            <li>Identify the emotion you're experiencing</li>
-            <li>Notice where in your body you feel it</li>
-            <li>Describe the emotion without judging it</li>
-            <li>Observe how the emotion changes over time</li>
+            <li>Notice current emotions</li>
+            <li>Label the emotion</li>
+            <li>Observe physical sensations</li>
+            <li>Allow the emotion to be present</li>
+            <li>Practice self-compassion</li>
           </ol>
-          <p>Use this exercise to better understand and handle your emotions.</p>
-        `,
+          
+          <h2>Duration</h2>
+          <p>15-20 minutes is recommended.</p>
+          
+          <h2>Benefits</h2>
+          <ul>
+            <li>Increases emotional awareness</li>
+            <li>Reduces emotional avoidance</li>
+            <li>Builds emotional resilience</li>
+            <li>Improves self-understanding</li>
+          </ul>
+        `
       },
       sv: {
-        title: 'Känslokarta',
+        title: 'Acceptans av Känslor',
         content: `
-          <h2>Känslokarta Övning</h2>
-          <p>En övning för att öka din emotionella medvetenhet och acceptans.</p>
-          <h3>Process:</h3>
+          <h2>Introduktion</h2>
+          <p>Denna övning hjälper dig att öva på att acceptera känslor utan att försöka förändra dem.</p>
+          
+          <h2>Instruktioner</h2>
           <ol>
-            <li>Identifiera känslan du upplever</li>
-            <li>Notera var i kroppen du känner den</li>
-            <li>Beskriv känslan utan att döma den</li>
-            <li>Observera hur känslan förändras över tid</li>
+            <li>Uppmärksamma nuvarande känslor</li>
+            <li>Sätt namn på känslan</li>
+            <li>Observera fysiska förnimmelser</li>
+            <li>Låt känslan vara närvarande</li>
+            <li>Öva självmedkänsla</li>
           </ol>
-          <p>Använd denna övning för att bättre förstå och hantera dina känslor.</p>
-        `,
-      },
+          
+          <h2>Varaktighet</h2>
+          <p>15-20 minuter rekommenderas.</p>
+          
+          <h2>Fördelar</h2>
+          <ul>
+            <li>Ökar känslomässig medvetenhet</li>
+            <li>Minskar känslomässigt undvikande</li>
+            <li>Bygger känslomässig motståndskraft</li>
+            <li>Förbättrar självförståelse</li>
+          </ul>
+        `
+      }
     },
-    category: ExerciseCategory.OPPENHET,
+    category: ExerciseCategoryEnum.OPPENHET,
     userId: '1',
-    createdAt: '2024-01-07T00:00:00Z',
-    updatedAt: '2024-01-07T00:00:00Z',
-    mediaIds: ['9'],
-    order: 2
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z',
+    mediaIds: [],
+    order: 7
   }
 ].map(exercise => ExerciseSchema.parse(exercise));
 
@@ -309,7 +471,7 @@ export const findExercises = (): Exercise[] => {
   return exercises.map(exercise => ExerciseSchema.parse(exercise));
 };
 
-export const findExercisesByCategory = (category: ExerciseCategory): Exercise[] => {
+export const findExercisesByCategory = (category: ExerciseCategoryEnum): Exercise[] => {
   return exercises
     .filter(exercise => exercise.category === category)
     .map(exercise => ExerciseSchema.parse(exercise));

@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { User, UserRole } from '@/lib/types'
 import { mockDb } from '@/lib/mockData'
+import { users } from '@/lib/mockData/users'
 
 export async function GET() {
   try {
@@ -14,8 +15,7 @@ export async function GET() {
       return new Response('Unauthorized', { status: 401 })
     }
 
-    const users = await mockDb.users.findAll()
-    console.log('[API] Users GET - Success:', { count: users.length })
+    // Return all users from the mock data
     return Response.json(users)
   } catch (error) {
     console.error('[API] Users GET - Error:', error)

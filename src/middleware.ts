@@ -36,11 +36,7 @@ export default withAuth(
       return NextResponse.next()
     }
 
-    // For admin routes, only check if user is admin
-    if (path.startsWith('/admin') && token?.role !== 'ADMIN') {
-      return new Response('Unauthorized - Admin access required', { status: 403 })
-    }
-
+    // Let components handle auth state
     return NextResponse.next()
   },
   {

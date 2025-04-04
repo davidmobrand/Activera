@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import NotLoggedIn from '@/components/NotLoggedIn'
-import { User } from '@/lib/mockData'
+import { User, UserRole } from '@/lib/mockData'
 
 export default function AdminUsers() {
   const router = useRouter()
@@ -23,6 +23,9 @@ export default function AdminUsers() {
   async function fetchUsers() {
     try {
       const response = await fetch('/api/users')
+      if (!response.ok) {
+        throw new Error('Failed to fetch users')
+      }
       const data = await response.json()
       setUsers(data)
     } catch (error) {
@@ -119,7 +122,7 @@ export default function AdminUsers() {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-500">
+                  <div className={`text-sm ${user.role === UserRole.ADMIN ? 'text-purple-600' : 'text-green-600'}`}>
                     {user.role}
                   </div>
                 </td>

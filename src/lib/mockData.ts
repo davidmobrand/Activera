@@ -458,6 +458,46 @@ export const mediaFiles: Media[] = [
     url: "/images/life-compass.jpg",
     name: "Life Compass Exercise",
     createdAt: "2024-03-20T12:04:00Z"
+  },
+  {
+    id: "44",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/body-scan.jpg",
+    name: "Body Scan Meditation",
+    createdAt: "2024-03-20T13:00:00Z"
+  },
+  {
+    id: "45",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/mindful-eating.jpg",
+    name: "Mindful Eating Exercise",
+    createdAt: "2024-03-20T13:01:00Z"
+  },
+  {
+    id: "46",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/sound-awareness.jpg",
+    name: "Sound Awareness Practice",
+    createdAt: "2024-03-20T13:02:00Z"
+  },
+  {
+    id: "47",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/mindful-movement.jpg",
+    name: "Mindful Movement Exercise",
+    createdAt: "2024-03-20T13:03:00Z"
+  },
+  {
+    id: "48",
+    exerciseId: "",
+    type: "IMAGE",
+    url: "/images/present-moment.jpg",
+    name: "Present Moment Exercise",
+    createdAt: "2024-03-20T13:04:00Z"
   }
 ];
 
@@ -1448,197 +1488,220 @@ Remember: Values are like a compass - they guide our actions but aren't a destin
     order: 30
   },
   {
-    id: "36",
-    title: "Values Clarification",
+    id: "41",
+    title: "Body Scan Meditation",
     content: `
-# Values Clarification Exercise
+# Body Scan Meditation
 
-Deepen your understanding of what truly matters to you.
-
-## Exercise Steps
-
-1. Life Domains Review
-   - Family relationships
-   - Intimate relationships
-   - Parenting
-   - Friendship
-   - Career
-   - Education/Growth
-   - Recreation
-   - Spirituality
-   - Community
-   - Health/Self-care
-
-2. For Each Domain:
-   - What would be ideal?
-   - What small steps can you take?
-   - What's stopping you?
-
-3. Values Action Plan
-   - Choose priority areas
-   - Set specific goals
-   - Create action steps
-
-Remember: Values are directions, not destinations.`,
-    category: ExerciseCategory.ENGAGEMANG,
-    userId: "admin",
-    createdAt: "2024-03-20T12:00:00Z",
-    updatedAt: "2024-03-20T12:00:00Z",
-    mediaIds: ["39"],
-    order: 36
-  },
-  {
-    id: "37",
-    title: "Committed Action",
-    content: `
-# Committed Action Practice
-
-Turn your values into meaningful actions.
+A systematic practice of bringing attention to physical sensations.
 
 ## Practice Guide
 
-1. Select a Value
-   - Choose one important value
-   - Consider its meaning to you
-   - Identify potential actions
+1. Getting Started
+   - Lie down or sit comfortably
+   - Close your eyes or maintain soft gaze
+   - Take a few deep breaths
 
-2. Plan Your Actions
-   - Start very small
-   - Make it specific
-   - Set a timeline
-   - Identify resources needed
+2. Systematic Scan
+   - Start with your toes
+   - Move up through each body part
+   - Notice sensations without judgment
+   - Include all areas of your body
 
-3. Handle Obstacles
-   - List potential barriers
-   - Plan for setbacks
-   - Create backup plans
+3. Common Experiences
+   - Temperature
+   - Pressure
+   - Tingling
+   - Tension/Relaxation
+   - Numbness
 
-## Implementation Tips
+## Tips for Practice
 
-- Begin with tiny steps
-- Celebrate progress
-- Learn from setbacks
-- Stay flexible
+- Start with 10-15 minutes
+- Be patient with wandering mind
+- No need to change anything
+- Regular practice builds awareness
 
-Remember: Small consistent actions lead to meaningful change.`,
-    category: ExerciseCategory.ENGAGEMANG,
+Remember: Every sensation is an opportunity for mindfulness.`,
+    category: ExerciseCategory.NARVARO,
     userId: "admin",
-    createdAt: "2024-03-20T12:01:00Z",
-    updatedAt: "2024-03-20T12:01:00Z",
-    mediaIds: ["40"],
-    order: 37
+    createdAt: "2024-03-20T13:00:00Z",
+    updatedAt: "2024-03-20T13:00:00Z",
+    mediaIds: ["44"],
+    order: 41
   },
   {
-    id: "38",
-    title: "Mindful Goal Setting",
+    id: "42",
+    title: "Mindful Eating",
     content: `
-# Mindful Goal Setting
+# Mindful Eating Practice
 
-Align your goals with your values while staying present.
+Transform an everyday activity into a mindfulness practice.
 
 ## Exercise Steps
 
-1. Present Moment Check-in
-   - Take three mindful breaths
-   - Notice your current state
-   - Connect with your values
+1. Choose Your Food
+   - Select a small portion
+   - Something simple is fine
+   - Notice initial reactions
 
-2. Goal Exploration
-   - What matters most?
-   - What's realistic?
-   - What's in your control?
+2. Explore with Senses
+   - Look: colors, shapes, textures
+   - Touch: temperature, texture
+   - Smell: all the aromas
+   - Listen: any sounds
+   - Taste: flavors and changes
 
-3. SMART Goals with Heart
-   - Specific
-   - Measurable
-   - Achievable
-   - Relevant to values
-   - Time-bound
+3. Eat Mindfully
+   - Take small bites
+   - Chew slowly
+   - Notice flavors change
+   - Feel the swallowing
 
-## Key Reminders
+## Practice Tips
 
-- Focus on process over outcome
-- Stay flexible
-- Practice self-compassion
-- Revisit and adjust as needed
+- Start with 5 minutes
+- One bite at a time
+- Notice judgments
+- Stay curious
 
-Remember: Goals are tools for living your values, not measures of your worth.`,
+Remember: Every meal is an opportunity for mindfulness.`,
     category: ExerciseCategory.NARVARO,
     userId: "admin",
-    createdAt: "2024-03-20T12:02:00Z",
-    updatedAt: "2024-03-20T12:02:00Z",
-    mediaIds: ["41"],
-    order: 38
+    createdAt: "2024-03-20T13:01:00Z",
+    updatedAt: "2024-03-20T13:01:00Z",
+    mediaIds: ["45"],
+    order: 42
   },
   {
-    id: "39",
-    title: "Values Obstacles",
+    id: "43",
+    title: "Sound Awareness",
     content: `
-# Values Obstacles Exercise
+# Sound Awareness Practice
 
-Learn to work with barriers to living your values.
+Use sounds as anchors for present moment awareness.
 
-## Practice Steps
+## Practice Guide
 
-1. Identify Obstacles
-   - Internal barriers (thoughts, feelings)
-   - External barriers (situations, resources)
-   - Avoidance patterns
+1. Setup
+   - Find a comfortable position
+   - Close eyes or soft gaze
+   - No need for silence
 
-2. Explore Your Response
-   - Notice your reactions
-   - Identify unhelpful patterns
-   - Consider workable alternatives
+2. Listen Mindfully
+   - Notice near sounds
+   - Notice far sounds
+   - Notice silence between sounds
+   - Don't label, just listen
 
-3. Create Strategies
-   - Acceptance practices
-   - Mindful awareness
-   - Committed actions
-   - Support systems
+3. Common Experiences
+   - Sounds come and go
+   - Some pleasant, some not
+   - Mind wants to name sounds
+   - Attention may wander
 
-Remember: Obstacles are part of the journey, not roadblocks.`,
-    category: ExerciseCategory.OPPENHET,
+## Key Points
+
+- All sounds are welcome
+- No need to search for sounds
+- Notice reactions without judgment
+- Return to listening when distracted
+
+Remember: Sounds are natural anchors for presence.`,
+    category: ExerciseCategory.NARVARO,
     userId: "admin",
-    createdAt: "2024-03-20T12:03:00Z",
-    updatedAt: "2024-03-20T12:03:00Z",
-    mediaIds: ["42"],
-    order: 39
+    createdAt: "2024-03-20T13:02:00Z",
+    updatedAt: "2024-03-20T13:02:00Z",
+    mediaIds: ["46"],
+    order: 43
   },
   {
-    id: "40",
-    title: "Life Compass",
+    id: "44",
+    title: "Mindful Movement",
     content: `
-# Life Compass Exercise
+# Mindful Movement Practice
 
-Navigate life's challenges using your values as a guide.
+Bring awareness to simple movements and stretches.
 
-## Exercise Guide
+## Exercise Steps
 
-1. Create Your Compass
-   - Draw a circle
-   - Divide into life areas
-   - Rate current satisfaction
-   - Note desired direction
+1. Standing Awareness
+   - Feel feet on ground
+   - Notice body's balance
+   - Sense your posture
+   - Feel the air on skin
 
-2. Choose Direction
-   - Select priority areas
-   - Set intentions
-   - Plan small steps
-   - Track progress
+2. Simple Movements
+   - Raise arms slowly
+   - Gentle neck rolls
+   - Shoulder circles
+   - Knee bends
+   - Ankle rotations
 
-3. Regular Check-ins
-   - Review weekly
-   - Adjust course
-   - Celebrate progress
-   - Plan next steps
+3. Movement Exploration
+   - Notice initiation
+   - Feel the process
+   - Observe completion
+   - Rest between movements
 
-Remember: Your compass points to what matters, even in stormy weather.`,
-    category: ExerciseCategory.ENGAGEMANG,
+## Practice Tips
+
+- Move at 25% speed
+- Notice subtle sensations
+- Stay within comfort zone
+- Breathe naturally
+
+Remember: Movement is a gateway to presence.`,
+    category: ExerciseCategory.NARVARO,
     userId: "admin",
-    createdAt: "2024-03-20T12:04:00Z",
-    updatedAt: "2024-03-20T12:04:00Z",
-    mediaIds: ["43"],
-    order: 40
+    createdAt: "2024-03-20T13:03:00Z",
+    updatedAt: "2024-03-20T13:03:00Z",
+    mediaIds: ["47"],
+    order: 44
+  },
+  {
+    id: "45",
+    title: "Present Moment Awareness",
+    content: `
+# Present Moment Awareness
+
+A simple practice to connect with the here and now.
+
+## Practice Guide
+
+1. Pause and Connect
+   - Stop current activity
+   - Take three breaths
+   - Feel your body
+   - Notice your surroundings
+
+2. STOP Technique
+   - Stop what you're doing
+   - Take a breath
+   - Observe present moment
+   - Proceed mindfully
+
+3. Five Senses Check-in
+   - See: 5 things
+   - Hear: 4 sounds
+   - Feel: 3 sensations
+   - Smell: 2 scents
+   - Taste: 1 taste
+
+## Daily Integration
+
+- Use at transitions
+- Set reminder bells
+- Practice in lines
+- During routine tasks
+
+Remember: The present moment is always available.`,
+    category: ExerciseCategory.NARVARO,
+    userId: "admin",
+    createdAt: "2024-03-20T13:04:00Z",
+    updatedAt: "2024-03-20T13:04:00Z",
+    mediaIds: ["48"],
+    order: 45
   }
 ].map(e => ({
   ...e,

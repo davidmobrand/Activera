@@ -6,40 +6,40 @@ export default withAuth(
     const token = req.nextauth.token
     const path = req.nextUrl.pathname
     const isApiRoute = path.startsWith('/api/')
+    const isLoginPage = path === '/login'
+    const isPublicRoute = isApiRoute || isLoginPage || path.startsWith('/_next') || path === '/favicon.ico'
 
-    console.log('[Middleware] Checking route:', {
+    console.log('[Middleware] Route check:', {
       path,
       isApiRoute,
+      isLoginPage,
+      isPublicRoute,
       hasToken: !!token,
       userRole: token?.role,
     })
 
-    // Skip middleware for API routes
-    if (isApiRoute) {
-      console.log('[Middleware] Skipping API route')
+    // Allow public routes
+    if (isPublicRoute) {
+      console.log('[Middleware] Public route, allowing access')
       return NextResponse.next()
+    }
+
+    // Redirect to login if no token (except for login page)
+    if (!token) {
+      console.log('[Middleware] No token found, redirecting to login')
+      const loginUrl = new URL('/login', req.url)
+      loginUrl.searchParams.set('callbackUrl', req.url)
+      return NextResponse.redirect(loginUrl)
     }
 
     // Admin routes protection
     if (path.startsWith('/admin')) {
       console.log('[Middleware] Checking admin access')
-      if (!token) {
-        console.log('[Middleware] No token found, redirecting to login')
-        return NextResponse.redirect(new URL('/login', req.url))
-      }
       if (token.role !== 'ADMIN') {
         console.log('[Middleware] Non-admin user attempting to access admin route')
         return NextResponse.redirect(new URL('/dashboard', req.url))
       }
       console.log('[Middleware] Admin access granted')
-    }
-
-    // Protected routes
-    if (!token && !path.startsWith('/login')) {
-      console.log('[Middleware] No token found, redirecting to login')
-      const loginUrl = new URL('/login', req.url)
-      loginUrl.searchParams.set('callbackUrl', path)
-      return NextResponse.redirect(loginUrl)
     }
 
     console.log('[Middleware] Access granted')
@@ -48,19 +48,8 @@ export default withAuth(
   {
     callbacks: {
       authorized: ({ token, req }) => {
-        const path = req.nextUrl.pathname
-        console.log('[Middleware] Authorization check:', {
-          path,
-          hasToken: !!token,
-          isLoginPage: path === '/login',
-        })
-
-        // Allow access to login page without token
-        if (path === '/login') {
-          return true
-        }
-
-        return !!token
+        // This is only used to determine if the middleware function should run
+        return true
       },
     },
     pages: {
@@ -69,15 +58,16 @@ export default withAuth(
   }
 )
 
+// Match all routes except static files and public assets
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder
+     * Match all paths except:
+     * 1. /api (API routes)
+     * 2. /_next (Next.js internals)
+     * 3. /static (static files)
+     * 4. /favicon.ico, /sitemap.xml (public files)
      */
-    '/((?!_next/static|_next/image|favicon.ico|public).*)',
+    '/((?!api|_next|static|favicon.ico|sitemap.xml).*)',
   ],
 } 

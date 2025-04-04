@@ -28,16 +28,12 @@ import {
   updateExerciseProgress
 } from './exerciseProgress';
 
-import type { Media } from '../types';
-import type { CreateMedia } from '../validation';
+import type { Media, CreateMediaInput } from '../types';
 
 export * from './users';
 export * from './media';
 export * from './exercises';
 export * from './exerciseProgress';
-
-// Define the function type explicitly
-type CreateMediaFn = (data: CreateMedia) => Media;
 
 interface MockDb {
   // User functions
@@ -49,7 +45,7 @@ interface MockDb {
 
   // Media functions
   findMediaByExerciseId: typeof findMediaByExerciseId;
-  createMedia: typeof createMedia;
+  createMedia: (data: CreateMediaInput) => Media;
   deleteMedia: typeof deleteMedia;
   getExerciseMedia: typeof getExerciseMedia;
 

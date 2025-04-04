@@ -28,15 +28,43 @@ import {
   updateExerciseProgress
 } from './exerciseProgress';
 
-import type { CreateMedia } from '../validation';
+import type { CreateMedia, Media } from '../validation';
 
 export * from './users';
 export * from './media';
 export * from './exercises';
 export * from './exerciseProgress';
 
+interface MockDb {
+  // User functions
+  findUserById: typeof findUserById;
+  findUserByEmail: typeof findUserByEmail;
+  findUsers: typeof findUsers;
+  createUser: typeof createUser;
+  deleteUser: typeof deleteUser;
+
+  // Media functions
+  findMediaByExerciseId: typeof findMediaByExerciseId;
+  createMedia: (data: CreateMedia) => Media;
+  deleteMedia: typeof deleteMedia;
+  getExerciseMedia: typeof getExerciseMedia;
+
+  // Exercise functions
+  findExerciseById: typeof findExerciseById;
+  findExercises: typeof findExercises;
+  findExercisesByCategory: typeof findExercisesByCategory;
+  createExercise: typeof createExercise;
+  updateExercise: typeof updateExercise;
+  deleteExercise: typeof deleteExercise;
+
+  // Exercise Progress functions
+  findExerciseProgress: typeof findExerciseProgress;
+  createExerciseProgress: typeof createExerciseProgress;
+  updateExerciseProgress: typeof updateExerciseProgress;
+}
+
 // Export mockDb object with all functions
-export const mockDb = {
+export const mockDb: MockDb = {
   // User functions
   findUserById,
   findUserByEmail,
@@ -62,4 +90,4 @@ export const mockDb = {
   findExerciseProgress,
   createExerciseProgress,
   updateExerciseProgress
-} as const; 
+}; 

@@ -24,43 +24,15 @@ export default function LoginPage() {
 
   // Handle authenticated state
   useEffect(() => {
-    console.log('[Login] Auth effect triggered:', { status, isRedirecting })
-    
     if (status === 'authenticated' && !isRedirecting) {
+      console.log('[Login] Auth effect triggered:', { status, isRedirecting })
       setIsRedirecting(true)
-      console.log('[Login] User authenticated, preparing redirect')
-      
-      // Get the callback URL from the URL parameters
-      const rawCallbackUrl = searchParams.get('callbackUrl')
-      console.log('[Login] Raw callback URL:', rawCallbackUrl)
-      
-      let callbackUrl = '/dashboard' // Default fallback
 
-      if (rawCallbackUrl) {
-        try {
-          // Decode and validate the callback URL
-          const decodedUrl = decodeURIComponent(rawCallbackUrl)
-          console.log('[Login] Decoded callback URL:', decodedUrl)
-          
-          const url = new URL(decodedUrl, window.location.origin)
-          console.log('[Login] Parsed URL:', url.toString())
-          
-          // Only accept URLs from our domain
-          if (url.origin === window.location.origin) {
-            callbackUrl = url.pathname + url.search
-            console.log('[Login] Using callback URL:', callbackUrl)
-          } else {
-            console.log('[Login] Rejected external callback URL')
-          }
-        } catch (e) {
-          console.error('[Login] Invalid callback URL:', e)
-        }
-      }
-
-      console.log('[Login] Final redirect URL:', callbackUrl)
-      router.replace(callbackUrl)
+      // Force navigation to dashboard using window.location
+      console.log('[Login] Forcing navigation to dashboard')
+      window.location.href = '/dashboard'
     }
-  }, [status, session, router, searchParams, isRedirecting])
+  }, [status, isRedirecting])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -122,7 +94,7 @@ export default function LoginPage() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">Redirecting...</p>
+          <p className="text-gray-600">Redirecting to dashboard...</p>
         </div>
       </div>
     )

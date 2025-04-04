@@ -18,38 +18,20 @@ export default withAuth(
       userRole: token?.role,
     })
 
-    // Allow public routes
-    if (isPublicRoute) {
-      console.log('[Middleware] Public route, allowing access')
+    // Allow public routes and authenticated users
+    if (isPublicRoute || token) {
+      console.log('[Middleware] Allowing access')
       return NextResponse.next()
     }
 
     // Redirect to login if no token
-    if (!token) {
-      console.log('[Middleware] No token found, redirecting to login')
-      const loginUrl = new URL('/login', req.url)
-      // Only use pathname to avoid double-encoding of full URLs
-      loginUrl.searchParams.set('callbackUrl', path)
-      return NextResponse.redirect(loginUrl)
-    }
-
-    // Admin routes protection
-    if (path.startsWith('/admin')) {
-      console.log('[Middleware] Checking admin access')
-      if (token.role !== 'ADMIN') {
-        console.log('[Middleware] Non-admin user attempting to access admin route')
-        return NextResponse.redirect(new URL('/dashboard', req.url))
-      }
-      console.log('[Middleware] Admin access granted')
-    }
-
-    console.log('[Middleware] Access granted')
-    return NextResponse.next()
+    console.log('[Middleware] No token found, redirecting to login')
+    return NextResponse.redirect(new URL('/login', req.url))
   },
   {
     callbacks: {
       authorized: ({ token, req }) => {
-        // This is only used to determine if the middleware function should run
+        // Allow the middleware function to handle the logic
         return true
       },
     },

@@ -24,28 +24,30 @@ export default function LoginPage() {
   useEffect(() => {
     if (status === 'authenticated' && !isRedirecting) {
       setIsRedirecting(true)
-      let callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
       
-      // Decode the callback URL if it's encoded
-      try {
-        callbackUrl = decodeURIComponent(callbackUrl)
-      } catch (e) {
-        console.error('[Login] Error decoding callback URL:', e)
-        callbackUrl = '/dashboard'
+      // Get the callback URL from the URL parameters
+      const rawCallbackUrl = searchParams.get('callbackUrl')
+      let callbackUrl = '/dashboard' // Default fallback
+
+      if (rawCallbackUrl) {
+        try {
+          // Decode and validate the callback URL
+          const decodedUrl = decodeURIComponent(rawCallbackUrl)
+          const url = new URL(decodedUrl, window.location.origin)
+          
+          // Only accept URLs from our domain
+          if (url.origin === window.location.origin) {
+            callbackUrl = url.pathname + url.search
+          }
+        } catch (e) {
+          console.error('[Login] Invalid callback URL:', e)
+        }
       }
 
-      // Ensure callback URL is internal and absolute
-      const isInternalCallback = callbackUrl.startsWith('/') || callbackUrl.startsWith(window.location.origin)
-      const finalUrl = isInternalCallback 
-        ? callbackUrl.startsWith('/') 
-          ? `${window.location.origin}${callbackUrl}`
-          : callbackUrl
-        : `${window.location.origin}/dashboard`
-
-      console.log('[Login] Authenticated, redirecting to:', finalUrl)
-      window.location.href = finalUrl
+      console.log('[Login] Redirecting to:', callbackUrl)
+      router.replace(callbackUrl)
     }
-  }, [status, session, searchParams, isRedirecting])
+  }, [status, session, router, searchParams, isRedirecting])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -60,13 +62,10 @@ export default function LoginPage() {
 
     try {
       console.log('[Login] Attempting sign in...')
-      const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
-      
       const result = await signIn('credentials', {
         email,
         password,
         redirect: false,
-        callbackUrl,
       })
 
       console.log('[Login] Sign in result:', result)
@@ -104,8 +103,8 @@ export default function LoginPage() {
     )
   }
 
-  // Show redirecting state after successful login
-  if (isRedirecting || status === 'authenticated') {
+  // If already authenticated, show redirecting state
+  if (status === 'authenticated') {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -135,7 +134,7 @@ export default function LoginPage() {
               autoComplete="email"
               required
               error={error}
-              disabled={isLoading || isRedirecting}
+              disabled={isLoading}
             />
             <Input
               label="Password"
@@ -144,16 +143,16 @@ export default function LoginPage() {
               type="password"
               autoComplete="current-password"
               required
-              disabled={isLoading || isRedirecting}
+              disabled={isLoading}
             />
           </div>
 
           <Button
             type="submit"
             className="w-full"
-            disabled={isLoading || isRedirecting}
+            disabled={isLoading}
           >
-            {isLoading ? 'Signing in...' : isRedirecting ? 'Redirecting...' : 'Sign in'}
+            {isLoading ? 'Signing in...' : 'Sign in'}
           </Button>
           {error && (
             <p className="mt-2 text-sm text-red-600">{error}</p>

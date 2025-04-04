@@ -18,25 +18,26 @@ const categoryLabels = {
 }
 
 export default function Dashboard() {
-  const { data: session, status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      window.location.href = '/login'
-    },
-  })
   const router = useRouter()
+  const { data: session, status } = useSession()
   const [progress, setProgress] = useState<CategoryProgress[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    console.log('Dashboard session status:', status)
-    console.log('Dashboard session data:', session)
+    console.log('Dashboard page - Session status:', status)
+    console.log('Dashboard page - Session data:', session)
     
+    if (status === 'unauthenticated') {
+      console.log('No session found, redirecting to login...')
+      router.push('/login')
+      return
+    }
+
     if (status === 'authenticated') {
-      console.log('Fetching progress...')
+      console.log('Session found, fetching progress...')
       fetchProgress()
     }
-  }, [status, session])
+  }, [status, session, router])
 
   async function fetchProgress() {
     try {
@@ -88,6 +89,10 @@ export default function Dashboard() {
         </div>
       </div>
     )
+  }
+
+  if (status === 'unauthenticated') {
+    return null
   }
 
   return (

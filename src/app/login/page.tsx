@@ -12,16 +12,18 @@ export default function LoginPage() {
   const { data: session, status } = useSession()
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isRedirecting, setIsRedirecting] = useState(false)
 
   useEffect(() => {
-    console.log('Session status:', status)
-    console.log('Session data:', session)
-    if (status === 'authenticated') {
-      console.log('Redirecting to dashboard...')
-      const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
-      window.location.href = callbackUrl
+    console.log('Login page - Session status:', status)
+    console.log('Login page - Session data:', session)
+    
+    if (status === 'authenticated' && !isRedirecting) {
+      setIsRedirecting(true)
+      console.log('Login successful, redirecting to dashboard...')
+      router.push('/dashboard')
     }
-  }, [status, router, session, searchParams])
+  }, [status, session, router, isRedirecting])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -38,13 +40,13 @@ export default function LoginPage() {
         email,
         password,
         redirect: false,
-        callbackUrl: '/dashboard'
       })
 
       console.log('Sign in result:', result)
 
       if (result?.error) {
         setError('Invalid email or password')
+        setIsLoading(false)
         return
       }
 
@@ -52,31 +54,25 @@ export default function LoginPage() {
     } catch (error) {
       console.error('Sign in error:', error)
       setError('An error occurred. Please try again.')
-    } finally {
       setIsLoading(false)
     }
   }
 
-  if (status === 'loading') {
+  if (status === 'loading' || (status === 'authenticated' && isRedirecting)) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
+          <p className="text-gray-600">
+            {status === 'loading' ? 'Loading...' : 'Redirecting to dashboard...'}
+          </p>
         </div>
       </div>
     )
   }
 
   if (status === 'authenticated') {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">Redirecting to dashboard...</p>
-        </div>
-      </div>
-    )
+    return null
   }
 
   return (

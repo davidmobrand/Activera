@@ -201,66 +201,161 @@ export const exercises: Exercise[] = [
     createdAt: new Date('2024-01-02'),
     updatedAt: new Date('2024-01-02'),
     mediaIds: ['3', '4'],
-    order: 2
+    order: 1
   },
   {
     id: '3',
-    title: 'Gratitude Journal',
+    title: 'Five Senses Grounding',
     content: `
-      <p>Practice gratitude with these prompts:</p>
-      <ul>
-        <li>List three things you're grateful for today</li>
-        <li>Write about someone who helped you recently</li>
-        <li>Describe a small moment that brought you joy</li>
-      </ul>
-      <p>Spend at least 5 minutes writing your responses.</p>
+      <h2>Five Senses Grounding Exercise</h2>
+      <p>A powerful mindfulness exercise to anchor yourself in the present moment using your senses.</p>
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Find a comfortable position and take a deep breath</li>
+        <li>Notice 5 things you can SEE in your environment</li>
+        <li>Identify 4 things you can FEEL (textures, temperature, etc.)</li>
+        <li>Focus on 3 different SOUNDS you can hear</li>
+        <li>Recognize 2 distinct SMELLS in your surroundings</li>
+        <li>Pay attention to 1 TASTE in your mouth</li>
+      </ol>
+      <p>This exercise is particularly helpful during moments of anxiety or when feeling disconnected.</p>
     `,
-    category: ExerciseCategory.OPPENHET,
+    category: ExerciseCategory.NARVARO,
     userId: '1',
     createdAt: new Date('2024-01-03'),
     updatedAt: new Date('2024-01-03'),
     mediaIds: [],
-    order: 3
+    order: 2
   },
   {
     id: '4',
-    title: 'Values Reflection',
+    title: 'Leaves on a Stream',
     content: `
-      <p>Reflect on your personal values:</p>
+      <h2>Leaves on a Stream Visualization</h2>
+      <p>A gentle exercise for practicing acceptance and letting go of difficult thoughts.</p>
+      <h3>Instructions:</h3>
       <ol>
-        <li>List your top 3 personal values</li>
-        <li>For each value, write why it's important to you</li>
-        <li>Describe a recent situation where you honored these values</li>
-        <li>Consider how you can better align your actions with your values</li>
+        <li>Imagine yourself sitting beside a gently flowing stream</li>
+        <li>Picture leaves floating by on the surface of the water</li>
+        <li>When thoughts arise, place each one on a leaf</li>
+        <li>Watch as the leaves carrying your thoughts drift away</li>
+        <li>If you get caught up in a thought, gently return to watching the stream</li>
       </ol>
-      <p>Take 15-20 minutes for this exercise.</p>
+      <p>Remember: The goal isn't to get rid of thoughts, but to practice letting them come and go.</p>
     `,
-    category: ExerciseCategory.ENGAGEMANG,
+    category: ExerciseCategory.OPPENHET,
     userId: '1',
     createdAt: new Date('2024-01-04'),
     updatedAt: new Date('2024-01-04'),
     mediaIds: [],
-    order: 4
+    order: 2
   },
   {
     id: '5',
-    title: 'Self-Compassion Practice',
+    title: 'Values Compass',
     content: `
-      <p>Practice self-compassion with these steps:</p>
+      <h2>Values Compass Exercise</h2>
+      <p>An exercise to help you identify and connect with your core values.</p>
+      <h3>Instructions:</h3>
       <ol>
-        <li>Identify a situation causing you difficulty</li>
-        <li>Acknowledge your feelings without judgment</li>
-        <li>Recognize that everyone experiences challenges</li>
-        <li>Write a kind message to yourself</li>
+        <li>Take a moment to reflect on what matters most to you in life</li>
+        <li>Consider different life domains (relationships, work, personal growth, etc.)</li>
+        <li>For each domain, ask yourself:
+          <ul>
+            <li>What kind of person do I want to be in this area?</li>
+            <li>What do I want to stand for?</li>
+            <li>What qualities do I want to embody?</li>
+          </ul>
+        </li>
+        <li>Write down specific actions that align with these values</li>
+        <li>Choose one small step you can take today</li>
       </ol>
-      <p>Take 10 minutes for this exercise.</p>
+      <p>Use this compass regularly to guide your decisions and actions.</p>
     `,
-    category: ExerciseCategory.OPPENHET,
+    category: ExerciseCategory.ENGAGEMANG,
     userId: '1',
     createdAt: new Date('2024-01-05'),
     updatedAt: new Date('2024-01-05'),
     mediaIds: [],
-    order: 5
+    order: 1
+  },
+  {
+    id: '6',
+    title: 'Mindful Walking',
+    content: `
+      <h2>Mindful Walking Practice</h2>
+      <p>A practice to bring mindfulness to everyday movement.</p>
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Find a quiet space where you can walk slowly</li>
+        <li>Stand still and become aware of your body's weight and balance</li>
+        <li>Begin walking very slowly, paying attention to each movement</li>
+        <li>Notice the lifting, moving, and placing of each foot</li>
+        <li>Feel the contact between your feet and the ground</li>
+        <li>When your mind wanders, gently return to the sensations of walking</li>
+      </ol>
+      <p>Practice this for 5-10 minutes, gradually increasing the duration.</p>
+    `,
+    category: ExerciseCategory.NARVARO,
+    userId: '1',
+    createdAt: new Date('2024-01-06'),
+    updatedAt: new Date('2024-01-06'),
+    mediaIds: [],
+    order: 3
+  },
+  {
+    id: '7',
+    title: 'Acceptance of Emotions',
+    content: `
+      <h2>Acceptance of Emotions Exercise</h2>
+      <p>A practice for developing a more accepting relationship with difficult emotions.</p>
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Notice any emotion present right now</li>
+        <li>Observe where you feel it in your body</li>
+        <li>Describe the sensation (temperature, weight, movement, etc.)</li>
+        <li>Make room for the emotion - imagine creating space around it</li>
+        <li>Allow it to be there, just as it is</li>
+        <li>Notice that you are larger than any emotion</li>
+      </ol>
+      <p>Practice this especially with emotions you typically try to avoid.</p>
+    `,
+    category: ExerciseCategory.OPPENHET,
+    userId: '1',
+    createdAt: new Date('2024-01-07'),
+    updatedAt: new Date('2024-01-07'),
+    mediaIds: [],
+    order: 3
+  },
+  {
+    id: '8',
+    title: 'Committed Action Plan',
+    content: `
+      <h2>Committed Action Planning Exercise</h2>
+      <p>A structured approach to taking value-guided action.</p>
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Select one of your core values</li>
+        <li>Identify a specific goal that expresses this value</li>
+        <li>Break down the goal into small, manageable steps</li>
+        <li>For each step, consider:
+          <ul>
+            <li>What might get in the way?</li>
+            <li>How will you handle obstacles?</li>
+            <li>What support do you need?</li>
+          </ul>
+        </li>
+        <li>Schedule your first action step</li>
+        <li>Track your progress and adjust as needed</li>
+      </ol>
+      <p>Remember: Focus on the process rather than the outcome.</p>
+    `,
+    category: ExerciseCategory.ENGAGEMANG,
+    userId: '1',
+    createdAt: new Date('2024-01-08'),
+    updatedAt: new Date('2024-01-08'),
+    mediaIds: [],
+    order: 2
   }
 ].map(e => ({
   ...e,

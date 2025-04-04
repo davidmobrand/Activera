@@ -1,7 +1,7 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
@@ -61,8 +61,18 @@ export default function AdminUsers() {
   }
 
   if (session.user?.role !== 'ADMIN') {
-    router.push('/dashboard')
-    return null
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h1>
+        <p className="text-gray-600">You need admin privileges to access this page.</p>
+        <Button
+          className="mt-4"
+          onClick={() => router.push('/dashboard')}
+        >
+          Go to Dashboard
+        </Button>
+      </div>
+    )
   }
 
   return (
@@ -119,18 +129,19 @@ export default function AdminUsers() {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <button
+                  <Button
+                    variant="secondary"
+                    className="mr-2"
                     onClick={() => router.push(`/admin/users/${user.id}`)}
-                    className="text-blue-600 hover:text-blue-900 mr-4"
                   >
                     Edit
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="outline"
                     onClick={() => deleteUser(user.id)}
-                    className="text-red-600 hover:text-red-900"
                   >
                     Delete
-                  </button>
+                  </Button>
                 </td>
               </tr>
             ))}

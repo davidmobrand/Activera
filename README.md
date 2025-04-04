@@ -1,20 +1,31 @@
 # ACTivera
 
-A Next.js application for exercise and activity tracking.
+A web application for managing and tracking exercises.
 
-## Environment Configuration
+## Environment Variables
 
-The application uses environment variables for configuration. Make sure to set these in your deployment:
+The following environment variables need to be set:
 
-- `NEXT_PUBLIC_STORAGE_URL`: URL for media storage (should match your deployment URL)
-- `NEXTAUTH_URL`: Authentication callback URL (should match your deployment URL)
-- `NEXTAUTH_SECRET`: Secret key for authentication (change in production)
+- `NEXT_PUBLIC_STORAGE_URL`: URL for media storage (matches deployment URL)
+- `NEXTAUTH_URL`: Authentication URL (matches deployment URL)
+- `NEXTAUTH_SECRET`: Secret key for NextAuth
+- `DATABASE_URL`: URL for the database connection
+- `NEXT_PUBLIC_TINYMCE_API_KEY`: API key for TinyMCE editor
+
+For local development, copy `.env.example` to `.env.local` and update the values.
 
 ## Development
 
 ```bash
 npm install
 npm run dev
+```
+
+## Production
+
+```bash
+npm run build
+npm start
 ```
 
 ## Project Structure

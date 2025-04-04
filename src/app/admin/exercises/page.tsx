@@ -1,19 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
-
-interface Exercise {
-  id: string
-  title: string
-  category: string
-  order: number
-  content: string
-  createdAt: string
-  updatedAt: string
-}
+import NotLoggedIn from '@/components/NotLoggedIn'
+import { Exercise } from '@/lib/mockData'
 
 const categoryLabels = {
   NARVARO: 'Närvaro',
@@ -23,12 +16,15 @@ const categoryLabels = {
 
 export default function AdminExercises() {
   const router = useRouter()
+  const { data: session, status } = useSession()
   const [exercises, setExercises] = useState<Exercise[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchExercises()
-  }, [])
+    if (status !== 'loading') {
+      fetchExercises()
+    }
+  }, [status])
 
   async function fetchExercises() {
     try {
@@ -58,12 +54,21 @@ export default function AdminExercises() {
     }
   }
 
-  if (loading) {
+  if (status === 'loading' || loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <LoadingSpinner className="h-8 w-8" />
       </div>
     )
+  }
+
+  if (!session) {
+    return <NotLoggedIn />
+  }
+
+  if (session.user?.role !== 'ADMIN') {
+    router.push('/dashboard')
+    return null
   }
 
   return (

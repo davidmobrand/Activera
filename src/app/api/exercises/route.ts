@@ -49,8 +49,8 @@ export async function POST(request: NextRequest) {
       content: data.content,
       category: data.category,
       userId: session.user.id,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       mediaIds: [],
       order: data.order || exercises.length + 1
     }
@@ -86,7 +86,7 @@ export async function PUT(request: NextRequest) {
       category,
       order,
       userId: session.user.id,
-      updatedAt: new Date()
+      updatedAt: new Date().toISOString()
     })
   } catch (error) {
     console.error('Error updating exercise:', error)

@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Exercise, mockDb } from '@/lib/mockData'
+import { Media, MediaType } from '@/lib/mockData'
 
 interface ExerciseViewProps {
   exercise: Exercise
@@ -17,6 +18,8 @@ export function ExerciseView({
   const [completed, setCompleted] = useState(initialProgress)
   const [isUpdating, setIsUpdating] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [media, setMedia] = useState<Media[]>([])
+  const [mediaError, setMediaError] = useState<string | null>(null)
 
   const handleProgressUpdate = async () => {
     setIsUpdating(true)
@@ -37,8 +40,17 @@ export function ExerciseView({
     }
   }
 
-  // Get media for all IDs in the exercise
-  const media = mockDb.findMediaByExerciseId(exercise.mediaIds)
+  useEffect(() => {
+    try {
+      const fetchedMedia = mockDb.findMediaByExerciseId(exercise.mediaIds)
+      setMedia(fetchedMedia)
+      setMediaError(null)
+    } catch (error) {
+      console.error('Error fetching media:', error)
+      setMediaError('Failed to load media')
+      setMedia([])
+    }
+  }, [exercise.mediaIds])
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
@@ -48,11 +60,16 @@ export function ExerciseView({
         dangerouslySetInnerHTML={{ __html: exercise.content }} 
       />
 
+      {/* Display media error if any */}
+      {mediaError && (
+        <p className="text-red-500 text-sm mb-4">{mediaError}</p>
+      )}
+
       {/* Display media if available */}
       {media.length > 0 && (
         <div className="mb-6 space-y-4">
           {/* Display images */}
-          {media.filter(m => m.type === 'IMAGE').map(image => (
+          {media.filter(m => m.type === MediaType.IMAGE).map(image => (
             <div key={image.id}>
               <img
                 src={image.url}
@@ -63,7 +80,7 @@ export function ExerciseView({
           ))}
           
           {/* Display audio */}
-          {media.filter(m => m.type === 'AUDIO').map(audio => (
+          {media.filter(m => m.type === MediaType.AUDIO).map(audio => (
             <div key={audio.id}>
               <audio controls src={audio.url} className="w-full" />
             </div>

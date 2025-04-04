@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
-import { Media } from '@/lib/mockData'
+import { Media, MediaType } from '@/lib/types'
 
 interface MediaGalleryProps {
   exerciseId: string
@@ -21,7 +21,7 @@ export function MediaGallery({
   const [isUploading, setIsUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleUpload = async (type: 'IMAGE' | 'AUDIO') => {
+  const handleUpload = async (type: MediaType) => {
     try {
       setIsUploading(true)
       setError(null)
@@ -29,7 +29,7 @@ export function MediaGallery({
       // Create a file input and trigger it
       const input = document.createElement('input')
       input.type = 'file'
-      input.accept = type === 'IMAGE' ? 'image/*' : 'audio/*'
+      input.accept = type === MediaType.IMAGE ? 'image/*' : 'audio/*'
       
       // Wait for file selection
       const file = await new Promise<File>((resolve, reject) => {
@@ -102,15 +102,15 @@ export function MediaGallery({
     }
   }
 
-  const images = media.filter(m => m.type === 'IMAGE')
-  const audio = media.filter(m => m.type === 'AUDIO')
+  const images = media.filter(m => m.type === MediaType.IMAGE)
+  const audio = media.filter(m => m.type === MediaType.AUDIO)
 
   return (
     <div className="space-y-6">
       {isAdmin && (
         <div className="flex gap-4 items-center">
           <Button
-            onClick={() => handleUpload('IMAGE')}
+            onClick={() => handleUpload(MediaType.IMAGE)}
             disabled={isUploading}
             variant="outline"
           >
@@ -124,7 +124,7 @@ export function MediaGallery({
             )}
           </Button>
           <Button
-            onClick={() => handleUpload('AUDIO')}
+            onClick={() => handleUpload(MediaType.AUDIO)}
             disabled={isUploading}
             variant="outline"
           >

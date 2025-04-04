@@ -37,14 +37,19 @@ export const findMediaByExerciseId = (exerciseId: string | string[]): Media[] =>
 };
 
 export const createMedia = (data: CreateMedia): Media => {
-  const validatedData = CreateMediaSchema.parse(data);
+  // First validate the input data
+  const validatedInput = CreateMediaSchema.parse(data);
+  
+  // Then create the full media object with system-added fields
   const now = new Date().toISOString();
-  const newMedia = {
-    ...validatedData,
+  const newMedia: Media = {
+    ...validatedInput,
     id: String(mediaFiles.length + 1),
     createdAt: now,
     updatedAt: now
   };
+
+  // Validate the complete media object
   const validatedMedia = MediaSchema.parse(newMedia);
   mediaFiles.push(validatedMedia);
   return validatedMedia;

@@ -52,14 +52,6 @@ export interface Media {
   updatedAt: string;
 }
 
-// Input type for creating media
-export interface CreateMediaInput {
-  exerciseId: string;
-  type: MediaType;
-  url: string;
-  name: string;
-}
-
 export interface ExerciseProgress {
   id: string;
   userId: string;

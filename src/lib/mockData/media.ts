@@ -1,25 +1,25 @@
-import { Media, MediaType, CreateMediaInput } from '../types';
-import { CreateMediaSchema, MediaSchema, UpdateMediaSchema } from '../validation';
+import { Media, MediaType } from '../types';
+import { MediaSchema, CreateMedia } from '../validation';
 
-// Mock Media Files
+// Mock Media Files with realistic URLs and consistent timestamps
 export const mediaFiles: Media[] = [
   {
     id: '1',
     exerciseId: '1',
     type: MediaType.IMAGE,
-    url: '/images/peaceful-meditation.jpg',
+    url: 'https://storage.activera.com/exercises/1/images/peaceful-meditation.jpg',
     name: 'Peaceful Meditation at Sunrise',
-    createdAt: '2024-01-01T00:00:00Z',
-    updatedAt: '2024-01-01T00:00:00Z'
+    createdAt: new Date('2024-01-01T00:00:00Z').toISOString(),
+    updatedAt: new Date('2024-01-01T00:00:00Z').toISOString()
   },
   {
     id: '2',
     exerciseId: '1',
     type: MediaType.AUDIO,
-    url: '/audio/calm-meditation.mp3',
+    url: 'https://storage.activera.com/exercises/1/audio/calm-meditation.mp3',
     name: 'Calming Meditation Music',
-    createdAt: '2024-01-15T00:00:00Z',
-    updatedAt: '2024-01-15T00:00:00Z'
+    createdAt: new Date('2024-01-15T00:00:00Z').toISOString(),
+    updatedAt: new Date('2024-01-15T00:00:00Z').toISOString()
   }
 ].map(media => MediaSchema.parse(media));
 
@@ -35,32 +35,33 @@ export const findMediaByExerciseId = (exerciseId: string | string[]): Media[] =>
     .map(media => MediaSchema.parse(media));
 };
 
-export const createMedia = (data: CreateMediaInput): Media => {
-  // First validate the input data
-  const validatedInput = CreateMediaSchema.parse(data);
-  
-  // Then create the full media object with system-added fields
+export const createMedia = (data: CreateMedia): Media => {
   const now = new Date().toISOString();
+  
+  // Create a URL that matches our mock data pattern
+  const urlPath = data.type === MediaType.IMAGE ? 'images' : 'audio';
+  const fileName = data.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const url = `https://storage.activera.com/exercises/${data.exerciseId}/${urlPath}/${fileName}`;
+  
   const newMedia: Media = {
-    ...validatedInput,
+    ...data,
+    url, // Use our generated URL instead of the passed one
     id: String(mediaFiles.length + 1),
     createdAt: now,
     updatedAt: now
   };
-
-  // Validate the complete media object
+  
   const validatedMedia = MediaSchema.parse(newMedia);
   mediaFiles.push(validatedMedia);
   return validatedMedia;
 };
 
 export const updateMedia = (id: string, data: Partial<Media>): Media | null => {
-  const validatedData = UpdateMediaSchema.parse(data);
   const index = mediaFiles.findIndex(media => media.id === id);
   if (index !== -1) {
     const updatedMedia = {
       ...mediaFiles[index],
-      ...validatedData,
+      ...data,
       updatedAt: new Date().toISOString()
     };
     const validatedMedia = MediaSchema.parse(updatedMedia);

@@ -1,3 +1,5 @@
+'use client';
+
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { Button } from './ui/Button';
 

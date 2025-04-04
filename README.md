@@ -1,6 +1,21 @@
 # ACTivera
 
-A mindfulness and ACT (Acceptance and Commitment Therapy) exercise platform.
+A Next.js application for exercise and activity tracking.
+
+## Environment Configuration
+
+The application uses environment variables for configuration. Make sure to set these in your deployment:
+
+- `NEXT_PUBLIC_STORAGE_URL`: URL for media storage (should match your deployment URL)
+- `NEXTAUTH_URL`: Authentication callback URL (should match your deployment URL)
+- `NEXTAUTH_SECRET`: Secret key for authentication (change in production)
+
+## Development
+
+```bash
+npm install
+npm run dev
+```
 
 ## Project Structure
 
@@ -28,25 +43,6 @@ src/
 - Progress tracking
 - Admin dashboard
 - Client exercise view
-
-## Setup
-
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-2. Required environment variables:
-   ```
-   DATABASE_URL=your_database_url
-   NEXTAUTH_SECRET=your_auth_secret
-   NEXTAUTH_URL=http://localhost:3000
-   ```
-
-3. Run development server:
-   ```bash
-   npm run dev
-   ```
 
 ## Type Safety
 

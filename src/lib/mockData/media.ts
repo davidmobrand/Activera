@@ -36,7 +36,12 @@ export const findMediaByExerciseId = (exerciseId: string | string[]): Media[] =>
     .map(media => MediaSchema.parse(media));
 };
 
-export const createMedia = (media: CreateMedia): Media => {
+export const createMedia = (media: {
+  exerciseId: string;
+  type: MediaType;
+  url: string;
+  name: string;
+}): Media => {
   const validatedData = CreateMediaSchema.parse(media);
   const now = new Date().toISOString();
   const newMedia = {

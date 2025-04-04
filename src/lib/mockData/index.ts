@@ -46,7 +46,7 @@ export const mockDb = {
 
   // Media functions
   findMediaByExerciseId,
-  createMedia: createMedia as (data: CreateMedia) => ReturnType<typeof createMedia>,
+  createMedia,
   deleteMedia,
   getExerciseMedia,
 

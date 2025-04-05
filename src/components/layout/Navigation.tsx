@@ -35,12 +35,12 @@ const Navigation = () => {
   ]
 
   return (
-    <nav className="bg-white/90 border-b border-mindful-100 backdrop-blur-sm shadow-soft">
+    <nav className="bg-stone-50/90 border-b border-stone-200 backdrop-blur-sm shadow-soft">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <Link href="/dashboard" className="text-2xl font-display text-mindful-800 hover:text-mindful-600 transition-colors">
+              <Link href="/dashboard" className="text-2xl font-display text-mindful-700 hover:text-mindful-600 transition-colors">
                 ACTivera
               </Link>
             </div>
@@ -51,8 +51,8 @@ const Navigation = () => {
                   href={item.href}
                   className={`inline-flex items-center px-3 pt-1 border-b-2 text-sm font-medium transition-colors ${
                     isActive(item.href)
-                      ? 'border-mindful-500 text-mindful-800 font-semibold'
-                      : 'border-transparent text-mindful-600 hover:border-mindful-300 hover:text-mindful-700'
+                      ? 'border-mindful-500 text-mindful-700 font-semibold'
+                      : 'border-transparent text-stone-600 hover:border-stone-300 hover:text-stone-700'
                   }`}
                 >
                   {item.label}
@@ -61,10 +61,10 @@ const Navigation = () => {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <span className="text-sm text-mindful-700 font-medium">
+            <span className="text-sm text-stone-600 font-medium">
               {session.user?.name || session.user?.email}
               {isAdmin && (
-                <span className="ml-2 bg-mindful-100 text-mindful-700 px-2 py-0.5 rounded-full text-xs">
+                <span className="ml-2 bg-stone-100 text-stone-700 px-2 py-0.5 rounded-full text-xs">
                   {t.common('admin')}
                 </span>
               )}

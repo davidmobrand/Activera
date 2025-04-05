@@ -13,7 +13,14 @@ export interface CategoryTranslation {
 
 export interface ExerciseTranslation {
   title: string;
-  content: string;
+  introduction: string;
+  duration: string;
+  benefits: string;
+  instructions: string;
+  tips: string;
+  accessibility?: string;
+  prerequisites?: string;
+  progressIndicators?: string;
 }
 
 export interface ExerciseTranslations {

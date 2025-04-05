@@ -37,12 +37,16 @@ export enum MediaType {
   AUDIO = 'AUDIO',
 }
 
-export interface Translation {
-  title: string
-  content: string
-  accessibility?: string
-  prerequisites?: string
-  progressIndicators?: string
+export type Translation = {
+  title: string;
+  introduction: string;
+  duration: string;
+  benefits: string;
+  instructions: string;
+  tips: string;
+  accessibility: string;
+  prerequisites: string;
+  progressIndicators: string;
 }
 
 export interface Exercise {

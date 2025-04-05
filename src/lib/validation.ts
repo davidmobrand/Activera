@@ -14,7 +14,11 @@ export const UserSchema = z.object({
 
 const TranslationSchema = z.object({
   title: z.string().min(1),
-  content: z.string().min(1),
+  introduction: z.string().min(1),
+  duration: z.string().min(1),
+  benefits: z.string().min(1),
+  instructions: z.string().min(1),
+  tips: z.string().min(1),
   accessibility: z.string().optional(),
   prerequisites: z.string().optional(),
   progressIndicators: z.string().optional(),

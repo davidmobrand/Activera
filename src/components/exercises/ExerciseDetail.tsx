@@ -58,12 +58,24 @@ export function ExerciseDetail({ exercise }: ExerciseDetailProps) {
         </h1>
 
         <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 shadow-inner-lg mb-8">
-          <div 
-            className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-mindful-700
-              prose-p:text-gray-700 prose-strong:text-mindful-700 prose-ul:text-gray-700 prose-ol:text-gray-700
-              prose-li:marker:text-mindful-400"
-            dangerouslySetInnerHTML={{ __html: translation.content }}
-          />
+          <div className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-mindful-700
+            prose-p:text-gray-700 prose-strong:text-mindful-700 prose-ul:text-gray-700 prose-ol:text-gray-700
+            prose-li:marker:text-mindful-400">
+            <h2>{t.common('introduction')}</h2>
+            <div dangerouslySetInnerHTML={{ __html: translation.introduction }} />
+
+            <h2>{t.common('duration')}</h2>
+            <div dangerouslySetInnerHTML={{ __html: translation.duration }} />
+
+            <h2>{t.common('benefits')}</h2>
+            <div dangerouslySetInnerHTML={{ __html: translation.benefits }} />
+
+            <h2>{t.common('instructions')}</h2>
+            <div dangerouslySetInnerHTML={{ __html: translation.instructions }} />
+
+            <h2>{t.common('tips')}</h2>
+            <div dangerouslySetInnerHTML={{ __html: translation.tips }} />
+          </div>
         </div>
 
         {translation.accessibility && (

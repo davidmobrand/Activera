@@ -41,6 +41,15 @@ export const common = {
     notLoggedIn: 'Not Logged In',
     pleaseSignIn: 'Please sign in to continue',
     signIn: 'Sign In',
+    // Exercise sections
+    introduction: 'Introduction',
+    duration: 'Duration',
+    benefits: 'Benefits',
+    instructions: 'Instructions',
+    tips: 'Tips',
+    accessibility: 'Accessibility',
+    prerequisites: 'Prerequisites',
+    progressIndicators: 'Progress Indicators',
   },
   sv: {
     dashboard: 'Dashboard',
@@ -84,5 +93,14 @@ export const common = {
     notLoggedIn: 'Inte Inloggad',
     pleaseSignIn: 'Vänligen logga in för att fortsätta',
     signIn: 'Logga In',
+    // Exercise sections
+    introduction: 'Introduktion',
+    duration: 'Längd',
+    benefits: 'Fördelar',
+    instructions: 'Instruktioner',
+    tips: 'Tips',
+    accessibility: 'Tillgänglighet',
+    prerequisites: 'Förkunskaper',
+    progressIndicators: 'Tecken på framsteg',
   },
 } as const; 

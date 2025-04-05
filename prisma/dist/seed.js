@@ -81,28 +81,106 @@ function main() {
                     exercises = [
                         {
                             id: 'mindful-breathing',
-                            title: 'Mindful Breathing',
-                            content: '<h2>Mindful Breathing Exercise</h2><p>Find a comfortable position and focus on your breath...</p>',
+                            translations: {
+                                en: {
+                                    title: 'Mindful Breathing',
+                                    introduction: '<p>A simple yet powerful mindfulness exercise to help you stay present and centered.</p>',
+                                    duration: '<p>10-15 minutes</p>',
+                                    benefits: '<ul><li>Reduced stress</li><li>Improved focus</li><li>Better emotional regulation</li></ul>',
+                                    instructions: '<ol><li>Find a comfortable position</li><li>Close your eyes</li><li>Focus on your breath</li></ol>',
+                                    tips: '<p>Remember to be gentle with yourself and maintain a non-judgmental attitude.</p>',
+                                    accessibility: '<p>This exercise can be done sitting, lying down, or standing.</p>',
+                                    prerequisites: '<p>No special equipment or prior experience needed.</p>',
+                                    progressIndicators: '<p>You may notice improved concentration and reduced stress over time.</p>'
+                                },
+                                sv: {
+                                    title: 'Medveten Andning',
+                                    introduction: '<p>En enkel men kraftfull mindfulness-övning som hjälper dig att vara närvarande och centrerad.</p>',
+                                    duration: '<p>10-15 minuter</p>',
+                                    benefits: '<ul><li>Minskad stress</li><li>Förbättrat fokus</li><li>Bättre emotionell reglering</li></ul>',
+                                    instructions: '<ol><li>Hitta en bekväm position</li><li>Blunda</li><li>Fokusera på din andning</li></ol>',
+                                    tips: '<p>Kom ihåg att vara snäll mot dig själv och behåll en icke-dömande attityd.</p>',
+                                    accessibility: '<p>Denna övning kan göras sittande, liggande eller stående.</p>',
+                                    prerequisites: '<p>Ingen särskild utrustning eller tidigare erfarenhet krävs.</p>',
+                                    progressIndicators: '<p>Du kan märka förbättrad koncentration och minskad stress över tid.</p>'
+                                }
+                            },
                             category: 'NARVARO',
+                            difficulty: 'BEGINNER',
+                            recommendedTime: ['MORNING', 'EVENING'],
+                            relatedExerciseIds: [],
                             order: 1,
                             userId: admin.id,
+                            mediaIds: []
                         },
                         {
                             id: 'accepting-emotions',
-                            title: 'Accepting Emotions',
-                            content: '<h2>Accepting Emotions Exercise</h2><p>Notice your emotions without judgment...</p>',
+                            translations: {
+                                en: {
+                                    title: 'Accepting Emotions',
+                                    introduction: '<p>Learn to observe and accept your emotions without judgment.</p>',
+                                    duration: '<p>15-20 minutes</p>',
+                                    benefits: '<ul><li>Increased emotional awareness</li><li>Better emotional regulation</li><li>Reduced emotional reactivity</li></ul>',
+                                    instructions: '<ol><li>Find a quiet space</li><li>Notice your current emotional state</li><li>Observe without trying to change anything</li></ol>',
+                                    tips: '<p>Remember that all emotions are valid and temporary.</p>',
+                                    accessibility: '<p>This exercise can be done in any comfortable position.</p>',
+                                    prerequisites: '<p>Basic mindfulness experience recommended but not required.</p>',
+                                    progressIndicators: '<p>You may notice increased emotional awareness and less reactivity.</p>'
+                                },
+                                sv: {
+                                    title: 'Acceptera Känslor',
+                                    introduction: '<p>Lär dig att observera och acceptera dina känslor utan att döma.</p>',
+                                    duration: '<p>15-20 minuter</p>',
+                                    benefits: '<ul><li>Ökad känslomässig medvetenhet</li><li>Bättre känsloreglering</li><li>Minskad känslomässig reaktivitet</li></ul>',
+                                    instructions: '<ol><li>Hitta en lugn plats</li><li>Notera ditt nuvarande känslotillstånd</li><li>Observera utan att försöka förändra något</li></ol>',
+                                    tips: '<p>Kom ihåg att alla känslor är giltiga och tillfälliga.</p>',
+                                    accessibility: '<p>Denna övning kan göras i valfri bekväm position.</p>',
+                                    prerequisites: '<p>Grundläggande mindfulness-erfarenhet rekommenderas men krävs inte.</p>',
+                                    progressIndicators: '<p>Du kan märka ökad känslomässig medvetenhet och mindre reaktivitet.</p>'
+                                }
+                            },
                             category: 'OPPENHET',
+                            difficulty: 'INTERMEDIATE',
+                            recommendedTime: ['ANY'],
+                            relatedExerciseIds: [],
                             order: 1,
                             userId: admin.id,
+                            mediaIds: []
                         },
                         {
                             id: 'values-exploration',
-                            title: 'Values Exploration',
-                            content: '<h2>Values Exploration Exercise</h2><p>Reflect on what matters most to you...</p>',
+                            translations: {
+                                en: {
+                                    title: 'Values Exploration',
+                                    introduction: '<p>A guided exercise to help you identify and connect with your personal values.</p>',
+                                    duration: '<p>20-30 minutes</p>',
+                                    benefits: '<ul><li>Clearer sense of purpose</li><li>Better decision making</li><li>Increased motivation</li></ul>',
+                                    instructions: '<ol><li>Find a quiet space for reflection</li><li>Consider different life areas</li><li>Identify what matters most to you</li></ol>',
+                                    tips: '<p>Focus on what truly matters to you, not what others expect.</p>',
+                                    accessibility: '<p>Can be done through writing, thinking, or recording thoughts.</p>',
+                                    prerequisites: '<p>A journal or recording device might be helpful but not required.</p>',
+                                    progressIndicators: '<p>You may notice more alignment between your actions and values.</p>'
+                                },
+                                sv: {
+                                    title: 'Utforska Värderingar',
+                                    introduction: '<p>En guidad övning för att hjälpa dig identifiera och anknyta till dina personliga värderingar.</p>',
+                                    duration: '<p>20-30 minuter</p>',
+                                    benefits: '<ul><li>Tydligare känsla av mening</li><li>Bättre beslutsfattande</li><li>Ökad motivation</li></ul>',
+                                    instructions: '<ol><li>Hitta en lugn plats för reflektion</li><li>Överväg olika livsområden</li><li>Identifiera vad som betyder mest för dig</li></ol>',
+                                    tips: '<p>Fokusera på vad som verkligen betyder något för dig, inte vad andra förväntar sig.</p>',
+                                    accessibility: '<p>Kan göras genom att skriva, tänka eller spela in tankar.</p>',
+                                    prerequisites: '<p>En dagbok eller inspelningsenhet kan vara hjälpsam men krävs inte.</p>',
+                                    progressIndicators: '<p>Du kan märka bättre överensstämmelse mellan dina handlingar och värderingar.</p>'
+                                }
+                            },
                             category: 'ENGAGEMANG',
+                            difficulty: 'INTERMEDIATE',
+                            recommendedTime: ['ANY'],
+                            relatedExerciseIds: [],
                             order: 1,
                             userId: admin.id,
-                        },
+                            mediaIds: []
+                        }
                     ];
                     createdExercises = [];
                     _i = 0, exercises_1 = exercises;
@@ -112,15 +190,16 @@ function main() {
                     exercise = exercises_1[_i];
                     return [4 /*yield*/, prisma.exercise.upsert({
                             where: {
-                                title_category: {
-                                    title: exercise.title,
-                                    category: exercise.category,
-                                },
+                                id: exercise.id
                             },
                             update: {
-                                content: exercise.content,
+                                translations: exercise.translations,
+                                category: exercise.category,
+                                difficulty: exercise.difficulty,
+                                recommendedTime: exercise.recommendedTime,
                                 order: exercise.order,
                                 userId: exercise.userId,
+                                mediaIds: exercise.mediaIds
                             },
                             create: exercise,
                         })];

@@ -23,23 +23,28 @@ export function ExerciseView({ exercise, onComplete }: ExerciseViewProps) {
   const [error, setError] = useState<string | null>(null)
   const [completed, setCompleted] = useState(false)
 
+  const translation = exercise.translations[language]
+
   useEffect(() => {
-    async function loadMedia() {
+    async function fetchMedia() {
+      if (!exercise.mediaIds?.length) return;
+      
       try {
-        setLoading(true)
-        setError(null)
-        const exerciseMedia = await mockDb.media.findByExerciseId(exercise.id)
-        setMedia(exerciseMedia)
+        const mediaItems = await Promise.all(
+          exercise.mediaIds.map(async (id) => {
+            const response = await fetch(`/api/media/${id}`);
+            if (!response.ok) throw new Error(`Failed to fetch media ${id}`);
+            return response.json();
+          })
+        );
+        setMedia(mediaItems);
       } catch (error) {
-        console.error('Error loading media:', error)
-        setError(error instanceof Error ? error.message : 'Failed to load media')
-      } finally {
-        setLoading(false)
+        console.error('Error fetching media:', error);
       }
     }
 
-    loadMedia()
-  }, [exercise.id])
+    fetchMedia();
+  }, [exercise.mediaIds]);
 
   const handleComplete = async () => {
     try {
@@ -59,8 +64,6 @@ export function ExerciseView({ exercise, onComplete }: ExerciseViewProps) {
       </div>
     )
   }
-
-  const translation = exercise.translations[language]
 
   return (
     <div className="space-y-8">
@@ -82,45 +85,88 @@ export function ExerciseView({ exercise, onComplete }: ExerciseViewProps) {
             {translation.title}
           </h1>
 
-          <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 shadow-inner-lg">
-            <div 
-              className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-mindful-700
-                prose-p:text-gray-700 prose-strong:text-mindful-700 prose-ul:text-gray-700 prose-ol:text-gray-700
-                prose-li:marker:text-mindful-400"
-              dangerouslySetInnerHTML={{ __html: translation.content }}
-            />
+          <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 shadow-inner-lg mb-8">
+            <div className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-mindful-700
+              prose-p:text-gray-700 prose-strong:text-mindful-700 prose-ul:text-gray-700 prose-ol:text-gray-700
+              prose-li:marker:text-mindful-400">
+              <h2>{t.common('introduction')}</h2>
+              <div dangerouslySetInnerHTML={{ __html: translation.introduction }} />
+
+              <h2>{t.common('duration')}</h2>
+              <div dangerouslySetInnerHTML={{ __html: translation.duration }} />
+
+              <h2>{t.common('benefits')}</h2>
+              <div dangerouslySetInnerHTML={{ __html: translation.benefits }} />
+
+              <h2>{t.common('instructions')}</h2>
+              <div dangerouslySetInnerHTML={{ __html: translation.instructions }} />
+
+              <h2>{t.common('tips')}</h2>
+              <div dangerouslySetInnerHTML={{ __html: translation.tips }} />
+            </div>
           </div>
+
+          {translation.accessibility && (
+            <div className="bg-calm-50 rounded-xl p-6 mb-6 border border-calm-100">
+              <div 
+                className="prose prose-calm max-w-none"
+                dangerouslySetInnerHTML={{ __html: translation.accessibility }}
+              />
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {translation.prerequisites && (
+              <div className="bg-mindful-50 rounded-xl p-6 border border-mindful-100">
+                <div 
+                  className="prose prose-mindful max-w-none"
+                  dangerouslySetInnerHTML={{ __html: translation.prerequisites }}
+                />
+              </div>
+            )}
+
+            {translation.progressIndicators && (
+              <div className="bg-warmth-50 rounded-xl p-6 border border-warmth-100">
+                <div 
+                  className="prose prose-warmth max-w-none"
+                  dangerouslySetInnerHTML={{ __html: translation.progressIndicators }}
+                />
+              </div>
+            )}
+          </div>
+
+          {media.length > 0 && (
+            <div className="mt-8 pt-6 border-t border-mindful-200">
+              <h2 className="font-display text-2xl text-mindful-700 mb-4">
+                {t.common('media')}
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {media.map((item) => (
+                  <div key={item.id} className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-mindful-100">
+                    {item.type === MediaType.IMAGE ? (
+                      <img
+                        src={item.url}
+                        alt={item.name}
+                        className="w-full h-auto"
+                      />
+                    ) : (
+                      <div className="p-4">
+                        <audio
+                          controls
+                          src={item.url}
+                          className="w-full"
+                        >
+                          Your browser does not support the audio element.
+                        </audio>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
-
-      {media.length > 0 && (
-        <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 shadow-soft">
-          <h2 className="font-display text-2xl text-mindful-700 mb-6">{t.common('media')}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {media.map((item) => (
-              <div key={item.id} className="rounded-lg overflow-hidden bg-mindful-50 border border-mindful-100">
-                {item.type === MediaType.IMAGE ? (
-                  <img
-                    src={item.url}
-                    alt={item.name}
-                    className="w-full h-auto"
-                  />
-                ) : (
-                  <div className="p-4">
-                    <audio
-                      controls
-                      src={item.url}
-                      className="w-full"
-                    >
-                      Your browser does not support the audio element.
-                    </audio>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {error && (
         <div className="bg-warmth-50 text-warmth-700 px-4 py-3 rounded-lg border border-warmth-200">

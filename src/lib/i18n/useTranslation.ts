@@ -32,14 +32,18 @@ export function useTranslation() {
         console.warn(`Translation key not found: ${String(key)}`);
         return {
           title: String(key),
-          content: '',
+          introduction: '',
+          duration: '',
+          benefits: '',
+          instructions: '',
+          tips: '',
+          accessibility: '',
+          prerequisites: '',
+          progressIndicators: '',
         };
       }
 
-      return {
-        title: exercise[language].title,
-        content: exercise[language].content,
-      };
+      return exercise[language];
     },
     common: (key: CommonKey) => {
       const translation = common[language][key];

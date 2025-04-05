@@ -13,7 +13,14 @@ const Editor = dynamic(() => import('@/components/Editor'), { ssr: false })
 
 type FormData = {
   title: string;
-  content: string;
+  introduction: string;
+  duration: string;
+  benefits: string;
+  instructions: string;
+  tips: string;
+  accessibility: string;
+  prerequisites: string;
+  progressIndicators: string;
   category: 'NARVARO' | 'OPPENHET' | 'ENGAGEMANG';
   order: number;
 }
@@ -23,7 +30,14 @@ export default function CreateExercise() {
   const { data: session, status } = useSession()
   const [formData, setFormData] = useState<FormData>({
     title: '',
-    content: '',
+    introduction: '',
+    duration: '',
+    benefits: '',
+    instructions: '',
+    tips: '',
+    accessibility: '',
+    prerequisites: '',
+    progressIndicators: '',
     category: 'NARVARO',
     order: 1
   })
@@ -31,12 +45,45 @@ export default function CreateExercise() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     try {
+      const exercise = {
+        translations: {
+          en: {
+            title: formData.title,
+            introduction: formData.introduction,
+            duration: formData.duration,
+            benefits: formData.benefits,
+            instructions: formData.instructions,
+            tips: formData.tips,
+            accessibility: formData.accessibility,
+            prerequisites: formData.prerequisites,
+            progressIndicators: formData.progressIndicators
+          },
+          sv: {
+            title: formData.title, // You might want to add separate fields for Swedish translations
+            introduction: formData.introduction,
+            duration: formData.duration,
+            benefits: formData.benefits,
+            instructions: formData.instructions,
+            tips: formData.tips,
+            accessibility: formData.accessibility,
+            prerequisites: formData.prerequisites,
+            progressIndicators: formData.progressIndicators
+          }
+        },
+        category: formData.category,
+        order: formData.order,
+        difficulty: 'BEGINNER',
+        recommendedTime: ['MORNING', 'EVENING'],
+        relatedExerciseIds: [],
+        mediaIds: []
+      }
+
       const response = await fetch('/api/exercises', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(exercise),
       })
 
       if (!response.ok) throw new Error('Failed to create exercise')
@@ -137,17 +184,19 @@ export default function CreateExercise() {
           />
         </div>
 
-        <div className="space-y-2">
-          <label htmlFor="content" className="block text-sm font-medium text-gray-700">
-            Content
-          </label>
-          <div className="mt-1 rounded-md shadow-sm">
-            <Editor
-              value={formData.content}
-              onEditorChange={(content: string) => setFormData({ ...formData, content })}
-            />
+        {(['introduction', 'duration', 'benefits', 'instructions', 'tips', 'accessibility', 'prerequisites', 'progressIndicators'] as const).map((field) => (
+          <div key={field} className="space-y-2">
+            <label htmlFor={field} className="block text-sm font-medium text-gray-700 capitalize">
+              {field}
+            </label>
+            <div className="mt-1 rounded-md shadow-sm">
+              <Editor
+                value={formData[field]}
+                onEditorChange={(content: string) => setFormData({ ...formData, [field]: content })}
+              />
+            </div>
           </div>
-        </div>
+        ))}
 
         <div className="flex justify-end space-x-4 pt-4 border-t border-gray-200">
           <Button

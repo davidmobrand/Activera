@@ -1,7 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { Navigation } from '@/components/layout/Navigation'
+import Navigation from '@/components/layout/Navigation'
 import AuthProvider from '@/components/AuthProvider'
 import { LanguageProvider } from '@/lib/i18n/LanguageContext'
 

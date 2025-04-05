@@ -8,7 +8,7 @@ import { ExerciseCategoryEnum } from '@/lib/types'
 import { LanguageSelector } from '@/components/LanguageSelector'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 
-export default function Navigation() {
+const Navigation = () => {
   const pathname = usePathname()
   const { data: session, status } = useSession()
   const { t } = useTranslation()
@@ -82,4 +82,7 @@ export default function Navigation() {
       </div>
     </nav>
   )
-} 
+}
+
+export { Navigation }
+export default Navigation 

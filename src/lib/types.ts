@@ -11,6 +11,19 @@ export enum ExerciseCategoryEnum {
   ENGAGEMANG = 'ENGAGEMANG',
 }
 
+export enum DifficultyLevel {
+  BEGINNER = 'BEGINNER',
+  INTERMEDIATE = 'INTERMEDIATE',
+  ADVANCED = 'ADVANCED',
+}
+
+export enum TimeOfDay {
+  MORNING = 'MORNING',
+  AFTERNOON = 'AFTERNOON',
+  EVENING = 'EVENING',
+  ANY = 'ANY',
+}
+
 export type ExerciseCategory = ExerciseCategoryEnum;
 
 export const ExerciseCategoryDisplay = {
@@ -27,12 +40,18 @@ export enum MediaType {
 export interface Translation {
   title: string
   content: string
+  accessibility?: string
+  prerequisites?: string
+  progressIndicators?: string
 }
 
 export interface Exercise {
   id: string
   translations: Record<Language, Translation>
   category: ExerciseCategory
+  difficulty: DifficultyLevel
+  recommendedTime: TimeOfDay[]
+  relatedExerciseIds: string[]
   userId: string
   createdAt: string
   updatedAt: string

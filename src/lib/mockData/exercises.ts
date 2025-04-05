@@ -1,4 +1,4 @@
-import { Exercise, ExerciseCategoryEnum } from '@/lib/types';
+import { Exercise, ExerciseCategoryEnum, DifficultyLevel, TimeOfDay } from '@/lib/types';
 import { CreateExerciseSchema, ExerciseSchema, UpdateExerciseSchema } from '../validation';
 import type { CreateExercise } from '../validation';
 
@@ -46,6 +46,23 @@ function generateExercises(count: number): Exercise[] {
 <li>Be patient with yourself - mind wandering is normal</li>
 <li>Start with shorter sessions and gradually increase duration</li>
 </ul>`,
+        accessibility: `<h2>Accessibility Options</h2>
+<ul>
+<li>Can be practiced in any position - sitting, lying down, or even standing</li>
+<li>Suitable for those with limited mobility</li>
+<li>Can be done with eyes open or closed</li>
+<li>No special equipment needed</li>
+</ul>`,
+        prerequisites: `<h2>Prerequisites</h2>
+<p>No prior experience needed. This is an excellent starting point for mindfulness practice.</p>`,
+        progressIndicators: `<h2>Signs of Progress</h2>
+<ul>
+<li>Increased ability to notice when mind wanders</li>
+<li>Quicker return to breath when distracted</li>
+<li>Longer periods of sustained attention</li>
+<li>Greater awareness of breath throughout the day</li>
+<li>Reduced reactivity to stress</li>
+</ul>`,
       },
       sv: {
         title: 'Medveten Andning',
@@ -82,7 +99,27 @@ function generateExercises(count: number): Exercise[] {
 <li>Var tålmodig med dig själv - det är normalt att tankarna vandrar</li>
 <li>Börja med kortare sessioner och öka gradvis längden</li>
 </ul>`,
+        accessibility: `<h2>Tillgänglighetsalternativ</h2>
+<ul>
+<li>Kan utövas i valfri position - sittande, liggande eller till och med stående</li>
+<li>Lämplig för personer med begränsad rörlighet</li>
+<li>Kan göras med öppna eller slutna ögon</li>
+<li>Ingen speciell utrustning behövs</li>
+</ul>`,
+        prerequisites: `<h2>Förkunskaper</h2>
+<p>Ingen tidigare erfarenhet krävs. Detta är en utmärkt startpunkt för mindfulness-träning.</p>`,
+        progressIndicators: `<h2>Tecken på Framsteg</h2>
+<ul>
+<li>Ökad förmåga att märka när tankarna vandrar</li>
+<li>Snabbare återgång till andningen vid distraktion</li>
+<li>Längre perioder av bibehållen uppmärksamhet</li>
+<li>Större medvetenhet om andningen under dagen</li>
+<li>Minskad reaktivitet på stress</li>
+</ul>`,
       },
+      difficulty: DifficultyLevel.BEGINNER,
+      recommendedTime: [TimeOfDay.MORNING, TimeOfDay.EVENING],
+      relatedExerciseIds: ['2', '3'],
     },
     {
       en: {
@@ -121,6 +158,22 @@ function generateExercises(count: number): Exercise[] {
 <li>Practice in a warm, quiet space</li>
 <li>Move slowly and deliberately through each body part</li>
 </ul>`,
+        accessibility: `<h2>Accessibility Options</h2>
+<ul>
+<li>Can be practiced in any position - lying down</li>
+<li>Suitable for those with limited mobility</li>
+<li>No special equipment needed</li>
+</ul>`,
+        prerequisites: `<h2>Prerequisites</h2>
+<p>No prior experience needed. This is an excellent starting point for mindfulness practice.</p>`,
+        progressIndicators: `<h2>Signs of Progress</h2>
+<ul>
+<li>Increased ability to notice when mind wanders</li>
+<li>Quicker return to breath when distracted</li>
+<li>Longer periods of sustained attention</li>
+<li>Greater awareness of body throughout the day</li>
+<li>Reduced reactivity to stress</li>
+</ul>`,
       },
       sv: {
         title: 'Kroppsskanning',
@@ -158,7 +211,26 @@ function generateExercises(count: number): Exercise[] {
 <li>Öva i ett varmt, tyst utrymme</li>
 <li>Rör dig långsamt och medvetet genom varje kroppsdel</li>
 </ul>`,
+        accessibility: `<h2>Tillgänglighetsalternativ</h2>
+<ul>
+<li>Kan utövas i valfri position - liggande</li>
+<li>Lämplig för personer med begränsad rörlighet</li>
+<li>Ingen speciell utrustning behövs</li>
+</ul>`,
+        prerequisites: `<h2>Förkunskaper</h2>
+<p>Ingen tidigare erfarenhet krävs. Detta är en utmärkt startpunkt för mindfulness-träning.</p>`,
+        progressIndicators: `<h2>Tecken på Framsteg</h2>
+<ul>
+<li>Ökad förmåga att märka när tankarna vandrar</li>
+<li>Snabbare återgång till andningen vid distraktion</li>
+<li>Längre perioder av bibehållen uppmärksamhet</li>
+<li>Större medvetenhet om kroppen under dagen</li>
+<li>Minskad reaktivitet på stress</li>
+</ul>`,
       },
+      difficulty: DifficultyLevel.BEGINNER,
+      recommendedTime: [TimeOfDay.MORNING, TimeOfDay.EVENING],
+      relatedExerciseIds: ['1', '3'],
     },
     {
       en: {
@@ -197,6 +269,22 @@ function generateExercises(count: number): Exercise[] {
 <li>Use gentle labels if helpful (e.g., "planning," "remembering")</li>
 <li>Remember that all types of thoughts are normal</li>
 </ul>`,
+        accessibility: `<h2>Accessibility Options</h2>
+<ul>
+<li>Can be practiced in any position - sitting</li>
+<li>Suitable for those with limited mobility</li>
+<li>No special equipment needed</li>
+</ul>`,
+        prerequisites: `<h2>Prerequisites</h2>
+<p>No prior experience needed. This is an excellent starting point for mindfulness practice.</p>`,
+        progressIndicators: `<h2>Signs of Progress</h2>
+<ul>
+<li>Increased ability to notice when mind wanders</li>
+<li>Quicker return to breath when distracted</li>
+<li>Longer periods of sustained attention</li>
+<li>Greater awareness of thoughts throughout the day</li>
+<li>Reduced reactivity to stress</li>
+</ul>`,
       },
       sv: {
         title: 'Tankeobservation',
@@ -234,7 +322,26 @@ function generateExercises(count: number): Exercise[] {
 <li>Använd milda etiketter om det hjälper (t.ex. "planerar," "minns")</li>
 <li>Kom ihåg att alla typer av tankar är normala</li>
 </ul>`,
+        accessibility: `<h2>Tillgänglighetsalternativ</h2>
+<ul>
+<li>Kan utövas i valfri position - sittande</li>
+<li>Lämplig för personer med begränsad rörlighet</li>
+<li>Ingen speciell utrustning behövs</li>
+</ul>`,
+        prerequisites: `<h2>Förkunskaper</h2>
+<p>Ingen tidigare erfarenhet krävs. Detta är en utmärkt startpunkt för mindfulness-träning.</p>`,
+        progressIndicators: `<h2>Tecken på Framsteg</h2>
+<ul>
+<li>Ökad förmåga att märka när tankarna vandrar</li>
+<li>Snabbare återgång till andningen vid distraktion</li>
+<li>Längre perioder av bibehållen uppmärksamhet</li>
+<li>Större medvetenhet om tankar under dagen</li>
+<li>Minskad reaktivitet på stress</li>
+</ul>`,
       },
+      difficulty: DifficultyLevel.BEGINNER,
+      recommendedTime: [TimeOfDay.MORNING, TimeOfDay.EVENING],
+      relatedExerciseIds: ['1', '2'],
     },
   ];
 
@@ -243,25 +350,38 @@ function generateExercises(count: number): Exercise[] {
     const category = categories[i % categories.length];
     const number = i + 1;
 
-    return {
+    const exercise: Exercise = {
       id: String(number),
       translations: {
         en: {
           title: `${baseExercise.en.title} ${number}`,
           content: baseExercise.en.content,
+          accessibility: baseExercise.en.accessibility,
+          prerequisites: baseExercise.en.prerequisites,
+          progressIndicators: baseExercise.en.progressIndicators,
         },
         sv: {
           title: `${baseExercise.sv.title} ${number}`,
           content: baseExercise.sv.content,
+          accessibility: baseExercise.sv.accessibility,
+          prerequisites: baseExercise.sv.prerequisites,
+          progressIndicators: baseExercise.sv.progressIndicators,
         },
       },
       category,
+      difficulty: baseExercise.difficulty || DifficultyLevel.BEGINNER,
+      recommendedTime: baseExercise.recommendedTime || [TimeOfDay.ANY],
+      relatedExerciseIds: baseExercise.relatedExerciseIds?.map(id => 
+        String(((parseInt(id) - 1 + i) % count) + 1)
+      ) || [],
       userId: '1',
       createdAt: '2024-01-01T12:00:00Z',
       updatedAt: '2024-01-01T12:00:00Z',
       mediaIds: [],
       order: number,
     };
+
+    return exercise;
   });
 }
 

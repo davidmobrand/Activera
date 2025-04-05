@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { UserRole, ExerciseCategoryEnum, MediaType } from './types';
+import { UserRole, ExerciseCategoryEnum, MediaType, DifficultyLevel, TimeOfDay } from './types';
 
 // User Validation
 export const UserSchema = z.object({
@@ -15,6 +15,9 @@ export const UserSchema = z.object({
 const TranslationSchema = z.object({
   title: z.string().min(1),
   content: z.string().min(1),
+  accessibility: z.string().optional(),
+  prerequisites: z.string().optional(),
+  progressIndicators: z.string().optional(),
 });
 
 const TranslationsSchema = z.object({
@@ -27,6 +30,9 @@ export const ExerciseSchema = z.object({
   id: z.string(),
   translations: TranslationsSchema,
   category: z.nativeEnum(ExerciseCategoryEnum),
+  difficulty: z.nativeEnum(DifficultyLevel),
+  recommendedTime: z.array(z.nativeEnum(TimeOfDay)),
+  relatedExerciseIds: z.array(z.string()),
   userId: z.string(),
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime(),

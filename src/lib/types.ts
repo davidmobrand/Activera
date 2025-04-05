@@ -1,30 +1,7 @@
 import { Language } from './i18n/types'
-
-export enum UserRole {
-  ADMIN = 'ADMIN',
-  CLIENT = 'CLIENT',
-}
-
-export enum ExerciseCategoryEnum {
-  NARVARO = 'NARVARO',
-  OPPENHET = 'OPPENHET',
-  ENGAGEMANG = 'ENGAGEMANG',
-}
-
-export enum DifficultyLevel {
-  BEGINNER = 'BEGINNER',
-  INTERMEDIATE = 'INTERMEDIATE',
-  ADVANCED = 'ADVANCED',
-}
-
-export enum TimeOfDay {
-  MORNING = 'MORNING',
-  AFTERNOON = 'AFTERNOON',
-  EVENING = 'EVENING',
-  ANY = 'ANY',
-}
-
-export type ExerciseCategory = ExerciseCategoryEnum;
+import { UserRole } from './constants/users'
+import { ExerciseCategoryEnum } from './constants/categories'
+import { DifficultyLevel, TimeOfDay, MediaType } from './constants/exercises'
 
 export const ExerciseCategoryDisplay = {
   [ExerciseCategoryEnum.NARVARO]: 'Närvaro',
@@ -32,10 +9,11 @@ export const ExerciseCategoryDisplay = {
   [ExerciseCategoryEnum.ENGAGEMANG]: 'Engagemang',
 } as const;
 
-export enum MediaType {
-  IMAGE = 'IMAGE',
-  AUDIO = 'AUDIO',
-}
+export const ExerciseCategoryDescription = {
+  [ExerciseCategoryEnum.OPPENHET]: 'Övningar för att utveckla din förmåga att vara öppen för nya erfarenheter och acceptera dina tankar och känslor som de är. Här tränar du på att möta livets utmaningar med nyfikenhet och flexibilitet.',
+  [ExerciseCategoryEnum.NARVARO]: 'Övningar som hjälper dig att vara närvarande i nuet och uppmärksamma dina upplevelser utan att döma. Här lär du dig mindfulness och att hantera stress genom medveten närvaro.',
+  [ExerciseCategoryEnum.ENGAGEMANG]: 'Övningar som stödjer dig i att leva ett rikt och meningsfullt liv i linje med dina värderingar. Här utforskar du vad som är viktigt för dig och tar steg mot dina mål.'
+} as const;
 
 export type Translation = {
   title: string;
@@ -52,7 +30,7 @@ export type Translation = {
 export interface Exercise {
   id: string
   translations: Record<Language, Translation>
-  category: ExerciseCategory
+  category: ExerciseCategoryEnum
   difficulty: DifficultyLevel
   recommendedTime: TimeOfDay[]
   relatedExerciseIds: string[]
@@ -72,12 +50,6 @@ export interface User {
   createdAt: string
   updatedAt: string
 }
-
-export const ExerciseCategoryDescription = {
-  [ExerciseCategoryEnum.OPPENHET]: 'Övningar för att utveckla din förmåga att vara öppen för nya erfarenheter och acceptera dina tankar och känslor som de är. Här tränar du på att möta livets utmaningar med nyfikenhet och flexibilitet.',
-  [ExerciseCategoryEnum.NARVARO]: 'Övningar som hjälper dig att vara närvarande i nuet och uppmärksamma dina upplevelser utan att döma. Här lär du dig mindfulness och att hantera stress genom medveten närvaro.',
-  [ExerciseCategoryEnum.ENGAGEMANG]: 'Övningar som stödjer dig i att leva ett rikt och meningsfullt liv i linje med dina värderingar. Här utforskar du vad som är viktigt för dig och tar steg mot dina mål.'
-} as const;
 
 export interface MediaInput {
   exerciseId: string
@@ -105,4 +77,7 @@ export interface ExerciseProgress {
 export type PageProps<T = Record<string, string>> = {
   params: Promise<T>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-} 
+}
+
+// Re-export constants for backward compatibility
+export { UserRole, ExerciseCategoryEnum, DifficultyLevel, TimeOfDay, MediaType } 

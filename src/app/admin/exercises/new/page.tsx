@@ -6,33 +6,20 @@ import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import NotLoggedIn from '@/components/NotLoggedIn'
-import { ExerciseCategory } from '@/lib/types'
+import { ExerciseCategoryEnum } from '@/lib/constants/categories'
 import dynamic from 'next/dynamic'
 import { RichTextEditor } from '@/components/admin/RichTextEditor'
 import { useTranslation } from '@/lib/i18n/useTranslation'
+import type { ExerciseFormData } from '@/lib/types/forms'
 
 // Use dynamic import for RichTextEditor to avoid SSR issues
 const DynamicRichTextEditor = dynamic(() => Promise.resolve(RichTextEditor), { ssr: false })
-
-type FormData = {
-  title: string;
-  introduction: string;
-  duration: string;
-  benefits: string;
-  instructions: string;
-  tips: string;
-  accessibility: string;
-  prerequisites: string;
-  progressIndicators: string;
-  category: 'NARVARO' | 'OPPENHET' | 'ENGAGEMANG';
-  order: number;
-}
 
 export default function CreateExercise() {
   const router = useRouter()
   const { data: session, status } = useSession()
   const { t } = useTranslation()
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<ExerciseFormData>({
     title: '',
     introduction: '',
     duration: '',
@@ -42,7 +29,7 @@ export default function CreateExercise() {
     accessibility: '',
     prerequisites: '',
     progressIndicators: '',
-    category: 'NARVARO',
+    category: ExerciseCategoryEnum.NARVARO,
     order: 1
   })
 
@@ -161,7 +148,7 @@ export default function CreateExercise() {
             <select
               id="category"
               value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value as FormData['category'] })}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value as ExerciseFormData['category'] })}
               className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               required
             >

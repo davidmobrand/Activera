@@ -1,4 +1,7 @@
-import type { User, Exercise, Media, ExerciseProgress, UserRole, ExerciseCategory, MediaType } from './types';
+import type { User, Exercise, Media, ExerciseProgress } from './types';
+import { UserRole } from './constants/users';
+import { ExerciseCategoryEnum } from './constants/categories';
+import { MediaType } from './constants/exercises';
 import { exercises } from './mockData/exercises';
 import { users } from './mockData/users';
 import { media } from './mockData/media';
@@ -39,7 +42,7 @@ export const findExercises = () => {
   return exercises;
 };
 
-export const findExercisesByCategory = (category: ExerciseCategory) => {
+export const findExercisesByCategory = (category: ExerciseCategoryEnum) => {
   return exercises.filter(exercise => exercise.category === category);
 };
 
@@ -116,7 +119,7 @@ export interface MockDb {
   };
   exercises: {
     findById: (id: string) => Promise<Exercise | null>;
-    findByCategory: (category: ExerciseCategory) => Promise<Exercise[]>;
+    findByCategory: (category: ExerciseCategoryEnum) => Promise<Exercise[]>;
     create: (exercise: Omit<Exercise, 'id' | 'createdAt' | 'updatedAt'>) => Promise<Exercise>;
     update: (id: string, data: Partial<Exercise>) => Promise<Exercise>;
     delete: (id: string) => Promise<void>;

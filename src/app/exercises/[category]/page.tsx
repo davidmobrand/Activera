@@ -2,8 +2,8 @@
 
 import { useSession } from 'next-auth/react'
 import { notFound } from 'next/navigation'
+import dynamic from 'next/dynamic'
 import { ExerciseCategoryEnum } from '@/lib/types'
-import { ExerciseList } from '@/components/exercises/ExerciseList'
 import NotLoggedIn from '@/components/NotLoggedIn'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { mockDb } from '@/lib/mockData'
@@ -11,7 +11,20 @@ import { useEffect, useState } from 'react'
 import { Exercise } from '@/lib/types'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 
-interface Props {
+// Dynamically import ExerciseList with loading state
+const ExerciseList = dynamic(
+  () => import('@/components/exercises/ExerciseList').then(mod => mod.ExerciseList),
+  {
+    loading: () => (
+      <div className="min-h-[400px] flex items-center justify-center">
+        <LoadingSpinner className="h-12 w-12 text-act-600" />
+      </div>
+    ),
+    ssr: false
+  }
+)
+
+type Props = {
   params: {
     category: string
   }

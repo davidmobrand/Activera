@@ -100,4 +100,9 @@ export interface ExerciseProgress {
   notes?: string
   startedAt: Date
   completedAt?: Date
+}
+
+export type PageProps<T = Record<string, string>> = {
+  params: Promise<T>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 } 

@@ -4,22 +4,22 @@ import { authOptions } from '@/lib/auth'
 import { mockDb } from '@/lib/mockData'
 import { ExerciseDetail } from '@/components/exercises/ExerciseDetail'
 import NotLoggedIn from '@/components/NotLoggedIn'
+import type { PageProps } from '@/lib/types'
 
-interface Props {
-  params: {
-    category: string
-    id: string
-  }
-}
+type Props = PageProps<{
+  category: string
+  id: string
+}>
 
-export default async function ExercisePage({ params }: Props) {
+export default async function ExercisePage({ params, searchParams }: Props) {
+  const [resolvedParams, resolvedSearchParams] = await Promise.all([params, searchParams])
   const session = await getServerSession(authOptions)
   if (!session?.user?.id) {
     return <NotLoggedIn />
   }
 
-  const exercise = await mockDb.exercises.findById(params.id)
-  if (!exercise || exercise.category.toLowerCase() !== params.category.toLowerCase()) {
+  const exercise = await mockDb.exercises.findById(resolvedParams.id)
+  if (!exercise || exercise.category.toLowerCase() !== resolvedParams.category.toLowerCase()) {
     return notFound()
   }
 

@@ -2,24 +2,20 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { Media, MediaType } from '@/lib/types'
 import { mockDb } from '@/lib/mockData'
+import { type NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 
 // Default to localhost in development
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:3000'
 
-interface Props {
-  params: {
-    id: string
-  }
-}
-
 export async function POST(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
     const session = await getServerSession(authOptions)
     if (!session?.user?.id) {
-      return new Response('Unauthorized', { status: 401 })
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const formData = await request.formData()
@@ -27,7 +23,7 @@ export async function POST(
     const type = formData.get('type') as MediaType
 
     if (!file || !type) {
-      return new Response('Missing required fields', { status: 400 })
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
     // Determine media type based on file type
@@ -38,7 +34,7 @@ export async function POST(
       : null
 
     if (!typeDetermined) {
-      return new Response('Invalid file type', { status: 400 })
+      return NextResponse.json({ error: 'Invalid file type' }, { status: 400 })
     }
 
     const urlPath = typeDetermined === MediaType.IMAGE ? 'images' : 'audio';
@@ -55,57 +51,55 @@ export async function POST(
 
     const media = await mockDb.media.create(mediaInput)
 
-    return Response.json(media)
+    return NextResponse.json(media)
   } catch (error) {
     console.error('Error uploading media:', error)
-    return new Response('Internal Server Error', { status: 500 })
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session?.user?.id) {
-      return new Response('Unauthorized', { status: 401 })
-    }
-
     const media = await mockDb.media.findByExerciseId(params.id)
-    return Response.json(media)
+    return NextResponse.json(media)
   } catch (error) {
     console.error('Error fetching media:', error)
-    return new Response('Internal Server Error', { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to fetch media' },
+      { status: 500 }
+    )
   }
 }
 
 export async function DELETE(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
     const session = await getServerSession(authOptions)
     if (!session) {
-      return new Response('Unauthorized', { status: 401 })
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { searchParams } = new URL(request.url)
+    const searchParams = request.nextUrl.searchParams
     const mediaId = searchParams.get('mediaId')
 
     if (!mediaId) {
-      return new Response(
-        'Media ID is required',
+      return NextResponse.json(
+        { error: 'Media ID is required' },
         { status: 400 }
       )
     }
 
     await mockDb.media.delete(mediaId)
-    return new Response('Success', { status: 200 })
+    return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Error deleting media:', error)
-    return new Response(
-      'Failed to delete media',
+    return NextResponse.json(
+      { error: 'Failed to delete media' },
       { status: 500 }
     )
   }

@@ -20,7 +20,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             rounded-md
             border
             px-3
-            py-2
+            py-2.5
+            sm:py-2
             text-base
             sm:text-sm
             bg-white
@@ -31,13 +32,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             disabled:opacity-50
             disabled:cursor-not-allowed
             placeholder:text-stone-400
+            touch-manipulation
+            appearance-none
             ${className}
           `}
           ref={ref}
           {...props}
         />
         {error && (
-          <p className="mt-1 text-sm text-warmth-600">{error}</p>
+          <p className="mt-2 text-sm text-warmth-600">{error}</p>
         )}
       </div>
     )

@@ -18,8 +18,8 @@ export function Navbar({ session }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <nav className="bg-stone-50/90 border-b border-stone-200 backdrop-blur-sm shadow-soft">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="bg-stone-50/90 border-b border-stone-200 backdrop-blur-sm shadow-soft sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
@@ -56,7 +56,8 @@ export function Navbar({ session }: NavbarProps) {
             <div className="flex items-center md:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-stone-600 hover:text-stone-900 hover:bg-stone-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ocean-500"
+                className="inline-flex items-center justify-center p-2.5 rounded-md text-stone-600 hover:text-stone-900 hover:bg-stone-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ocean-500 touch-manipulation"
+                aria-expanded={isOpen}
               >
                 <span className="sr-only">Open main menu</span>
                 {isOpen ? (
@@ -70,20 +71,24 @@ export function Navbar({ session }: NavbarProps) {
         </div>
 
         {/* Mobile menu */}
-        <div className={`md:hidden ${isOpen ? 'block' : 'hidden'}`}>
+        <div 
+          className={`md:hidden transition-all duration-200 ease-in-out ${
+            isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+          }`}
+        >
           <div className="pt-2 pb-3 space-y-1">
             {isAdmin && (
               <>
                 <Link
                   href="/admin/exercises"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-stone-600 hover:text-stone-900 hover:bg-stone-50"
+                  className="block px-4 py-2.5 rounded-md text-base font-medium text-stone-600 hover:text-stone-900 hover:bg-stone-50 active:bg-stone-100"
                   onClick={() => setIsOpen(false)}
                 >
                   {t.common('manageExercises')}
                 </Link>
                 <Link
                   href="/admin/users"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-stone-600 hover:text-stone-900 hover:bg-stone-50"
+                  className="block px-4 py-2.5 rounded-md text-base font-medium text-stone-600 hover:text-stone-900 hover:bg-stone-50 active:bg-stone-100"
                   onClick={() => setIsOpen(false)}
                 >
                   {t.common('manageUsers')}
@@ -95,7 +100,7 @@ export function Navbar({ session }: NavbarProps) {
                 setIsOpen(false)
                 signOut({ callbackUrl: '/login' })
               }}
-              className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-stone-600 hover:text-stone-900 hover:bg-stone-50"
+              className="block w-full text-left px-4 py-2.5 rounded-md text-base font-medium text-stone-600 hover:text-stone-900 hover:bg-stone-50 active:bg-stone-100"
             >
               {t.common('signOut')}
             </button>

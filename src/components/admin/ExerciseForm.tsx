@@ -130,14 +130,14 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8">
-        <h1 className="text-2xl sm:text-3xl font-display text-ocean-700 mb-4 sm:mb-0">
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl mx-auto px-2 sm:px-4 lg:px-8">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-8">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-display text-ocean-700 mb-4 sm:mb-0">
           {initialExercise.id ? t.common('editExercise') : t.common('createNewExercise')}
         </h1>
       </div>
 
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
         <Button
           type="button"
           onClick={() => setLanguage('en')}
@@ -158,8 +158,8 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
         </Button>
       </div>
 
-      <div className="space-y-4">
-        <div className="space-y-2">
+      <div className="space-y-3 sm:space-y-4">
+        <div className="space-y-1 sm:space-y-2">
           <label className="block text-sm font-medium text-stone-700">
             {t.common('title')}
           </label>
@@ -167,7 +167,7 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
             type="text"
             value={exercise.translations[language].title}
             onChange={(e) => updateTranslation('title', e.target.value)}
-            className="w-full rounded-md border border-stone-200 px-4 py-2 bg-white focus:border-ocean-300 focus:ring focus:ring-ocean-200 focus:ring-opacity-50"
+            className="w-full rounded-md border border-stone-200 px-3 py-2 text-base sm:text-sm bg-white focus:border-ocean-300 focus:ring focus:ring-ocean-200 focus:ring-opacity-50"
             required
           />
         </div>
@@ -250,19 +250,19 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
         <div className="text-warmth-600 text-sm">{error}</div>
       )}
 
-      <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 sm:gap-4 mt-8">
+      <div className="flex flex-col sm:flex-row sm:justify-end gap-2 sm:gap-4 mt-6 sm:mt-8">
         <Button
           type="button"
           variant="secondary"
           onClick={() => router.push('/admin/exercises')}
-          className="w-full sm:w-auto"
+          className="w-full sm:w-auto order-2 sm:order-1"
         >
           {t.common('cancel')}
         </Button>
         <Button
           type="submit"
           disabled={saving}
-          className="w-full sm:w-auto"
+          className="w-full sm:w-auto order-1 sm:order-2"
         >
           {saving ? t.common('saving') : t.common('save')}
         </Button>

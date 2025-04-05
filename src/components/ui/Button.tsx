@@ -17,11 +17,11 @@ export function Button({
   const baseStyles = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50'
   
   const variants = {
-    primary: 'bg-mindful-600 text-white hover:bg-mindful-700 focus-visible:ring-mindful-500',
-    secondary: 'bg-mindful-100 text-mindful-700 hover:bg-mindful-200 focus-visible:ring-mindful-400',
-    outline: 'border border-mindful-200 text-mindful-700 hover:bg-mindful-50 focus-visible:ring-mindful-400',
-    danger: 'bg-warmth-600 text-white hover:bg-warmth-700 focus-visible:ring-warmth-500',
-    success: 'bg-calm-600 text-white hover:bg-calm-700 focus-visible:ring-calm-500',
+    primary: 'bg-act-600 text-cream-50 hover:bg-act-700 focus-visible:ring-act-500',
+    secondary: 'bg-sage-100 text-sage-700 hover:bg-sage-200 focus-visible:ring-sage-400',
+    outline: 'border border-act-200 text-act-600 hover:bg-cream-50 focus-visible:ring-act-400',
+    danger: 'bg-act-600 text-cream-50 hover:bg-act-700 focus-visible:ring-act-500',
+    success: 'bg-sage-600 text-cream-50 hover:bg-sage-700 focus-visible:ring-sage-500',
   }
 
   const sizes = {

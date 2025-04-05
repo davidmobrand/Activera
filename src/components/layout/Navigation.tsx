@@ -38,12 +38,12 @@ const Navigation = () => {
   ]
 
   return (
-    <nav className="bg-stone-50/90 border-b border-stone-200 backdrop-blur-sm shadow-soft sticky top-0 z-50">
+    <nav className="bg-cream-50/95 border-b border-act-200 backdrop-blur-sm shadow-soft sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <Link href="/dashboard" className="text-2xl font-display text-mindful-700 hover:text-mindful-600 transition-colors">
+              <Link href="/dashboard" className="text-2xl font-display text-act-600 hover:text-act-500 transition-colors">
                 ACTivera
               </Link>
             </div>
@@ -55,8 +55,8 @@ const Navigation = () => {
                   href={item.href}
                   className={`inline-flex items-center px-3 pt-1 border-b-2 text-sm font-medium transition-colors ${
                     isActive(item.href)
-                      ? 'border-mindful-500 text-mindful-700 font-semibold'
-                      : 'border-transparent text-stone-600 hover:border-stone-300 hover:text-stone-700'
+                      ? 'border-sage-500 text-act-600 font-semibold'
+                      : 'border-transparent text-act-500 hover:border-act-300 hover:text-act-700'
                   }`}
                 >
                   {item.label}
@@ -68,10 +68,10 @@ const Navigation = () => {
           <div className="flex items-center space-x-4">
             {/* Desktop user info and buttons */}
             <div className="hidden md:flex md:items-center md:space-x-4">
-              <span className="text-sm text-stone-600 font-medium">
+              <span className="text-sm text-act-600 font-medium">
                 {session.user?.name || session.user?.email}
                 {isAdmin && (
-                  <span className="ml-2 bg-stone-100 text-stone-700 px-2 py-0.5 rounded-full text-xs">
+                  <span className="ml-2 bg-cream-200 text-act-600 px-2 py-0.5 rounded-full text-xs">
                     {t.common('admin')}
                   </span>
                 )}
@@ -90,7 +90,7 @@ const Navigation = () => {
             <div className="flex items-center md:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="inline-flex items-center justify-center p-2.5 rounded-md text-stone-600 hover:text-stone-900 hover:bg-stone-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-mindful-500 touch-manipulation"
+                className="inline-flex items-center justify-center p-2.5 rounded-md text-act-500 hover:text-act-700 hover:bg-cream-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sage-500 touch-manipulation"
                 aria-expanded={isOpen}
               >
                 <span className="sr-only">Open main menu</span>
@@ -110,7 +110,7 @@ const Navigation = () => {
             isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
           }`}
         >
-          <div className="py-2 divide-y divide-stone-200">
+          <div className="py-2 divide-y divide-act-200">
             {/* Navigation Links */}
             <div className="pb-2 space-y-1">
               {menuItems.map((item) => (
@@ -119,8 +119,8 @@ const Navigation = () => {
                   href={item.href}
                   className={`block px-4 py-2.5 rounded-md text-base font-medium ${
                     isActive(item.href)
-                      ? 'bg-mindful-50 text-mindful-700'
-                      : 'text-stone-600 hover:text-stone-900 hover:bg-stone-50 active:bg-stone-100'
+                      ? 'bg-cream-100 text-act-600'
+                      : 'text-act-500 hover:text-act-700 hover:bg-cream-50 active:bg-cream-100'
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -133,10 +133,10 @@ const Navigation = () => {
             <div className="pt-2 px-4">
               {/* User Info Row */}
               <div className="flex items-center justify-between py-2">
-                <span className="text-sm text-stone-600 font-medium flex items-center">
+                <span className="text-sm text-act-600 font-medium flex items-center">
                   {session.user?.name || session.user?.email}
                   {isAdmin && (
-                    <span className="ml-2 bg-stone-100 text-stone-700 px-2 py-0.5 rounded-full text-xs">
+                    <span className="ml-2 bg-cream-200 text-act-600 px-2 py-0.5 rounded-full text-xs">
                       {t.common('admin')}
                     </span>
                   )}
@@ -153,7 +153,7 @@ const Navigation = () => {
                     setIsOpen(false)
                     signOut({ callbackUrl: '/login' })
                   }}
-                  className="w-full justify-center"
+                  className="w-full justify-center bg-act-600 hover:bg-act-700 text-cream-50"
                 >
                   {t.common('signOut')}
                 </Button>

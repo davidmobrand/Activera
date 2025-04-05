@@ -141,14 +141,16 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
         <Button
           type="button"
           onClick={() => setLanguage('en')}
-          variant={language === 'en' ? 'primary' : 'secondary'}
+          variant={language === 'en' ? 'secondary' : 'outline'}
+          size="sm"
         >
           English
         </Button>
         <Button
           type="button"
           onClick={() => setLanguage('sv')}
-          variant={language === 'sv' ? 'primary' : 'secondary'}
+          variant={language === 'sv' ? 'secondary' : 'outline'}
+          size="sm"
         >
           Swedish
         </Button>
@@ -237,9 +239,7 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
       </div>
 
       {error && (
-        <div className="text-red-600">
-          {error}
-        </div>
+        <div className="text-warmth-600">{error}</div>
       )}
 
       <div className="flex justify-end gap-4">

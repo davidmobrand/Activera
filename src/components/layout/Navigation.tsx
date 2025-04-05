@@ -8,7 +8,7 @@ import { ExerciseCategoryEnum } from '@/lib/types'
 import { LanguageSelector } from '@/components/LanguageSelector'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 
-export function Navigation() {
+export default function Navigation() {
   const pathname = usePathname()
   const { data: session, status } = useSession()
   const { t } = useTranslation()
@@ -74,7 +74,6 @@ export function Navigation() {
               variant="outline"
               size="sm"
               onClick={() => signOut({ callbackUrl: '/login' })}
-              className="border-mindful-200 text-mindful-700 hover:bg-mindful-50"
             >
               {t.common('signOut')}
             </Button>

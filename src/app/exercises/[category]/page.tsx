@@ -19,6 +19,16 @@ const LoadingState = () => (
   </div>
 )
 
+// Error display component
+const ErrorDisplay = ({ error }: { error: Error }) => (
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-act-50 to-white">
+    <div className="text-center">
+      <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Exercises</h2>
+      <p className="text-gray-600">{error.message}</p>
+    </div>
+  </div>
+)
+
 // Lazy load the ExerciseList component
 const ExerciseList = dynamic(
   () => import('@/components/exercises/ExerciseList').then(mod => mod.ExerciseList),
@@ -59,9 +69,11 @@ function CategoryContent({ category, exercises }: { category: ExerciseCategoryEn
         </div>
 
         <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-soft border border-act-100 overflow-hidden p-6">
-          <Suspense fallback={<LoadingSpinner className="h-12 w-12 text-act-600" />}>
-            <ExerciseList exercises={exercises} category={category} />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<LoadingSpinner className="h-12 w-12 text-act-600" />}>
+              <ExerciseList exercises={exercises} category={category} />
+            </Suspense>
+          </ErrorBoundary>
         </div>
       </div>
     </div>
@@ -74,54 +86,65 @@ export default function ExerciseCategoryPage({ params }: Props) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
 
-  // Unwrap params using React.use()
-  const resolvedParams = use(params)
-  
-  // Convert category string to enum
-  const category = resolvedParams.category.toUpperCase() as ExerciseCategoryEnum
-  if (!Object.values(ExerciseCategoryEnum).includes(category)) {
-    return notFound()
-  }
-
-  useEffect(() => {
-    async function loadExercises() {
-      try {
-        const data = await mockDb.exercises.findByCategory(category)
-        setExercises(data)
-        setError(null)
-      } catch (error) {
-        console.error('Error loading exercises:', error)
-        setError(error instanceof Error ? error : new Error('Failed to load exercises'))
-      } finally {
-        setLoading(false)
-      }
+  // Wrap params access in try-catch since it might throw
+  try {
+    // Unwrap params using React.use()
+    const resolvedParams = use(params)
+    
+    // Convert category string to enum
+    const category = resolvedParams.category.toUpperCase() as ExerciseCategoryEnum
+    if (!Object.values(ExerciseCategoryEnum).includes(category)) {
+      return notFound()
     }
 
-    loadExercises()
-  }, [category])
+    useEffect(() => {
+      let mounted = true
 
-  if (status === 'loading' || loading) {
-    return <LoadingState />
-  }
+      async function loadExercises() {
+        try {
+          const data = await mockDb.exercises.findByCategory(category)
+          if (mounted) {
+            setExercises(data)
+            setError(null)
+          }
+        } catch (error) {
+          console.error('Error loading exercises:', error)
+          if (mounted) {
+            setError(error instanceof Error ? error : new Error('Failed to load exercises'))
+          }
+        } finally {
+          if (mounted) {
+            setLoading(false)
+          }
+        }
+      }
 
-  if (!session) {
-    return <NotLoggedIn />
-  }
+      loadExercises()
 
-  if (error) {
+      return () => {
+        mounted = false
+      }
+    }, [category])
+
+    if (status === 'loading' || loading) {
+      return <LoadingState />
+    }
+
+    if (!session) {
+      return <NotLoggedIn />
+    }
+
+    if (error) {
+      return <ErrorDisplay error={error} />
+    }
+
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-act-50 to-white">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Exercises</h2>
-          <p className="text-gray-600">{error.message}</p>
-        </div>
-      </div>
+      <ErrorBoundary>
+        <CategoryContent category={category} exercises={exercises} />
+      </ErrorBoundary>
     )
+  } catch (error) {
+    console.error('Error processing params:', error)
+    return <ErrorDisplay error={error instanceof Error ? error : new Error('Failed to process request')} />
   }
-
-  return (
-    <ErrorBoundary>
-      <CategoryContent category={category} exercises={exercises} />
-    </ErrorBoundary>
-  )
 } 

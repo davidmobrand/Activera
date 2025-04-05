@@ -3,20 +3,20 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { mockDb } from '@/lib/mockData'
 import { UserForm } from '@/components/admin/UserForm'
-import type { PageProps } from '@/lib/types'
 
-type Props = PageProps<{
-  id: string
-}>
+type PageParams = {
+  params: {
+    id: string
+  }
+}
 
-export default async function EditUserPage({ params, searchParams }: Props) {
-  const [resolvedParams, resolvedSearchParams] = await Promise.all([params, searchParams])
+export default async function EditUserPage({ params }: PageParams) {
   const session = await getServerSession(authOptions)
   if (!session?.user?.id || session.user.role !== 'ADMIN') {
     redirect('/login')
   }
 
-  const user = await mockDb.users.findById(resolvedParams.id)
+  const user = await mockDb.users.findById(params.id)
   if (!user) {
     return notFound()
   }

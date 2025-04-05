@@ -6,7 +6,7 @@ import { ExerciseCategoryEnum } from '@/lib/types'
 import NotLoggedIn from '@/components/NotLoggedIn'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { mockDb } from '@/lib/mockData'
-import { useEffect, useState, Suspense } from 'react'
+import { useEffect, useState, Suspense, use } from 'react'
 import { Exercise } from '@/lib/types'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
@@ -33,9 +33,9 @@ const ExerciseList = dynamic(
 )
 
 type Props = {
-  params: {
+  params: Promise<{
     category: string
-  }
+  }>
 }
 
 // Separate category content component for better error isolation
@@ -74,8 +74,11 @@ export default function ExerciseCategoryPage({ params }: Props) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
 
+  // Unwrap params using React.use()
+  const resolvedParams = use(params)
+  
   // Convert category string to enum
-  const category = params.category.toUpperCase() as ExerciseCategoryEnum
+  const category = resolvedParams.category.toUpperCase() as ExerciseCategoryEnum
   if (!Object.values(ExerciseCategoryEnum).includes(category)) {
     return notFound()
   }

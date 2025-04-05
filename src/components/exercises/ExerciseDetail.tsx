@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { Exercise } from '@/lib/types'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import type { Language } from '@/lib/i18n/types'
@@ -12,7 +14,29 @@ interface ExerciseDetailProps {
 export function ExerciseDetail({ exercise }: ExerciseDetailProps) {
   const { language } = useLanguage()
   const { t } = useTranslation()
+  const [relatedExercises, setRelatedExercises] = useState<Exercise[]>([])
   const translation = exercise.translations[language]
+
+  useEffect(() => {
+    async function fetchRelatedExercises() {
+      if (!exercise.relatedExerciseIds?.length) return
+      
+      try {
+        const exercises = await Promise.all(
+          exercise.relatedExerciseIds.map(async (id) => {
+            const response = await fetch(`/api/exercises/${id}`)
+            if (!response.ok) throw new Error(`Failed to fetch exercise ${id}`)
+            return response.json()
+          })
+        )
+        setRelatedExercises(exercises)
+      } catch (error) {
+        console.error('Error fetching related exercises:', error)
+      }
+    }
+
+    fetchRelatedExercises()
+  }, [exercise.relatedExerciseIds])
 
   return (
     <div className="bg-gradient-mindful rounded-2xl p-8 shadow-soft">
@@ -77,10 +101,26 @@ export function ExerciseDetail({ exercise }: ExerciseDetailProps) {
               {t.common('relatedExercises')}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {exercise.relatedExerciseIds.map((id) => (
-                <div key={id} className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-mindful-100">
-                  <span className="text-mindful-600 font-medium">Exercise #{id}</span>
-                </div>
+              {relatedExercises.map((relatedExercise) => (
+                <Link
+                  key={relatedExercise.id}
+                  href={`/exercises/${relatedExercise.category.toLowerCase()}/${relatedExercise.id}`}
+                  className="group"
+                >
+                  <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-mindful-100 hover:border-mindful-200 transition-all duration-300 transform hover:-translate-y-1">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-medium text-mindful-800 group-hover:text-mindful-600 transition-colors">
+                          {relatedExercise.translations[language].title}
+                        </h3>
+                        <p className="text-sm text-mindful-600">
+                          {t.category(relatedExercise.category).name}
+                        </p>
+                      </div>
+                      <span className="text-sm text-mindful-500">#{relatedExercise.order}</span>
+                    </div>
+                  </div>
+                </Link>
               ))}
             </div>
           </div>

@@ -130,19 +130,20 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-display text-ocean-700 mb-6">
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8">
+        <h1 className="text-2xl sm:text-3xl font-display text-ocean-700 mb-4 sm:mb-0">
           {initialExercise.id ? t.common('editExercise') : t.common('createNewExercise')}
         </h1>
       </div>
 
-      <div className="flex space-x-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-6">
         <Button
           type="button"
           onClick={() => setLanguage('en')}
           variant={language === 'en' ? 'primary' : 'secondary'}
           size="sm"
+          className="flex-1 sm:flex-none"
         >
           English
         </Button>
@@ -151,107 +152,117 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
           onClick={() => setLanguage('sv')}
           variant={language === 'sv' ? 'primary' : 'secondary'}
           size="sm"
+          className="flex-1 sm:flex-none"
         >
           Swedish
         </Button>
       </div>
 
-      <div className="space-y-2">
-        <label className="block text-sm font-medium text-stone-700">
-          {t.common('title')}
-        </label>
-        <input
-          type="text"
-          value={exercise.translations[language].title}
-          onChange={(e) => updateTranslation('title', e.target.value)}
-          className="w-full rounded-md border border-stone-200 px-4 py-2 bg-white focus:border-ocean-300 focus:ring focus:ring-ocean-200 focus:ring-opacity-50"
-          required
-        />
-      </div>
-
-      <div className="space-y-2">
-        <label className="block text-sm font-medium text-stone-700">
-          {t.common('category')}
-        </label>
-        <select
-          value={exercise.category}
-          onChange={(e) => setExercise({ ...exercise, category: e.target.value as Exercise['category'] })}
-          className="w-full rounded-md border border-stone-200 px-4 py-2 bg-white focus:border-ocean-300 focus:ring focus:ring-ocean-200 focus:ring-opacity-50"
-          required
-        >
-          <option value="NARVARO">{t.category('NARVARO').name}</option>
-          <option value="OPPENHET">{t.category('OPPENHET').name}</option>
-          <option value="ENGAGEMANG">{t.category('ENGAGEMANG').name}</option>
-        </select>
-      </div>
-
-      <div className="space-y-2">
-        <label className="block text-sm font-medium text-stone-700">
-          {t.common('order')}
-        </label>
-        <input
-          type="number"
-          value={exercise.order}
-          onChange={(e) => setExercise({ ...exercise, order: parseInt(e.target.value) })}
-          className="w-full rounded-md border border-stone-200 px-4 py-2 bg-white focus:border-ocean-300 focus:ring focus:ring-ocean-200 focus:ring-opacity-50"
-          required
-        />
-      </div>
-
-      <div className="space-y-2">
-        <label className="block text-sm font-medium text-stone-700">
-          {t.common('content')}
-        </label>
-        <div className="h-96">
-          <Editor
-            apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
-            onInit={(_evt: unknown, editor: TinyMCEEditor) => {
-              editorRef.current = editor
-            }}
-            value={exercise.translations[language].content}
-            onEditorChange={(content: string) => updateTranslation('content', content)}
-            init={{
-              height: '100%',
-              menubar: false,
-              plugins: [
-                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                'insertdatetime', 'media', 'table', 'help', 'wordcount'
-              ],
-              toolbar: 'undo redo | blocks | ' +
-                'bold italic forecolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat | help',
-              content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; line-height: 1.5; }',
-              file_picker_callback: (callback: FilePickerCallback, value: string, meta: FilePickerMeta) => {
-                if (meta.filetype === 'image') {
-                  handleUpload('IMAGE').then((media) => {
-                    if (media) {
-                      callback(media.url, { alt: media.name })
-                    }
-                  })
-                }
-              }
-            }}
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-stone-700">
+            {t.common('title')}
+          </label>
+          <input
+            type="text"
+            value={exercise.translations[language].title}
+            onChange={(e) => updateTranslation('title', e.target.value)}
+            className="w-full rounded-md border border-stone-200 px-4 py-2 bg-white focus:border-ocean-300 focus:ring focus:ring-ocean-200 focus:ring-opacity-50"
+            required
           />
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-stone-700">
+            {t.common('category')}
+          </label>
+          <select
+            value={exercise.category}
+            onChange={(e) => setExercise({ ...exercise, category: e.target.value as Exercise['category'] })}
+            className="w-full rounded-md border border-stone-200 px-4 py-2 bg-white focus:border-ocean-300 focus:ring focus:ring-ocean-200 focus:ring-opacity-50"
+            required
+          >
+            <option value="NARVARO">{t.category('NARVARO').name}</option>
+            <option value="OPPENHET">{t.category('OPPENHET').name}</option>
+            <option value="ENGAGEMANG">{t.category('ENGAGEMANG').name}</option>
+          </select>
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-stone-700">
+            {t.common('order')}
+          </label>
+          <input
+            type="number"
+            value={exercise.order}
+            onChange={(e) => setExercise({ ...exercise, order: parseInt(e.target.value) })}
+            className="w-full rounded-md border border-stone-200 px-4 py-2 bg-white focus:border-ocean-300 focus:ring focus:ring-ocean-200 focus:ring-opacity-50"
+            required
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-stone-700">
+            {t.common('content')}
+          </label>
+          <div className="h-[50vh] sm:h-96">
+            <Editor
+              apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
+              onInit={(_evt: unknown, editor: TinyMCEEditor) => {
+                editorRef.current = editor
+              }}
+              value={exercise.translations[language].content}
+              onEditorChange={(content: string) => updateTranslation('content', content)}
+              init={{
+                height: '100%',
+                menubar: false,
+                plugins: [
+                  'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                  'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                  'insertdatetime', 'media', 'table', 'help', 'wordcount'
+                ],
+                toolbar: 'undo redo | blocks | ' +
+                  'bold italic forecolor | alignleft aligncenter ' +
+                  'alignright alignjustify | bullist numlist outdent indent | ' +
+                  'removeformat | help',
+                content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; line-height: 1.5; }',
+                mobile: {
+                  menubar: false,
+                  toolbar: 'undo redo | bold italic | bullist numlist',
+                  height: '100%'
+                },
+                file_picker_callback: (callback: FilePickerCallback, value: string, meta: FilePickerMeta) => {
+                  if (meta.filetype === 'image') {
+                    handleUpload('IMAGE').then((media) => {
+                      if (media) {
+                        callback(media.url, { alt: media.name })
+                      }
+                    })
+                  }
+                }
+              }}
+            />
+          </div>
         </div>
       </div>
 
       {error && (
-        <div className="text-warmth-600">{error}</div>
+        <div className="text-warmth-600 text-sm">{error}</div>
       )}
 
-      <div className="flex justify-end gap-4">
+      <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 sm:gap-4 mt-8">
         <Button
           type="button"
           variant="secondary"
           onClick={() => router.push('/admin/exercises')}
+          className="w-full sm:w-auto"
         >
           {t.common('cancel')}
         </Button>
         <Button
           type="submit"
           disabled={saving}
+          className="w-full sm:w-auto"
         >
           {saving ? t.common('saving') : t.common('save')}
         </Button>

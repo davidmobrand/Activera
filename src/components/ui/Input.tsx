@@ -19,13 +19,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             w-full
             rounded-md
             border
-            px-4
+            px-3
             py-2
+            text-base
+            sm:text-sm
             bg-white
             ${error ? 'border-warmth-300 focus:border-warmth-400' : 'border-stone-200 focus:border-ocean-300'}
             focus:ring
             ${error ? 'focus:ring-warmth-200' : 'focus:ring-ocean-200'}
             focus:ring-opacity-50
+            disabled:opacity-50
+            disabled:cursor-not-allowed
+            placeholder:text-stone-400
             ${className}
           `}
           ref={ref}

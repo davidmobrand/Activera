@@ -35,12 +35,12 @@ export function Navigation() {
   ]
 
   return (
-    <nav className="bg-white shadow-sm">
+    <nav className="bg-gradient-mindful backdrop-blur-sm shadow-soft">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <Link href="/dashboard" className="text-xl font-bold text-blue-600">
+              <Link href="/dashboard" className="text-2xl font-display text-mindful-800 hover:text-mindful-600 transition-colors">
                 ACTivera
               </Link>
             </div>
@@ -49,10 +49,10 @@ export function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                  className={`inline-flex items-center px-3 pt-1 border-b-2 text-sm font-medium transition-colors ${
                     isActive(item.href)
-                      ? 'border-blue-500 text-gray-900'
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                      ? 'border-mindful-500 text-mindful-800 font-semibold'
+                      : 'border-transparent text-mindful-600 hover:border-mindful-300 hover:text-mindful-700'
                   }`}
                 >
                   {item.label}
@@ -60,21 +60,24 @@ export function Navigation() {
               ))}
             </div>
           </div>
-          <div className="flex items-center">
-            <span className="text-sm text-gray-500 mr-4">
+          <div className="flex items-center space-x-4">
+            <span className="text-sm text-mindful-600 font-medium">
               {session.user?.name || session.user?.email}
-              {isAdmin && ` (${t.common('admin')})`}
+              {isAdmin && (
+                <span className="ml-2 bg-mindful-100 text-mindful-600 px-2 py-0.5 rounded-full text-xs">
+                  {t.common('admin')}
+                </span>
+              )}
             </span>
             <LanguageSelector />
-            <div className="ml-4">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => signOut({ callbackUrl: '/login' })}
-              >
-                {t.common('signOut')}
-              </Button>
-            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => signOut({ callbackUrl: '/login' })}
+              className="border-mindful-200 text-mindful-700 hover:bg-mindful-50"
+            >
+              {t.common('signOut')}
+            </Button>
           </div>
         </div>
       </div>

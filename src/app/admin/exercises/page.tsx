@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
@@ -55,8 +54,8 @@ export default function AdminExercises() {
 
   if (status === 'loading' || loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <LoadingSpinner className="h-8 w-8" />
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-mindful-50 to-white">
+        <LoadingSpinner className="h-12 w-12 text-mindful-600" />
       </div>
     )
   }
@@ -67,99 +66,105 @@ export default function AdminExercises() {
 
   if (session.user?.role !== 'ADMIN') {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">{t.common('accessDenied')}</h1>
-        <p className="text-gray-600">{t.common('adminPrivilegesRequired')}</p>
-        <Button
-          className="mt-4"
-          onClick={() => router.push('/dashboard')}
-        >
-          {t.common('goToDashboard')}
-        </Button>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-mindful-50 to-white p-6">
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-soft border border-mindful-100 text-center max-w-md w-full">
+          <h1 className="text-2xl font-display text-mindful-800 mb-4">
+            {t.common('accessDenied')}
+          </h1>
+          <p className="text-mindful-600 mb-6">
+            {t.common('adminPrivilegesRequired')}
+          </p>
+          <Button
+            onClick={() => router.push('/dashboard')}
+            className="bg-mindful-600 hover:bg-mindful-700 text-white"
+          >
+            {t.common('goToDashboard')}
+          </Button>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">{t.common('manageExercises')}</h1>
-        <Button onClick={() => router.push('/admin/exercises/new')}>
-          {t.common('createNewExercise')}
-        </Button>
-      </div>
+    <div className="p-6 bg-gradient-to-b from-mindful-50 to-white min-h-screen">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-display text-mindful-800">
+            {t.common('manageExercises')}
+          </h1>
+          <Button 
+            onClick={() => router.push('/admin/exercises/new')}
+            className="bg-mindful-600 hover:bg-mindful-700 text-white"
+          >
+            {t.common('createNewExercise')}
+          </Button>
+        </div>
 
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                {t.common('title')}
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                {t.common('category')}
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                {t.common('order')}
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                {t.common('lastUpdated')}
-              </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                {t.common('actions')}
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {exercises.map((exercise) => (
-              <tr key={exercise.id}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">
-                    <Link 
-                      href={`/exercises/${exercise.category}/${exercise.id}`}
-                      className="text-blue-600 hover:text-blue-800 hover:underline"
-                    >
-                      {exercise.translations[language].title}
-                    </Link>
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
-                    <Link 
-                      href={`/exercises/${exercise.category}`}
-                      className="text-blue-600 hover:text-blue-800 hover:underline"
-                    >
-                      {t.category(exercise.category).name}
-                    </Link>
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{exercise.order}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
-                    {new Date(exercise.updatedAt).toLocaleDateString(language === 'sv' ? 'sv-SE' : 'en-US')}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <Button
-                    variant="secondary"
-                    className="mr-2"
-                    onClick={() => router.push(`/admin/exercises/${exercise.id}`)}
-                  >
-                    {t.common('edit')}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => deleteExercise(exercise.id)}
-                  >
-                    {t.common('delete')}
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-soft border border-mindful-100 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-mindful-200">
+              <thead className="bg-mindful-50">
+                <tr>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-mindful-700">
+                    {t.common('title')}
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-mindful-700">
+                    {t.common('category')}
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-mindful-700">
+                    {t.common('order')}
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-mindful-700">
+                    {t.common('lastUpdated')}
+                  </th>
+                  <th className="px-6 py-4 text-right text-sm font-medium text-mindful-700">
+                    {t.common('actions')}
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-mindful-200 bg-white">
+                {exercises.map((exercise) => (
+                  <tr key={exercise.id} className="hover:bg-mindful-50/50 transition-colors">
+                    <td className="px-6 py-4 text-sm text-mindful-800">
+                      <div className="text-sm font-medium">
+                        {exercise.translations[language].title}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-mindful-600">
+                      <div className="text-sm">
+                        {t.category(exercise.category).name}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-mindful-600">
+                      <div className="text-sm">{exercise.order}</div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-mindful-600">
+                      <div className="text-sm">
+                        {new Date(exercise.updatedAt).toLocaleDateString(
+                          language === 'sv' ? 'sv-SE' : 'en-US'
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-right text-sm font-medium space-x-2">
+                      <Button
+                        onClick={() => router.push(`/admin/exercises/${exercise.id}`)}
+                        className="bg-mindful-100 hover:bg-mindful-200 text-mindful-700"
+                      >
+                        {t.common('edit')}
+                      </Button>
+                      <Button
+                        onClick={() => deleteExercise(exercise.id)}
+                        className="bg-warmth-100 hover:bg-warmth-200 text-warmth-700"
+                      >
+                        {t.common('delete')}
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   )

@@ -27,15 +27,11 @@ export default function LoginPage() {
         return
       }
 
-      console.log('[Login] Attempting sign in:', { email })
-
       const result = await signIn('credentials', {
         email,
         password,
         redirect: false
       })
-
-      console.log('[Login] Sign in result:', result)
 
       if (!result) {
         setError('An unexpected error occurred')
@@ -49,64 +45,72 @@ export default function LoginPage() {
         return
       }
 
-      // Only redirect after successful sign in
       window.location.href = '/dashboard'
     } catch (error) {
-      console.error('[Login] Error:', error)
+      console.error('Login error:', error)
       setError('An unexpected error occurred')
       setIsLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-mindful-50 to-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to ACTivera
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Admin: admin@activera.com / admin123
-            <br />
-            Client: client@example.com / client123
+        <div className="text-center">
+          <h1 className="text-4xl font-display text-mindful-800 mb-2">
+            Welcome to ACTivera
+          </h1>
+          <p className="text-lg text-mindful-600 mb-8">
+            Your journey to mindfulness begins here
           </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            <Input
-              label="Email address"
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              error={error}
-              disabled={isLoading}
-            />
-            <Input
-              label="Password"
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              disabled={isLoading}
-            />
-          </div>
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={isLoading}
-          >
-            {isLoading ? 'Signing in...' : 'Sign in'}
-          </Button>
-          {error && (
-            <p className="mt-2 text-sm text-red-600" role="alert">
-              {error}
-            </p>
-          )}
-        </form>
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-soft border border-mindful-100">
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div className="space-y-4">
+              <Input
+                label="Email address"
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                disabled={isLoading}
+                className="bg-white/50"
+              />
+              <Input
+                label="Password"
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                disabled={isLoading}
+                className="bg-white/50"
+              />
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full bg-mindful-600 hover:bg-mindful-700 text-white"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Signing in...' : 'Sign in'}
+            </Button>
+
+            {error && (
+              <div className="bg-warmth-50 text-warmth-700 px-4 py-3 rounded-lg border border-warmth-200" role="alert">
+                {error}
+              </div>
+            )}
+          </form>
+        </div>
+
+        <div className="bg-mindful-50 rounded-lg p-4 text-sm text-mindful-600 border border-mindful-100">
+          <p className="font-medium mb-2">Demo Accounts</p>
+          <p className="mb-1">Admin: admin@activera.com / admin123</p>
+          <p>Client: client@example.com / client123</p>
+        </div>
       </div>
     </div>
   )

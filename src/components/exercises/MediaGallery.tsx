@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Media, MediaType } from '@/lib/types'
-import { EyeIcon, TrashIcon } from 'lucide-react'
+import { useTranslation } from '@/lib/i18n/useTranslation'
+import { EyeIcon, Trash as TrashIcon } from 'lucide-react'
 
 interface MediaGalleryProps {
   exerciseId: string
@@ -21,6 +22,7 @@ export function MediaGallery({
 }: MediaGalleryProps) {
   const [isUploading, setIsUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const t = useTranslation()
 
   const handleUpload = async (type: MediaType) => {
     try {
@@ -139,7 +141,7 @@ export function MediaGallery({
             )}
           </Button>
           {error && (
-            <p className="text-warmth-600 text-sm">{error}</p>
+            <p className="text-red-500 text-sm">{error}</p>
           )}
         </div>
       )}
@@ -160,18 +162,20 @@ export function MediaGallery({
                   <div className="absolute top-2 right-2 flex gap-2">
                     <button
                       onClick={() => handleInsert(image)}
-                      className="bg-mindful-600 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="bg-blue-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                       title="Insert into content"
                     >
-                      <EyeIcon className="h-4 w-4" />
+                      Insert
                     </button>
-                    <button
+                    <Button
                       onClick={() => handleDelete(image.id)}
-                      className="bg-warmth-600 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      variant="outline"
+                      size="sm"
+                      className="!p-2 !h-8 !w-8 rounded-full bg-white/90 backdrop-blur-sm text-warmth-600 hover:bg-warmth-50 hover:text-warmth-700 hover:border-warmth-300"
                       title="Delete media"
                     >
                       <TrashIcon className="h-4 w-4" />
-                    </button>
+                    </Button>
                   </div>
                 )}
               </div>
@@ -191,18 +195,20 @@ export function MediaGallery({
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleInsert(audio)}
-                      className="text-mindful-600 hover:text-mindful-800"
+                      className="text-blue-500 hover:text-blue-700"
                       title="Insert into content"
                     >
-                      View
+                      Insert
                     </button>
-                    <button
+                    <Button
                       onClick={() => handleDelete(audio.id)}
-                      className="text-warmth-600 hover:text-warmth-800"
+                      variant="outline"
+                      size="sm"
+                      className="text-warmth-600 hover:bg-warmth-50 hover:text-warmth-700 hover:border-warmth-300"
                       title="Delete media"
                     >
                       Delete
-                    </button>
+                    </Button>
                   </div>
                 )}
               </div>

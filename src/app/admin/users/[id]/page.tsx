@@ -70,8 +70,8 @@ export default function EditUser({ params }: { params: { id: string } }) {
 
   if (status === 'loading' || loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <LoadingSpinner className="h-8 w-8" />
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-act-50 to-white">
+        <LoadingSpinner className="h-12 w-12 text-act-600" />
       </div>
     )
   }
@@ -82,29 +82,33 @@ export default function EditUser({ params }: { params: { id: string } }) {
 
   if (session.user?.role !== 'ADMIN') {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h1>
-        <p className="text-gray-600">You need admin privileges to access this page.</p>
-        <Button
-          className="mt-4"
-          onClick={() => router.push('/dashboard')}
-        >
-          Go to Dashboard
-        </Button>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-act-50 to-white p-6">
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-soft border border-act-100 text-center max-w-md w-full">
+          <h1 className="text-2xl font-display text-act-800 mb-4">Access Denied</h1>
+          <p className="text-act-600 mb-6">You need admin privileges to access this page.</p>
+          <Button
+            variant="primary"
+            onClick={() => router.push('/dashboard')}
+          >
+            Go to Dashboard
+          </Button>
+        </div>
       </div>
     )
   }
 
   if (!user) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">User Not Found</h1>
-        <Button
-          className="mt-4"
-          onClick={() => router.push('/admin/users')}
-        >
-          Back to Users
-        </Button>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-act-50 to-white p-6">
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-soft border border-act-100 text-center max-w-md w-full">
+          <h1 className="text-2xl font-display text-act-800 mb-4">User Not Found</h1>
+          <Button
+            variant="primary"
+            onClick={() => router.push('/admin/users')}
+          >
+            Back to Users
+          </Button>
+        </div>
       </div>
     )
   }

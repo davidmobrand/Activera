@@ -120,4 +120,8 @@
   - Consistent error handling
   - Type-safe returns
   - Data validation
-  - Relationship management 
+  - Relationship management
+
+## Development Server Configuration
+- Local server must run on port 8989
+- Configure port in package.json and environment files 

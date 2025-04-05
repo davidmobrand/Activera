@@ -8,57 +8,57 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Deep teal for primary brand elements
+        // Deep teal for primary brand elements (from brain icon)
         act: {
-          50: '#f2f5f5',
-          100: '#e6ebeb',
-          200: '#c1d1d1',
-          300: '#9bb7b7',
-          400: '#517d7d',
-          500: '#264444',
-          600: '#223d3d',
-          700: '#1d3333',
-          800: '#172929',
-          900: '#132222',
+          50: '#e6f4f4',
+          100: '#cce9e9',
+          200: '#99d3d3',
+          300: '#66bdbd',
+          400: '#33a7a7',
+          500: '#008080',  // Base teal
+          600: '#006666',
+          700: '#004d4d',
+          800: '#003333',
+          900: '#001a1a',
         },
-        // Muted sage green for secondary elements
+        // Sage green for secondary elements (from leaf icon)
         sage: {
-          50: '#f5f7f5',
-          100: '#ebefeb',
-          200: '#cdd7cd',
-          300: '#aebfae',
-          400: '#728e72',
-          500: '#355e35',
-          600: '#305530',
-          700: '#284728',
-          800: '#203820',
-          900: '#1a2e1a',
+          50: '#f0f6f0',
+          100: '#e1ede1',
+          200: '#c3dbc3',
+          300: '#a5c9a5',
+          400: '#87b787',
+          500: '#69a569',  // Base sage
+          600: '#548454',
+          700: '#3f633f',
+          800: '#2a422a',
+          900: '#152115',
         },
-        // Warm beige for backgrounds
+        // Warm sand for backgrounds (from image background)
         sand: {
-          50: '#faf9f6',
-          100: '#f5f3ed',
-          200: '#e6e2d2',
-          300: '#d7d1b7',
-          400: '#baaf82',
-          500: '#9c8d4d',
-          600: '#8c7f45',
-          700: '#756a3a',
-          800: '#5e552e',
-          900: '#4d4626',
+          50: '#faf8f4',
+          100: '#f5f1e9',
+          200: '#ebe3d3',
+          300: '#e1d5bd',
+          400: '#d7c7a7',
+          500: '#cdb991',  // Base sand
+          600: '#a49474',
+          700: '#7b6f57',
+          800: '#524a3a',
+          900: '#29251d',
         },
         // Off-white for text and borders
         cream: {
-          50: '#fefefd',
-          100: '#fcfcfa',
-          200: '#f9f8f2',
-          300: '#f5f4ea',
-          400: '#eeebda',
-          500: '#e7e2c9',
-          600: '#d0cbb5',
-          700: '#aea997',
-          800: '#8b8779',
-          900: '#726f63',
+          50: '#fefdfb',
+          100: '#fdfbf7',
+          200: '#fbf7ef',
+          300: '#f9f3e7',
+          400: '#f7efdf',
+          500: '#f5ebd7',  // Base cream
+          600: '#c4bcac',
+          700: '#938d81',
+          800: '#625e56',
+          900: '#312f2b',
         },
       },
       fontFamily: {
@@ -71,7 +71,7 @@ module.exports = {
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-act': 'linear-gradient(to right bottom, rgb(242, 245, 245), rgb(155, 183, 183))',
+        'gradient-act': 'linear-gradient(to right bottom, rgb(230, 244, 244), rgb(102, 189, 189))',
       },
       typography: (theme) => ({
         DEFAULT: {
@@ -86,11 +86,11 @@ module.exports = {
               fontFamily: theme('fontFamily.display').join(', '),
             },
             h3: {
-              color: theme('colors.sage.500'),
+              color: theme('colors.sage.600'),
               fontFamily: theme('fontFamily.display').join(', '),
             },
             strong: {
-              color: theme('colors.act.600'),
+              color: theme('colors.act.700'),
             },
             a: {
               color: theme('colors.sage.600'),

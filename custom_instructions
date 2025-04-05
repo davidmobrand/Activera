@@ -1,0 +1,43 @@
+# ACTivera Project Rules
+
+## Build and Commit Requirements
+- Production Build Check
+  - Run `next build` before any commits
+  - Fix any TypeScript or linting errors
+  - Ensure no build warnings
+  - Test the build output
+- Commit and Push Process
+  - Stage all relevant files
+  - Write clear, descriptive commit messages
+  - Include affected components in commit description
+  - Push to remote after successful build
+  - Verify push success
+
+## Build and Commit Workflow
+1. Before Committing Changes:
+   ```bash
+   # Run production build
+   npm run build
+   ```
+   - If build fails, fix errors and repeat
+   - If build succeeds, proceed to commit
+
+2. Committing Changes:
+   ```bash
+   # Stage changes
+   git add [modified-files]
+   
+   # Create descriptive commit
+   git commit -m "type: description
+   
+   - Detail 1
+   - Detail 2"
+   
+   # Push to remote
+   git push
+   ```
+
+3. After Push:
+   - Verify changes on remote
+   - Confirm CI/CD pipeline success
+   - Document any necessary follow-ups 

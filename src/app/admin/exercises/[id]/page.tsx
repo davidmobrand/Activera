@@ -22,8 +22,12 @@ export default async function EditExercisePage({ params }: Props) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <ExerciseForm exercise={exercise} />
+    <div className="p-6 bg-gradient-to-b from-act-50 to-white min-h-screen">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-soft border border-act-100 p-8">
+          <ExerciseForm exercise={exercise} />
+        </div>
+      </div>
     </div>
   )
 } 

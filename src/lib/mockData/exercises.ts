@@ -65,7 +65,7 @@ function generateExercises(count: number): Exercise[] {
 </ul>`,
       },
       sv: {
-        title: 'Medveten andning',
+        title: 'Medveten Andning',
         content: `<h2>Introduktion</h2>
 <p>Den här övningen i medveten andning hjälper dig utveckla en djupare medvetenhet om din andning och dess naturliga rytm. Genom att fokusera på andningen kan du förankra dig i nuet och minska stress och oro. Regelbunden övning kan förbättra din koncentrationsförmåga och känsloreglering.</p>
 
@@ -345,23 +345,151 @@ function generateExercises(count: number): Exercise[] {
     },
   ];
 
+  // Remove the additional exercise templates
+  const moreExercises = [];
+
+  // Add name variations for each exercise type
+  const nameVariations = {
+    breathing: {
+      en: [
+        'Mindful Breathing',
+        'Breath Awareness',
+        'Calming Breath',
+        'Focused Breathing',
+        'Grounding Breath',
+        'Centering Breath',
+        'Balanced Breathing',
+        'Present Moment Breath',
+        'Anchoring Breath',
+        'Steady Breathing',
+        'Rhythmic Breathing',
+        'Peaceful Breath',
+        'Gentle Breathing',
+        'Natural Breath',
+        'Relaxed Breathing'
+      ],
+      sv: [
+        'Medveten Andning',
+        'Andningsmedvetenhet',
+        'Lugnande Andning',
+        'Fokuserad Andning',
+        'Grundande Andning',
+        'Centrerande Andning',
+        'Balanserad Andning',
+        'Närvarande Andning',
+        'Förankrande Andning',
+        'Stadig Andning',
+        'Rytmisk Andning',
+        'Fridfull Andning',
+        'Varsam Andning',
+        'Naturlig Andning',
+        'Avslappnad Andning'
+      ]
+    },
+    bodyScan: {
+      en: [
+        'Body Scan',
+        'Body Awareness',
+        'Physical Presence',
+        'Somatic Awareness',
+        'Body Connection',
+        'Physical Check-in',
+        'Body Listening',
+        'Embodied Awareness',
+        'Body Mindfulness',
+        'Physical Grounding',
+        'Body Sensing',
+        'Somatic Presence',
+        'Body Attunement',
+        'Physical Awareness',
+        'Body Observation'
+      ],
+      sv: [
+        'Kroppsskanning',
+        'Kroppsmedvetenhet',
+        'Fysisk Närvaro',
+        'Somatisk Medvetenhet',
+        'Kroppsanknytning',
+        'Kroppsgenomgång',
+        'Kroppslyssnande',
+        'Förkroppsligad Närvaro',
+        'Kroppslig Mindfulness',
+        'Fysisk Grundning',
+        'Kroppskänning',
+        'Somatisk Närvaro',
+        'Kroppslig Avstämning',
+        'Fysisk Medvetenhet',
+        'Kroppsobservation'
+      ]
+    },
+    thoughtObservation: {
+      en: [
+        'Thought Observation',
+        'Mental Noting',
+        'Mind Watching',
+        'Thought Awareness',
+        'Mental Space',
+        'Cognitive Distance',
+        'Thought Flow',
+        'Mind Observation',
+        'Mental Clarity',
+        'Thought Perspective',
+        'Mind Awareness',
+        'Cognitive Space',
+        'Thought Recognition',
+        'Mental Presence',
+        'Thought Witnessing'
+      ],
+      sv: [
+        'Tankeobservation',
+        'Mental Notering',
+        'Sinnesbetraktelse',
+        'Tankemedvetenhet',
+        'Mentalt Utrymme',
+        'Kognitiv Distans',
+        'Tankeflöde',
+        'Sinnesobservation',
+        'Mental Klarhet',
+        'Tankeperspektiv',
+        'Sinnesmedvetenhet',
+        'Kognitivt Utrymme',
+        'Tankekänning',
+        'Mental Närvaro',
+        'Tankebevittnande'
+      ]
+    }
+  };
+
   return Array.from({ length: count }, (_, i) => {
     const baseExercise = baseExercises[i % baseExercises.length];
     const category = categories[i % categories.length];
     const number = i + 1;
 
+    // Determine which set of variations to use based on the base exercise type
+    let variations;
+    if (i % 3 === 0) {
+      variations = nameVariations.breathing;
+    } else if (i % 3 === 1) {
+      variations = nameVariations.bodyScan;
+    } else {
+      variations = nameVariations.thoughtObservation;
+    }
+
+    // Calculate a unique index for each group of exercises
+    const variationIndex = Math.floor(i / 3) % variations.en.length;
+
     const exercise: Exercise = {
       id: String(number),
       translations: {
         en: {
-          title: `${baseExercise.en.title} ${number}`,
+          title: variations.en[variationIndex],
           content: baseExercise.en.content,
           accessibility: baseExercise.en.accessibility,
           prerequisites: baseExercise.en.prerequisites,
           progressIndicators: baseExercise.en.progressIndicators,
         },
         sv: {
-          title: `${baseExercise.sv.title} ${number}`,
+          title: variations.sv[variationIndex],
           content: baseExercise.sv.content,
           accessibility: baseExercise.sv.accessibility,
           prerequisites: baseExercise.sv.prerequisites,

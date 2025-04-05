@@ -11,18 +11,22 @@ export function LanguageSelector() {
       <Button
         size="sm"
         onClick={() => setLanguage('en')}
-        className={`border-mindful-200 text-mindful-700 hover:bg-mindful-50 ${
-          language === 'en' ? 'bg-mindful-50' : ''
-        }`}
+        className={`${
+          language === 'en' 
+            ? 'bg-mindful-100 text-mindful-700' 
+            : 'bg-white/80 text-mindful-600 hover:bg-mindful-50'
+        } border border-mindful-200`}
       >
         EN
       </Button>
       <Button
         size="sm"
         onClick={() => setLanguage('sv')}
-        className={`border-mindful-200 text-mindful-700 hover:bg-mindful-50 ${
-          language === 'sv' ? 'bg-mindful-50' : ''
-        }`}
+        className={`${
+          language === 'sv'
+            ? 'bg-mindful-100 text-mindful-700'
+            : 'bg-white/80 text-mindful-600 hover:bg-mindful-50'
+        } border border-mindful-200`}
       >
         SV
       </Button>

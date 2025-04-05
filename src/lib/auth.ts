@@ -13,26 +13,14 @@ export const authOptions: AuthOptions = {
       async authorize(credentials) {
         try {
           if (!credentials?.email || !credentials?.password) {
-            console.error('[Auth] Missing credentials:', { email: !!credentials?.email, password: !!credentials?.password })
             throw new Error('Please provide both email and password')
           }
 
-          console.log('[Auth] Attempting login with email:', credentials.email)
-
           const user = await mockDb.users.findByEmail(credentials.email)
           
-          if (!user) {
-            console.error('[Auth] User not found:', credentials.email)
+          if (!user || user.password !== credentials.password) {
             throw new Error('Invalid email or password')
           }
-
-          // In a real application, you would hash the password and compare hashes
-          if (user.password !== credentials.password) {
-            console.error('[Auth] Invalid password for user:', credentials.email)
-            throw new Error('Invalid email or password')
-          }
-
-          console.log('[Auth] Login successful for user:', { id: user.id, email: user.email, role: user.role })
           
           return {
             id: user.id,
@@ -72,5 +60,16 @@ export const authOptions: AuthOptions = {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
-  debug: process.env.NODE_ENV === 'development'
+  debug: false,
+  logger: {
+    error: (code, ...message) => {
+      console.error(code, ...message)
+    },
+    warn: (code, ...message) => {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn(code, ...message)
+      }
+    },
+    debug: () => {}
+  }
 } 

@@ -2,16 +2,24 @@
 
 import { useSession } from 'next-auth/react'
 import { notFound } from 'next/navigation'
-import dynamic from 'next/dynamic'
 import { ExerciseCategoryEnum } from '@/lib/types'
 import NotLoggedIn from '@/components/NotLoggedIn'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { mockDb } from '@/lib/mockData'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { Exercise } from '@/lib/types'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
+import dynamic from 'next/dynamic'
 
-// Dynamically import ExerciseList with loading state
+// Separate loading component for better code splitting
+const LoadingState = () => (
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-act-50 to-white">
+    <LoadingSpinner className="h-12 w-12 text-act-600" />
+  </div>
+)
+
+// Lazy load the ExerciseList component
 const ExerciseList = dynamic(
   () => import('@/components/exercises/ExerciseList').then(mod => mod.ExerciseList),
   {
@@ -30,45 +38,9 @@ type Props = {
   }
 }
 
-export default function ExerciseCategoryPage({ params }: Props) {
-  const { data: session, status } = useSession()
+// Separate category content component for better error isolation
+function CategoryContent({ category, exercises }: { category: ExerciseCategoryEnum, exercises: Exercise[] }) {
   const { t } = useTranslation()
-  const [exercises, setExercises] = useState<Exercise[]>([])
-  const [loading, setLoading] = useState(true)
-
-  // Convert category string to enum
-  const category = params.category.toUpperCase() as ExerciseCategoryEnum
-  if (!Object.values(ExerciseCategoryEnum).includes(category)) {
-    return notFound()
-  }
-
-  useEffect(() => {
-    async function loadExercises() {
-      try {
-        const data = await mockDb.exercises.findByCategory(category)
-        setExercises(data)
-      } catch (error) {
-        console.error('Error loading exercises:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadExercises()
-  }, [category])
-
-  if (status === 'loading' || loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-act-50 to-white">
-        <LoadingSpinner className="h-12 w-12 text-act-600" />
-      </div>
-    )
-  }
-
-  if (!session) {
-    return <NotLoggedIn />
-  }
-
   const categoryTranslation = t.category(category)
 
   return (
@@ -87,9 +59,66 @@ export default function ExerciseCategoryPage({ params }: Props) {
         </div>
 
         <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-soft border border-act-100 overflow-hidden p-6">
-          <ExerciseList exercises={exercises} category={category} />
+          <Suspense fallback={<LoadingSpinner className="h-12 w-12 text-act-600" />}>
+            <ExerciseList exercises={exercises} category={category} />
+          </Suspense>
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ExerciseCategoryPage({ params }: Props) {
+  const { data: session, status } = useSession()
+  const [exercises, setExercises] = useState<Exercise[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
+
+  // Convert category string to enum
+  const category = params.category.toUpperCase() as ExerciseCategoryEnum
+  if (!Object.values(ExerciseCategoryEnum).includes(category)) {
+    return notFound()
+  }
+
+  useEffect(() => {
+    async function loadExercises() {
+      try {
+        const data = await mockDb.exercises.findByCategory(category)
+        setExercises(data)
+        setError(null)
+      } catch (error) {
+        console.error('Error loading exercises:', error)
+        setError(error instanceof Error ? error : new Error('Failed to load exercises'))
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadExercises()
+  }, [category])
+
+  if (status === 'loading' || loading) {
+    return <LoadingState />
+  }
+
+  if (!session) {
+    return <NotLoggedIn />
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-act-50 to-white">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Exercises</h2>
+          <p className="text-gray-600">{error.message}</p>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <ErrorBoundary>
+      <CategoryContent category={category} exercises={exercises} />
+    </ErrorBoundary>
   )
 } 

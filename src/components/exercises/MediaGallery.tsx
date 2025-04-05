@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Media, MediaType } from '@/lib/types'
+import { EyeIcon, TrashIcon } from 'lucide-react'
 
 interface MediaGalleryProps {
   exerciseId: string
@@ -138,7 +139,7 @@ export function MediaGallery({
             )}
           </Button>
           {error && (
-            <p className="text-red-500 text-sm">{error}</p>
+            <p className="text-warmth-600 text-sm">{error}</p>
           )}
         </div>
       )}
@@ -159,17 +160,17 @@ export function MediaGallery({
                   <div className="absolute top-2 right-2 flex gap-2">
                     <button
                       onClick={() => handleInsert(image)}
-                      className="bg-blue-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="bg-mindful-600 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                       title="Insert into content"
                     >
-                      Insert
+                      <EyeIcon className="h-4 w-4" />
                     </button>
                     <button
                       onClick={() => handleDelete(image.id)}
-                      className="bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="bg-warmth-600 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                       title="Delete media"
                     >
-                      Delete
+                      <TrashIcon className="h-4 w-4" />
                     </button>
                   </div>
                 )}
@@ -190,14 +191,14 @@ export function MediaGallery({
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleInsert(audio)}
-                      className="text-blue-500 hover:text-blue-700"
+                      className="text-mindful-600 hover:text-mindful-800"
                       title="Insert into content"
                     >
-                      Insert
+                      View
                     </button>
                     <button
                       onClick={() => handleDelete(audio.id)}
-                      className="text-red-500 hover:text-red-700"
+                      className="text-warmth-600 hover:text-warmth-800"
                       title="Delete media"
                     >
                       Delete

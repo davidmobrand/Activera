@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
@@ -114,12 +115,22 @@ export default function AdminExercises() {
               <tr key={exercise.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
-                    {exercise.translations[language].title}
+                    <Link 
+                      href={`/exercises/${exercise.category}/${exercise.id}`}
+                      className="text-blue-600 hover:text-blue-800 hover:underline"
+                    >
+                      {exercise.translations[language].title}
+                    </Link>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">
-                    {t.category(exercise.category).name}
+                    <Link 
+                      href={`/exercises/${exercise.category}`}
+                      className="text-blue-600 hover:text-blue-800 hover:underline"
+                    >
+                      {t.category(exercise.category).name}
+                    </Link>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">

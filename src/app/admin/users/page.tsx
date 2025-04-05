@@ -116,7 +116,7 @@ export default function AdminUsers() {
                     {t.common('role')}
                   </th>
                   <th className="px-6 py-4 text-left text-xs sm:text-sm font-medium text-act-700">
-                    {t.common('joined')}
+                    {t.common('joinedDate')}
                   </th>
                   <th className="px-6 py-4 text-right text-xs sm:text-sm font-medium text-act-700">
                     {t.common('actions')}

@@ -5,6 +5,12 @@ import { Exercise, ExerciseCategoryEnum } from '@/lib/types'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import type { Language } from '@/lib/i18n/types'
 
+// Helper function to strip HTML tags and decode entities
+function stripHtml(html: string): string {
+  const doc = new DOMParser().parseFromString(html, 'text/html')
+  return doc.body.textContent || ''
+}
+
 interface ExerciseListProps {
   exercises: Exercise[]
   category: ExerciseCategoryEnum
@@ -26,12 +32,9 @@ export function ExerciseList({ exercises, category }: ExerciseListProps) {
               <h2 className="text-xl font-display text-mindful-800 mb-3 group-hover:text-mindful-600 transition-colors">
                 {exercise.translations[language].title}
               </h2>
-              <p 
-                className="text-mindful-600 text-sm mb-4 line-clamp-3"
-                dangerouslySetInnerHTML={{ 
-                  __html: exercise.translations[language].introduction
-                }}
-              />
+              <p className="text-mindful-600 text-sm mb-4 line-clamp-3">
+                {stripHtml(exercise.translations[language].introduction)}
+              </p>
               <div className="mt-auto flex items-center justify-end pt-4 border-t border-mindful-100">
                 <div className="bg-mindful-50 text-mindful-600 px-3 py-1 rounded-full text-sm font-medium">
                   {exercise.difficulty}

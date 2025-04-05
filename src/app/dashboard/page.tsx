@@ -27,12 +27,12 @@ export default function DashboardPage() {
     {
       key: ExerciseCategoryEnum.NARVARO,
       slug: 'narvaro',
-      color: 'bg-sage-100 text-sage-800'
+      color: 'bg-act-100 text-act-800'
     },
     {
       key: ExerciseCategoryEnum.OPPENHET,
       slug: 'oppenhet',
-      color: 'bg-sand-100 text-sand-800'
+      color: 'bg-act-100 text-act-800'
     },
     {
       key: ExerciseCategoryEnum.ENGAGEMANG,
@@ -49,7 +49,7 @@ export default function DashboardPage() {
             {t.common('welcome')}, {session.user?.name || session.user?.email}
           </h1>
           <p className="text-lg text-act-600">
-            Choose a category to begin your mindfulness journey
+            {t.common('chooseCategoryText')}
           </p>
         </div>
         

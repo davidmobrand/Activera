@@ -8,8 +8,11 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import NotLoggedIn from '@/components/NotLoggedIn'
 import { ExerciseCategory } from '@/lib/types'
 import dynamic from 'next/dynamic'
+import { RichTextEditor } from '@/components/admin/RichTextEditor'
+import { useTranslation } from '@/lib/i18n/useTranslation'
 
-const Editor = dynamic(() => import('@/components/Editor'), { ssr: false })
+// Use dynamic import for RichTextEditor to avoid SSR issues
+const DynamicRichTextEditor = dynamic(() => Promise.resolve(RichTextEditor), { ssr: false })
 
 type FormData = {
   title: string;
@@ -28,6 +31,7 @@ type FormData = {
 export default function CreateExercise() {
   const router = useRouter()
   const { data: session, status } = useSession()
+  const { t } = useTranslation()
   const [formData, setFormData] = useState<FormData>({
     title: '',
     introduction: '',
@@ -137,7 +141,7 @@ export default function CreateExercise() {
         <div className="grid grid-cols-2 gap-6">
           <div className="space-y-2">
             <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-              Title
+              {t.common('title')}
             </label>
             <input
               type="text"
@@ -152,7 +156,7 @@ export default function CreateExercise() {
 
           <div className="space-y-2">
             <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-              Category
+              {t.common('category')}
             </label>
             <select
               id="category"
@@ -161,16 +165,16 @@ export default function CreateExercise() {
               className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               required
             >
-              <option value="NARVARO">Närvaro</option>
-              <option value="OPPENHET">Öppenhet</option>
-              <option value="ENGAGEMANG">Engagemang</option>
+              <option value="NARVARO">{t.category('NARVARO').name}</option>
+              <option value="OPPENHET">{t.category('OPPENHET').name}</option>
+              <option value="ENGAGEMANG">{t.category('ENGAGEMANG').name}</option>
             </select>
           </div>
         </div>
 
         <div className="space-y-2">
           <label htmlFor="order" className="block text-sm font-medium text-gray-700">
-            Order
+            {t.common('order')}
           </label>
           <input
             type="number"
@@ -184,19 +188,92 @@ export default function CreateExercise() {
           />
         </div>
 
-        {(['introduction', 'duration', 'benefits', 'instructions', 'tips', 'accessibility', 'prerequisites', 'progressIndicators'] as const).map((field) => (
+        {(['introduction', 'instructions'] as const).map((field) => (
           <div key={field} className="space-y-2">
-            <label htmlFor={field} className="block text-sm font-medium text-gray-700 capitalize">
-              {field}
+            <label className="block text-sm font-medium text-gray-700">
+              {t.common(field)}
             </label>
-            <div className="mt-1 rounded-md shadow-sm">
-              <Editor
+            <div className="mt-1">
+              <DynamicRichTextEditor
                 value={formData[field]}
-                onEditorChange={(content: string) => setFormData({ ...formData, [field]: content })}
+                onChange={(content: string) => setFormData({ ...formData, [field]: content })}
+                exerciseId="new"
               />
             </div>
           </div>
         ))}
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            {t.common('duration')}
+          </label>
+          <input
+            type="text"
+            value={formData.duration}
+            onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            {t.common('benefits')}
+          </label>
+          <textarea
+            value={formData.benefits}
+            onChange={(e) => setFormData({ ...formData, benefits: e.target.value })}
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            rows={4}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            {t.common('tips')}
+          </label>
+          <textarea
+            value={formData.tips}
+            onChange={(e) => setFormData({ ...formData, tips: e.target.value })}
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            rows={4}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            {t.common('accessibility')}
+          </label>
+          <textarea
+            value={formData.accessibility}
+            onChange={(e) => setFormData({ ...formData, accessibility: e.target.value })}
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            rows={4}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            {t.common('prerequisites')}
+          </label>
+          <textarea
+            value={formData.prerequisites}
+            onChange={(e) => setFormData({ ...formData, prerequisites: e.target.value })}
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            rows={4}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            {t.common('progressIndicators')}
+          </label>
+          <textarea
+            value={formData.progressIndicators}
+            onChange={(e) => setFormData({ ...formData, progressIndicators: e.target.value })}
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            rows={4}
+          />
+        </div>
 
         <div className="flex justify-end space-x-4 pt-4 border-t border-gray-200">
           <Button

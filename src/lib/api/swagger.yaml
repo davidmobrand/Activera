@@ -1,0 +1,388 @@
+openapi: 3.0.0
+info:
+  title: ACTivera API
+  description: API for managing exercises, users, and progress in the ACTivera application
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8989/api
+    description: Local development server
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Translation:
+      type: object
+      properties:
+        title:
+          type: string
+        introduction:
+          type: string
+        duration:
+          type: string
+        benefits:
+          type: string
+        instructions:
+          type: string
+        tips:
+          type: string
+        accessibility:
+          type: string
+        prerequisites:
+          type: string
+        progressIndicators:
+          type: string
+
+    Exercise:
+      type: object
+      properties:
+        id:
+          type: string
+        translations:
+          type: object
+          properties:
+            en:
+              $ref: '#/components/schemas/Translation'
+            sv:
+              $ref: '#/components/schemas/Translation'
+        category:
+          type: string
+          enum: [NARVARO, OPPENHET, ENGAGEMANG]
+        order:
+          type: integer
+        difficulty:
+          type: string
+          enum: [BEGINNER, INTERMEDIATE, ADVANCED]
+        recommendedTime:
+          type: array
+          items:
+            type: string
+            enum: [MORNING, AFTERNOON, EVENING]
+        relatedExerciseIds:
+          type: array
+          items:
+            type: string
+        mediaIds:
+          type: array
+          items:
+            type: string
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          enum: [USER, ADMIN]
+        createdAt:
+          type: string
+          format: date-time
+
+    Progress:
+      type: object
+      properties:
+        userId:
+          type: string
+        exerciseId:
+          type: string
+        completed:
+          type: boolean
+        completedAt:
+          type: string
+          format: date-time
+        notes:
+          type: string
+
+security:
+  - bearerAuth: []
+
+paths:
+  /exercises:
+    get:
+      summary: Get all exercises
+      parameters:
+        - in: query
+          name: category
+          schema:
+            type: string
+            enum: [NARVARO, OPPENHET, ENGAGEMANG]
+          description: Filter exercises by category
+      responses:
+        '200':
+          description: List of exercises
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Exercise'
+        '401':
+          description: Unauthorized
+    post:
+      summary: Create a new exercise
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exercise'
+      responses:
+        '201':
+          description: Exercise created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden - Admin only
+
+  /exercises/{id}:
+    get:
+      summary: Get exercise by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Exercise details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exercise'
+        '404':
+          description: Exercise not found
+    put:
+      summary: Update exercise
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exercise'
+      responses:
+        '200':
+          description: Exercise updated
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden - Admin only
+        '404':
+          description: Exercise not found
+    delete:
+      summary: Delete exercise
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Exercise deleted
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden - Admin only
+        '404':
+          description: Exercise not found
+
+  /exercises/{id}/media:
+    post:
+      summary: Upload media for exercise
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Media uploaded
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden - Admin only
+        '404':
+          description: Exercise not found
+
+  /exercises/{id}/progress:
+    post:
+      summary: Update exercise progress
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Progress'
+      responses:
+        '200':
+          description: Progress updated
+        '401':
+          description: Unauthorized
+        '404':
+          description: Exercise not found
+
+  /users:
+    get:
+      summary: Get all users
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden - Admin only
+    post:
+      summary: Create a new user
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden - Admin only
+
+  /users/{id}:
+    get:
+      summary: Get user by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden - Admin only
+        '404':
+          description: User not found
+    put:
+      summary: Update user
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User updated
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden - Admin only
+        '404':
+          description: User not found
+    delete:
+      summary: Delete user
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User deleted
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden - Admin only
+        '404':
+          description: User not found
+
+  /progress:
+    get:
+      summary: Get user progress
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: User progress
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Progress'
+        '401':
+          description: Unauthorized 

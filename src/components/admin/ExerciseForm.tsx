@@ -9,6 +9,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import type { Language } from '@/lib/i18n/types'
 import type { Editor as TinyMCEEditor } from 'tinymce'
+import { RichTextEditor } from './RichTextEditor'
 
 interface ExerciseFormProps {
   exercise: Exercise
@@ -204,44 +205,68 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
           <label className="block text-sm font-medium text-stone-700">
             {t.common('introduction')}
           </label>
-          <div className="h-[50vh] sm:h-96">
-            <Editor
-              apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
-              onInit={(_evt: unknown, editor: TinyMCEEditor) => {
-                editorRef.current = editor
-              }}
-              value={exercise.translations[language].introduction}
-              onEditorChange={(content: string) => updateTranslation('introduction', content)}
-              init={{
-                height: '100%',
-                menubar: false,
-                plugins: [
-                  'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                  'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                  'insertdatetime', 'media', 'table', 'help', 'wordcount'
-                ],
-                toolbar: 'undo redo | blocks | ' +
-                  'bold italic forecolor | alignleft aligncenter ' +
-                  'alignright alignjustify | bullist numlist outdent indent | ' +
-                  'removeformat | help',
-                content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; line-height: 1.5; }',
-                mobile: {
-                  menubar: false,
-                  toolbar: 'undo redo | bold italic | bullist numlist',
-                  height: '100%'
-                },
-                file_picker_callback: (callback: FilePickerCallback, value: string, meta: FilePickerMeta) => {
-                  if (meta.filetype === 'image') {
-                    handleUpload('IMAGE').then((media) => {
-                      if (media) {
-                        callback(media.url, { alt: media.name })
-                      }
-                    })
-                  }
-                }
-              }}
-            />
-          </div>
+          <RichTextEditor
+            value={exercise.translations[language].introduction}
+            onChange={(content: string) => updateTranslation('introduction', content)}
+            exerciseId={exercise.id}
+          />
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-mindful-600 mb-2">
+            Duration
+          </label>
+          <input
+            type="text"
+            className="w-full px-4 py-2 border border-mindful-200 rounded-lg focus:ring-2 focus:ring-mindful-500 focus:border-transparent"
+            value={exercise.translations[language].duration}
+            onChange={(e) => {
+              const newTranslations = { ...exercise.translations }
+              newTranslations[language].duration = e.target.value
+              updateTranslation('duration', e.target.value)
+            }}
+          />
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-mindful-600 mb-2">
+            Benefits
+          </label>
+          <textarea
+            className="w-full px-4 py-2 border border-mindful-200 rounded-lg focus:ring-2 focus:ring-mindful-500 focus:border-transparent min-h-[100px]"
+            value={exercise.translations[language].benefits}
+            onChange={(e) => {
+              const newTranslations = { ...exercise.translations }
+              newTranslations[language].benefits = e.target.value
+              updateTranslation('benefits', e.target.value)
+            }}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-stone-700">
+            {t.common('instructions')}
+          </label>
+          <RichTextEditor
+            value={exercise.translations[language].instructions}
+            onChange={(content: string) => updateTranslation('instructions', content)}
+            exerciseId={exercise.id}
+          />
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-mindful-600 mb-2">
+            Tips
+          </label>
+          <textarea
+            className="w-full px-4 py-2 border border-mindful-200 rounded-lg focus:ring-2 focus:ring-mindful-500 focus:border-transparent min-h-[100px]"
+            value={exercise.translations[language].tips}
+            onChange={(e) => {
+              const newTranslations = { ...exercise.translations }
+              newTranslations[language].tips = e.target.value
+              updateTranslation('tips', e.target.value)
+            }}
+          />
         </div>
       </div>
 

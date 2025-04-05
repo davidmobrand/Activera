@@ -10,18 +10,24 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, error, label, type = 'text', ...props }, ref) => {
     return (
       <div className="w-full">
-        {label && (
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            {label}
-          </label>
-        )}
+        <label className="block text-sm font-medium text-stone-700 mb-1">
+          {label}
+        </label>
         <input
           type={type}
-          className={twMerge(
-            'flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
-            error && 'border-red-500 focus:ring-red-500',
-            className
-          )}
+          className={`
+            w-full
+            rounded-md
+            border
+            px-4
+            py-2
+            bg-white
+            ${error ? 'border-warmth-300 focus:border-warmth-400' : 'border-stone-200 focus:border-ocean-300'}
+            focus:ring
+            ${error ? 'focus:ring-warmth-200' : 'focus:ring-ocean-200'}
+            focus:ring-opacity-50
+            ${className}
+          `}
           ref={ref}
           {...props}
         />

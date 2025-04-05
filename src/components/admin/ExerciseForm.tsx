@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Exercise, Media } from '@/lib/types'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { useTranslation } from '@/lib/i18n/useTranslation'
 import type { Language } from '@/lib/i18n/types'
 import type { Editor as TinyMCEEditor } from 'tinymce'
 
@@ -25,6 +26,7 @@ interface FilePickerMeta {
 export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
   const router = useRouter()
   const { language, setLanguage } = useLanguage()
+  const { t } = useTranslation()
   const [exercise, setExercise] = useState(initialExercise)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -129,6 +131,12 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-900">
+          {initialExercise.id ? t.common('editExercise') : t.common('createNewExercise')}
+        </h1>
+      </div>
+
       <div className="flex gap-4 mb-4">
         <Button
           type="button"
@@ -148,7 +156,7 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
 
       <div className="space-y-2">
         <label className="block text-sm font-medium text-gray-700">
-          Title
+          {t.common('title')}
         </label>
         <input
           type="text"
@@ -161,7 +169,7 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
 
       <div className="space-y-2">
         <label className="block text-sm font-medium text-gray-700">
-          Category
+          {t.common('category')}
         </label>
         <select
           value={exercise.category}
@@ -169,15 +177,28 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
           className="w-full rounded-md border border-gray-300 px-4 py-2"
           required
         >
-          <option value="NARVARO">Närvaro</option>
-          <option value="OPPENHET">Öppenhet</option>
-          <option value="ENGAGEMANG">Engagemang</option>
+          <option value="NARVARO">{t.category('NARVARO').name}</option>
+          <option value="OPPENHET">{t.category('OPPENHET').name}</option>
+          <option value="ENGAGEMANG">{t.category('ENGAGEMANG').name}</option>
         </select>
       </div>
 
       <div className="space-y-2">
         <label className="block text-sm font-medium text-gray-700">
-          Content
+          {t.common('order')}
+        </label>
+        <input
+          type="number"
+          value={exercise.order}
+          onChange={(e) => setExercise({ ...exercise, order: parseInt(e.target.value) })}
+          className="w-full rounded-md border border-gray-300 px-4 py-2"
+          required
+        />
+      </div>
+
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700">
+          {t.common('content')}
         </label>
         <div className="h-96">
           <Editor
@@ -198,45 +219,28 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
               toolbar: [
                 'undo redo | blocks',
                 'bold italic | alignleft aligncenter alignright alignjustify',
-                'bullist numlist | link image media | removeformat help'
-              ].join(' | '),
-              file_picker_callback: async (
-                callback: FilePickerCallback,
-                value: string,
-                meta: FilePickerMeta
-              ) => {
-                try {
-                  if (meta.filetype === 'image') {
-                    const media = await handleUpload('IMAGE')
+                'bullist numlist outdent indent | removeformat | help'
+              ],
+              content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 14px; line-height: 1.5; }',
+              file_picker_callback: (callback: FilePickerCallback, value: string, meta: FilePickerMeta) => {
+                if (meta.filetype === 'image') {
+                  handleUpload('IMAGE').then((media) => {
                     if (media) {
                       callback(media.url, { alt: media.name })
                     }
-                  } else if (meta.filetype === 'media') {
-                    const media = await handleUpload('AUDIO')
-                    if (media) {
-                      callback(media.url, { alt: media.name, source2: media.url })
-                    }
-                  }
-                } catch (error) {
-                  console.error('Error in file picker:', error)
+                  })
                 }
-              },
-              content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; }'
+              }
             }}
           />
-          {isUploading && (
-            <div className="flex items-center gap-2 mt-2 text-sm text-gray-600">
-              <LoadingSpinner className="h-4 w-4" />
-              Uploading media...
-            </div>
-          )}
-          {error && (
-            <div className="mt-2 text-sm text-red-600">
-              {error}
-            </div>
-          )}
         </div>
       </div>
+
+      {error && (
+        <div className="text-red-600">
+          {error}
+        </div>
+      )}
 
       <div className="flex justify-end gap-4">
         <Button
@@ -244,21 +248,13 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
           variant="secondary"
           onClick={() => router.push('/admin/exercises')}
         >
-          Cancel
+          {t.common('cancel')}
         </Button>
         <Button
           type="submit"
-          variant="primary"
           disabled={saving}
         >
-          {saving ? (
-            <>
-              <LoadingSpinner className="h-4 w-4 mr-2" />
-              Saving...
-            </>
-          ) : (
-            'Save Exercise'
-          )}
+          {saving ? t.common('saving') : t.common('save')}
         </Button>
       </div>
     </form>

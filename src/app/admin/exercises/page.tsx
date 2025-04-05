@@ -6,27 +6,16 @@ import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import NotLoggedIn from '@/components/NotLoggedIn'
-
-interface Exercise {
-  id: string
-  title: string
-  category: string
-  order: number
-  content: string
-  createdAt: string
-  updatedAt: string
-}
-
-const categoryLabels = {
-  NARVARO: 'Närvaro',
-  OPPENHET: 'Öppenhet',
-  ENGAGEMANG: 'Engagemang',
-}
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { useTranslation } from '@/lib/i18n/useTranslation'
+import { Exercise as ExerciseType } from '@/lib/types'
 
 export default function AdminExercises() {
   const router = useRouter()
   const { data: session, status } = useSession()
-  const [exercises, setExercises] = useState<Exercise[]>([])
+  const { language } = useLanguage()
+  const { t } = useTranslation()
+  const [exercises, setExercises] = useState<ExerciseType[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -48,7 +37,7 @@ export default function AdminExercises() {
   }
 
   async function deleteExercise(id: string) {
-    if (!confirm('Are you sure you want to delete this exercise?')) return
+    if (!confirm(t.common('confirmDelete'))) return
 
     try {
       const response = await fetch(`/api/exercises/${id}`, {
@@ -78,13 +67,13 @@ export default function AdminExercises() {
   if (session.user?.role !== 'ADMIN') {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h1>
-        <p className="text-gray-600">You need admin privileges to access this page.</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">{t.common('accessDenied')}</h1>
+        <p className="text-gray-600">{t.common('adminPrivilegesRequired')}</p>
         <Button
           className="mt-4"
           onClick={() => router.push('/dashboard')}
         >
-          Go to Dashboard
+          {t.common('goToDashboard')}
         </Button>
       </div>
     )
@@ -93,9 +82,9 @@ export default function AdminExercises() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Manage Exercises</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t.common('manageExercises')}</h1>
         <Button onClick={() => router.push('/admin/exercises/new')}>
-          Create New Exercise
+          {t.common('createNewExercise')}
         </Button>
       </div>
 
@@ -104,19 +93,19 @@ export default function AdminExercises() {
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Title
+                {t.common('title')}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Category
+                {t.common('category')}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Order
+                {t.common('order')}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Last Updated
+                {t.common('lastUpdated')}
               </th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
+                {t.common('actions')}
               </th>
             </tr>
           </thead>
@@ -125,12 +114,12 @@ export default function AdminExercises() {
               <tr key={exercise.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
-                    {exercise.title}
+                    {exercise.translations[language].title}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">
-                    {categoryLabels[exercise.category as keyof typeof categoryLabels]}
+                    {t.category(exercise.category).name}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -138,7 +127,7 @@ export default function AdminExercises() {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">
-                    {new Date(exercise.updatedAt).toLocaleDateString()}
+                    {new Date(exercise.updatedAt).toLocaleDateString(language === 'sv' ? 'sv-SE' : 'en-US')}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -147,13 +136,13 @@ export default function AdminExercises() {
                     className="mr-2"
                     onClick={() => router.push(`/admin/exercises/${exercise.id}`)}
                   >
-                    Edit
+                    {t.common('edit')}
                   </Button>
                   <Button
                     variant="outline"
                     onClick={() => deleteExercise(exercise.id)}
                   >
-                    Delete
+                    {t.common('delete')}
                   </Button>
                 </td>
               </tr>

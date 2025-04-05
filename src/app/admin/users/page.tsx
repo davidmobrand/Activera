@@ -6,11 +6,15 @@ import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import NotLoggedIn from '@/components/NotLoggedIn'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { useTranslation } from '@/lib/i18n/useTranslation'
 import { User, UserRole } from '@/lib/types'
 
 export default function AdminUsers() {
   const router = useRouter()
   const { data: session, status } = useSession()
+  const { language } = useLanguage()
+  const { t } = useTranslation()
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -36,7 +40,7 @@ export default function AdminUsers() {
   }
 
   async function deleteUser(id: string) {
-    if (!confirm('Are you sure you want to delete this user?')) return
+    if (!confirm(t.common('confirmDelete'))) return
 
     try {
       const response = await fetch(`/api/users/${id}`, {
@@ -66,13 +70,13 @@ export default function AdminUsers() {
   if (session.user?.role !== 'ADMIN') {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h1>
-        <p className="text-gray-600">You need admin privileges to access this page.</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">{t.common('accessDenied')}</h1>
+        <p className="text-gray-600">{t.common('adminPrivilegesRequired')}</p>
         <Button
           className="mt-4"
           onClick={() => router.push('/dashboard')}
         >
-          Go to Dashboard
+          {t.common('goToDashboard')}
         </Button>
       </div>
     )
@@ -81,9 +85,9 @@ export default function AdminUsers() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Manage Users</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t.common('manageUsers')}</h1>
         <Button onClick={() => router.push('/admin/users/new')}>
-          Create New User
+          {t.common('createNewUser')}
         </Button>
       </div>
 
@@ -92,19 +96,19 @@ export default function AdminUsers() {
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Name
+                {t.common('name')}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Email
+                {t.common('email')}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Role
+                {t.common('role')}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Joined
+                {t.common('joined')}
               </th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
+                {t.common('actions')}
               </th>
             </tr>
           </thead>
@@ -128,7 +132,7 @@ export default function AdminUsers() {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-500">
-                    {new Date(user.createdAt).toLocaleDateString()}
+                    {new Date(user.createdAt).toLocaleDateString(language === 'sv' ? 'sv-SE' : 'en-US')}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -137,13 +141,13 @@ export default function AdminUsers() {
                     className="mr-2"
                     onClick={() => router.push(`/admin/users/${user.id}`)}
                   >
-                    Edit
+                    {t.common('edit')}
                   </Button>
                   <Button
                     variant="outline"
                     onClick={() => deleteUser(user.id)}
                   >
-                    Delete
+                    {t.common('delete')}
                   </Button>
                 </td>
               </tr>

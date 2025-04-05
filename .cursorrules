@@ -1,50 +1,123 @@
 # ACTivera Project Rules
 
 ## Authentication & Authorization
-1. NO REDIRECTS for authentication
-   - When user is not logged in, show NotLoggedIn component with login link
-   - No automatic redirects to login page
-   - Let components handle their own auth state
-
-2. Admin Route Protection
-   - Admin routes (/admin/*) should check for admin role
-   - If not admin, show appropriate message or redirect to dashboard
-   - No redirects to login page
-
-3. Session Handling
-   - Use JWT for session management
-   - Session maxAge: 30 days
-   - Include user role and ID in session token
+- NO REDIRECTS for authentication
+  - When user is not logged in, show NotLoggedIn component with login link
+  - No automatic redirects to login page
+  - Let components handle their own auth state
+- Admin Route Protection
+  - Admin routes (/admin/*) should check for admin role
+  - If not admin, show appropriate message or redirect to dashboard
+  - No redirects to login page
+- Session Handling
+  - Use JWT for session management
+  - Session maxAge: 30 days
+  - Include user role and ID in session token
 
 ## Component Guidelines
-1. Authentication State
-   - Use NotLoggedIn component for unauthenticated states
-   - Handle loading states with LoadingSpinner
-   - Check session status before rendering protected content
-
-2. Navigation
-   - Show admin links only for admin users
-   - Regular users see exercise category links
-   - Display user role (Admin) next to name when applicable
+- Authentication State
+  - Use NotLoggedIn component for unauthenticated states
+  - Handle loading states with LoadingSpinner
+  - Check session status before rendering protected content
+- Navigation
+  - Show admin links only for admin users
+  - Regular users see exercise category links
+  - Display user role (Admin) next to name when applicable
 
 ## Code Style
-1. Error Handling
-   - Add descriptive error messages
-   - Log errors with relevant context
-   - Handle edge cases gracefully
-
-2. Type Safety
-   - Use TypeScript types for all components and functions
-   - Avoid type assertions (as any) when possible
-   - Define clear interfaces for data structures
+- Error Handling
+  - Add descriptive error messages
+  - Log errors with relevant context
+  - Handle edge cases gracefully
+- Type Safety
+  - Use TypeScript types for all components and functions
+  - Avoid type assertions (as any) when possible
+  - Define clear interfaces for data structures
 
 ## API Guidelines
-1. Response Format
-   - Use consistent error response structure
-   - Include appropriate HTTP status codes
-   - Validate input data
+- Response Format
+  - Use consistent error response structure
+  - Include appropriate HTTP status codes
+  - Validate input data
+- Security
+  - Validate user permissions for protected routes
+  - Sanitize user input
+  - Use CSRF protection where needed
 
-2. Security
-   - Validate user permissions for protected routes
-   - Sanitize user input
-   - Use CSRF protection where needed 
+## Page Requirements
+
+### Admin Exercises Page (/admin/exercises)
+- Create New Exercise button
+- List view with:
+  - Title in selected language
+  - Category
+  - Order
+  - Last updated timestamp
+- Edit and Delete buttons for each item
+- Real-time page updates after deletion
+- All texts must be in selected language
+
+### Exercise Edit Page (/admin/exercises/[id])
+- All UI elements in selected language
+- Complete set of editable fields
+- Multi-language version editing support
+- Working language selector
+- TinyMCE editor integration for content
+- Media upload functionality
+  - Image upload support
+  - Audio upload support
+  - Preview capabilities
+
+### Admin Users Page (/admin/users)
+- All texts in selected language
+- Display columns:
+  - Name
+  - Email
+  - Role
+  - Joined date
+- Edit and Delete functionality
+- Real-time page updates after actions
+
+## Database Requirements
+
+### Mock Database Implementation
+- Generate 100 exercise records
+- Admin-only CRUD operations
+- Structured for real database migration
+- Error handling and validation
+- Clear interfaces for all operations
+- Consistent error responses
+- Type-safe return values
+- Pre-operation data validation
+- Entity relationship handling
+
+## Language Support
+- Site-wide language selector
+- Language preference in localStorage
+- Consistent UI text translations
+- Localized date formatting
+- Support for:
+  - English (en)
+  - Swedish (sv)
+
+## Navigation and Actions
+- Accurate button routing
+- Confirmation dialogs for deletions
+- Real-time page updates
+- Admin access restrictions
+- State management between actions
+
+## Implementation Requirements
+- Translation consistency
+- Admin access enforcement
+- State persistence between actions
+- Bilingual support (English/Swedish)
+- Media upload handling
+- Data validation
+- Error handling
+- Database abstraction:
+  - Clear interfaces
+  - Consistent error handling
+  - Type-safe returns
+  - Data validation
+  - Relationship management 

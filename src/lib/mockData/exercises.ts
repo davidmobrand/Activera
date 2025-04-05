@@ -65,9 +65,9 @@ function generateExercises(count: number): Exercise[] {
 </ul>`,
       },
       sv: {
-        title: 'Medveten Andning',
+        title: 'Medveten andning',
         content: `<h2>Introduktion</h2>
-<p>Denna övning i medveten andning hjälper dig att utveckla en djupare medvetenhet om din andning och dess naturliga rytm. Genom att fokusera på andningen kan du förankra dig i nuet och minska stress och oro. Regelbunden övning kan förbättra koncentration och känsloreglering.</p>
+<p>Den här övningen i medveten andning hjälper dig utveckla en djupare medvetenhet om din andning och dess naturliga rytm. Genom att fokusera på andningen kan du förankra dig i nuet och minska stress och oro. Regelbunden övning kan förbättra din koncentrationsförmåga och känsloreglering.</p>
 
 <h2>Längd</h2>
 <p>10-15 minuter</p>
@@ -76,45 +76,45 @@ function generateExercises(count: number): Exercise[] {
 <ul>
 <li>Minskar stress och oro</li>
 <li>Förbättrar fokus och koncentration</li>
-<li>Hjälper till att reglera känslor</li>
+<li>Hjälper dig reglera känslor</li>
 <li>Främjar avslappning</li>
-<li>Förstärker kopplingen mellan kropp och sinne</li>
+<li>Stärker kopplingen mellan kropp och sinne</li>
 </ul>
 
 <h2>Instruktioner</h2>
 <ol>
-<li>Hitta en bekväm position, sittande eller liggande</li>
+<li>Hitta en bekväm position, antingen sittande eller liggande</li>
 <li>Slut försiktigt ögonen eller behåll en mjuk blick</li>
 <li>Ta några djupa andetag för att komma till ro</li>
-<li>Observera din naturliga andningsrytm utan att försöka ändra den</li>
-<li>Uppmärksamma känslan av andningen i din kropp</li>
-<li>När tankarna vandrar, för varsamt tillbaka uppmärksamheten till andningen</li>
-<li>Fortsätt under önskad tid</li>
+<li>Observera din naturliga andningsrytm utan att försöka förändra den</li>
+<li>Uppmärksamma känslan av andningen i kroppen</li>
+<li>När tankarna vandrar iväg, för varsamt tillbaka uppmärksamheten till andningen</li>
+<li>Fortsätt under den tid du valt</li>
 </ol>
 
 <h2>Tips</h2>
 <ul>
 <li>Öva i en tyst miljö när det är möjligt</li>
-<li>Ställ in en mjuk timer för att undvika att kolla tiden</li>
-<li>Var tålmodig med dig själv - det är normalt att tankarna vandrar</li>
-<li>Börja med kortare sessioner och öka gradvis längden</li>
+<li>Ställ in en timer med mjuk signal för att slippa hålla koll på tiden</li>
+<li>Var tålmodig med dig själv - det är helt normalt att tankarna vandrar</li>
+<li>Börja med kortare pass och öka längden gradvis</li>
 </ul>`,
-        accessibility: `<h2>Tillgänglighetsalternativ</h2>
+        accessibility: `<h2>Tillgänglighet</h2>
 <ul>
-<li>Kan utövas i valfri position - sittande, liggande eller till och med stående</li>
-<li>Lämplig för personer med begränsad rörlighet</li>
+<li>Kan utföras i valfri position - sittande, liggande eller till och med stående</li>
+<li>Passar även personer med begränsad rörlighet</li>
 <li>Kan göras med öppna eller slutna ögon</li>
-<li>Ingen speciell utrustning behövs</li>
+<li>Ingen särskild utrustning krävs</li>
 </ul>`,
         prerequisites: `<h2>Förkunskaper</h2>
-<p>Ingen tidigare erfarenhet krävs. Detta är en utmärkt startpunkt för mindfulness-träning.</p>`,
-        progressIndicators: `<h2>Tecken på Framsteg</h2>
+<p>Inga förkunskaper krävs. Detta är en utmärkt startpunkt för mindfulnessträning.</p>`,
+        progressIndicators: `<h2>Tecken på framsteg</h2>
 <ul>
-<li>Ökad förmåga att märka när tankarna vandrar</li>
+<li>Ökad förmåga att upptäcka när tankarna vandrar</li>
 <li>Snabbare återgång till andningen vid distraktion</li>
 <li>Längre perioder av bibehållen uppmärksamhet</li>
-<li>Större medvetenhet om andningen under dagen</li>
-<li>Minskad reaktivitet på stress</li>
+<li>Större medvetenhet om andningen i vardagen</li>
+<li>Minskad stressreaktivitet</li>
 </ul>`,
       },
       difficulty: DifficultyLevel.BEGINNER,
@@ -178,7 +178,7 @@ function generateExercises(count: number): Exercise[] {
       sv: {
         title: 'Kroppsskanning',
         content: `<h2>Introduktion</h2>
-<p>Kroppsskanning är en kraftfull teknik för att utveckla kroppsmedvetenhet och släppa fysisk spänning. Denna övning hjälper dig att få kontakt med kroppens förnimmelser och främjar djup avslappning. Regelbunden övning kan förbättra sömnkvalitet och minska fysiska stressymtom.</p>
+<p>Kroppsskanning är en kraftfull teknik för att utveckla kroppsmedvetenhet och släppa fysiska spänningar. Övningen hjälper dig att få kontakt med kroppens förnimmelser och främjar djup avslappning. Regelbunden övning kan förbättra din sömnkvalitet och minska fysiska stressymtom.</p>
 
 <h2>Längd</h2>
 <p>15-20 minuter</p>
@@ -186,10 +186,10 @@ function generateExercises(count: number): Exercise[] {
 <h2>Fördelar</h2>
 <ul>
 <li>Ökar kroppsmedvetenheten</li>
-<li>Släpper fysiska spänningar</li>
+<li>Hjälper dig släppa fysiska spänningar</li>
 <li>Förbättrar sömnkvaliteten</li>
 <li>Minskar stressrelaterade symtom</li>
-<li>Förstärker avslappningsresponsen</li>
+<li>Stärker avslappningsresponsen</li>
 </ul>
 
 <h2>Instruktioner</h2>
@@ -197,35 +197,35 @@ function generateExercises(count: number): Exercise[] {
 <li>Lägg dig bekvämt på rygg</li>
 <li>Slut ögonen och ta några djupa andetag</li>
 <li>Börja med att fokusera på tårna och fötterna</li>
-<li>Flytta gradvis uppmärksamheten uppåt genom kroppen</li>
-<li>Notera alla förnimmelser, spänningar eller bekvämlighet i varje område</li>
-<li>Släpp eventuell spänning när du andas ut</li>
+<li>För gradvis uppmärksamheten uppåt genom kroppen</li>
+<li>Uppmärksamma alla förnimmelser, spänningar eller bekvämlighet i varje område</li>
+<li>Släpp eventuella spänningar när du andas ut</li>
 <li>Fortsätt tills du har skannat hela kroppen</li>
-<li>Ta en stund att känna kroppen som helhet</li>
+<li>Ta en stund att känna hela kroppen som en helhet</li>
 </ol>
 
 <h2>Tips</h2>
 <ul>
-<li>Använd en yogamatta eller bekvämt underlag</li>
-<li>Täck dig med en lätt filt</li>
-<li>Öva i ett varmt, tyst utrymme</li>
+<li>Använd en yogamatta eller annat bekvämt underlag</li>
+<li>Täck dig med en lätt filt om det känns bra</li>
+<li>Öva i ett varmt och tyst rum</li>
 <li>Rör dig långsamt och medvetet genom varje kroppsdel</li>
 </ul>`,
-        accessibility: `<h2>Tillgänglighetsalternativ</h2>
+        accessibility: `<h2>Tillgänglighet</h2>
 <ul>
-<li>Kan utövas i valfri position - liggande</li>
-<li>Lämplig för personer med begränsad rörlighet</li>
-<li>Ingen speciell utrustning behövs</li>
+<li>Kan utföras i valfri position - främst liggande</li>
+<li>Passar även personer med begränsad rörlighet</li>
+<li>Ingen särskild utrustning krävs</li>
 </ul>`,
         prerequisites: `<h2>Förkunskaper</h2>
-<p>Ingen tidigare erfarenhet krävs. Detta är en utmärkt startpunkt för mindfulness-träning.</p>`,
-        progressIndicators: `<h2>Tecken på Framsteg</h2>
+<p>Inga förkunskaper krävs. Detta är en utmärkt startpunkt för mindfulnessträning.</p>`,
+        progressIndicators: `<h2>Tecken på framsteg</h2>
 <ul>
-<li>Ökad förmåga att märka när tankarna vandrar</li>
-<li>Snabbare återgång till andningen vid distraktion</li>
+<li>Ökad förmåga att upptäcka kroppens signaler</li>
+<li>Snabbare återgång till kroppen vid distraktion</li>
 <li>Längre perioder av bibehållen uppmärksamhet</li>
-<li>Större medvetenhet om kroppen under dagen</li>
-<li>Minskad reaktivitet på stress</li>
+<li>Större kroppsmedvetenhet i vardagen</li>
+<li>Minskad stressreaktivitet</li>
 </ul>`,
       },
       difficulty: DifficultyLevel.BEGINNER,
@@ -289,54 +289,54 @@ function generateExercises(count: number): Exercise[] {
       sv: {
         title: 'Tankeobservation',
         content: `<h2>Introduktion</h2>
-<p>Tankeobservation är en mindfulnessövning som hjälper dig att utveckla en annorlunda relation till dina tankar. Istället för att fastna i dem lär du dig att observera tankar som mentala händelser som kommer och går. Denna övning kan minska oro och förbättra emotionell motståndskraft.</p>
+<p>Tankeobservation är en mindfulnessövning som hjälper dig utveckla en annorlunda relation till dina tankar. Istället för att fastna i tankarna lär du dig att observera dem som mentala händelser som kommer och går. Övningen kan minska oro och stärka din emotionella motståndskraft.</p>
 
 <h2>Längd</h2>
 <p>10-15 minuter</p>
 
 <h2>Fördelar</h2>
 <ul>
-<li>Minskar överdriven tankeverksamhet och grubblande</li>
-<li>Ökar emotionell medvetenhet</li>
+<li>Minskar överdrivet grubblande</li>
+<li>Ökar känslomässig medvetenhet</li>
 <li>Utvecklar mental klarhet</li>
 <li>Förbättrar stresshantering</li>
-<li>Förstärker självförståelse</li>
+<li>Stärker självförståelsen</li>
 </ul>
 
 <h2>Instruktioner</h2>
 <ol>
-<li>Hitta en bekväm sittande position</li>
+<li>Hitta en bekväm sittställning</li>
 <li>Slut ögonen eller behåll en mjuk blick</li>
 <li>Ta några centrerande andetag</li>
-<li>Notera tankar när de uppstår utan att engagera dig i dem</li>
-<li>Föreställ dig tankar som moln som passerar på himlen</li>
+<li>Uppmärksamma tankar när de dyker upp utan att fastna i dem</li>
+<li>Föreställ dig tankarna som moln som passerar på himlen</li>
 <li>När du fastnar i en tanke, återgå varsamt till observerandet</li>
-<li>Lägg märke till eventuella mönster eller teman i ditt tänkande</li>
+<li>Lägg märke till eventuella mönster i ditt tänkande</li>
 <li>Avsluta med några medvetna andetag</li>
 </ol>
 
 <h2>Tips</h2>
 <ul>
-<li>Försök inte stoppa eller ändra dina tankar</li>
-<li>Öva på att acceptera det som uppstår</li>
-<li>Använd milda etiketter om det hjälper (t.ex. "planerar," "minns")</li>
-<li>Kom ihåg att alla typer av tankar är normala</li>
+<li>Försök inte stoppa eller förändra dina tankar</li>
+<li>Öva på att acceptera det som kommer</li>
+<li>Använd enkla etiketter om det hjälper (t.ex. "planerar", "minns")</li>
+<li>Kom ihåg att alla tankar är normala</li>
 </ul>`,
-        accessibility: `<h2>Tillgänglighetsalternativ</h2>
+        accessibility: `<h2>Tillgänglighet</h2>
 <ul>
-<li>Kan utövas i valfri position - sittande</li>
-<li>Lämplig för personer med begränsad rörlighet</li>
-<li>Ingen speciell utrustning behövs</li>
+<li>Kan utföras i valfri position - främst sittande</li>
+<li>Passar även personer med begränsad rörlighet</li>
+<li>Ingen särskild utrustning krävs</li>
 </ul>`,
         prerequisites: `<h2>Förkunskaper</h2>
-<p>Ingen tidigare erfarenhet krävs. Detta är en utmärkt startpunkt för mindfulness-träning.</p>`,
-        progressIndicators: `<h2>Tecken på Framsteg</h2>
+<p>Inga förkunskaper krävs. Detta är en utmärkt startpunkt för mindfulnessträning.</p>`,
+        progressIndicators: `<h2>Tecken på framsteg</h2>
 <ul>
-<li>Ökad förmåga att märka när tankarna vandrar</li>
-<li>Snabbare återgång till andningen vid distraktion</li>
+<li>Ökad förmåga att upptäcka tankemönster</li>
+<li>Snabbare återgång till observerande vid distraktion</li>
 <li>Längre perioder av bibehållen uppmärksamhet</li>
-<li>Större medvetenhet om tankar under dagen</li>
-<li>Minskad reaktivitet på stress</li>
+<li>Större medvetenhet om tankar i vardagen</li>
+<li>Minskad stressreaktivitet</li>
 </ul>`,
       },
       difficulty: DifficultyLevel.BEGINNER,

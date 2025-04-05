@@ -1,77 +1,224 @@
 import { Exercise, ExerciseCategoryEnum, DifficultyLevel, TimeOfDay } from '@/lib/types'
 import type { CreateExercise } from '../validation'
 
-export const exercises: Exercise[] = Array.from({ length: 100 }, (_, i) => {
-  const order = i + 1
-  let category: Exercise['category']
-  if (order <= 33) {
-    category = ExerciseCategoryEnum.NARVARO
-  } else if (order <= 66) {
-    category = ExerciseCategoryEnum.OPPENHET
-  } else {
-    category = ExerciseCategoryEnum.ENGAGEMANG
-  }
-  
-  return {
-    id: `ex_${order}`,
-    order,
-    category,
+export const exercises: Exercise[] = [
+  {
+    id: 'ex_1',
     translations: {
       en: {
-        title: category === ExerciseCategoryEnum.NARVARO
-          ? `Mindful ${['Breathing', 'Body Scan', 'Walking', 'Eating', 'Listening', 'Observation', 'Movement', 'Rest', 'Gratitude', 'Nature Connection'][order % 10]}`
-          : category === ExerciseCategoryEnum.OPPENHET
-          ? `Open ${['Awareness', 'Heart', 'Mind', 'Acceptance', 'Curiosity', 'Perspective', 'Reflection', 'Understanding', 'Compassion', 'Presence'][order % 10]}`
-          : `Engaged ${['Action', 'Purpose', 'Connection', 'Learning', 'Growth', 'Service', 'Creativity', 'Expression', 'Collaboration', 'Leadership'][order % 10]}`,
-        introduction: category === ExerciseCategoryEnum.NARVARO
-          ? `<p>Welcome to a mindfulness exercise focusing on ${['conscious breathing techniques', 'deep body awareness', 'mindful movement', 'conscious eating practices', 'active listening skills', 'detailed observation', 'gentle movement awareness', 'restorative rest', 'gratitude practice', 'nature connection'][order % 10]}.</p>`
-          : category === ExerciseCategoryEnum.OPPENHET
-          ? `<p>Welcome to an openness exercise exploring ${['present moment awareness', 'heart-centered practice', 'mind expansion techniques', 'radical acceptance', 'cultivating curiosity', 'shifting perspectives', 'deep reflection', 'building understanding', 'developing compassion', 'deepening presence'][order % 10]}.</p>`
-          : `<p>Welcome to an engagement exercise developing ${['purposeful action', 'life purpose exploration', 'meaningful connections', 'continuous learning', 'personal growth', 'service to others', 'creative expression', 'authentic expression', 'effective collaboration', 'mindful leadership'][order % 10]}.</p>`,
-        duration: '<p>10-15 minutes</p>',
-        benefits: '<ul><li>Reduced stress</li><li>Improved focus</li><li>Better emotional regulation</li></ul>',
-        instructions: `<p>Follow these steps:</p><ol><li>Find a comfortable position</li><li>Close your eyes</li><li>Focus on your breath</li></ol>`,
-        tips: '<p>Remember to be gentle with yourself and maintain a non-judgmental attitude.</p>',
-        accessibility: '<p>This exercise can be done sitting, lying down, or standing.</p>',
-        prerequisites: '<p>No special equipment or prior experience needed.</p>',
-        progressIndicators: '<p>You may notice improved concentration and reduced stress over time.</p>'
+        title: 'Mindful Breathing',
+        introduction: 'A foundational mindfulness practice focusing on breath awareness. <audio controls src="/assets/exercises/audio/zen-meditation.mp3"></audio><br/><img src="/assets/exercises/images/peaceful-meditation.jpg" alt="Peaceful Meditation Posture" />',
+        duration: '10-15 minutes',
+        benefits: 'Reduces stress and anxiety, improves focus and emotional regulation',
+        instructions: 'Find a comfortable position, close your eyes, and bring your attention to your breath...',
+        tips: 'Start with short sessions and gradually increase duration',
+        accessibility: 'Can be practiced sitting, lying down, or standing',
+        prerequisites: 'None',
+        progressIndicators: 'Increased ability to maintain focus on breath, reduced mind wandering'
       },
       sv: {
-        title: category === ExerciseCategoryEnum.NARVARO
-          ? `Medveten ${['Andning', 'Kroppsskanning', 'Promenad', 'Ätande', 'Lyssnande', 'Observation', 'Rörelse', 'Vila', 'Tacksamhet', 'Naturkontakt'][order % 10]}`
-          : category === ExerciseCategoryEnum.OPPENHET
-          ? `Öppen ${['Medvetenhet', 'Hjärta', 'Sinne', 'Acceptans', 'Nyfikenhet', 'Perspektiv', 'Reflektion', 'Förståelse', 'Medkänsla', 'Närvaro'][order % 10]}`
-          : `Engagerad ${['Handling', 'Syfte', 'Kontakt', 'Lärande', 'Utveckling', 'Tjänst', 'Kreativitet', 'Uttryck', 'Samarbete', 'Ledarskap'][order % 10]}`,
-        introduction: `<p>Välkommen till ${category === ExerciseCategoryEnum.NARVARO ? 'en mindfulness' : category === ExerciseCategoryEnum.OPPENHET ? 'en öppenhets' : 'en engagemangs'}övning som hjälper dig att utveckla din praktik.</p>`,
-        duration: '<p>10-15 minuter</p>',
-        benefits: '<ul><li>Minskad stress</li><li>Förbättrat fokus</li><li>Bättre emotionell reglering</li></ul>',
-        instructions: `<p>Följ dessa steg:</p><ol><li>Hitta en bekväm position</li><li>Blunda</li><li>Fokusera på din andning</li></ol>`,
-        tips: '<p>Kom ihåg att vara snäll mot dig själv och behåll en icke-dömande attityd.</p>',
-        accessibility: '<p>Denna övning kan göras sittande, liggande eller stående.</p>',
-        prerequisites: '<p>Ingen särskild utrustning eller tidigare erfarenhet krävs.</p>',
-        progressIndicators: '<p>Du kan märka förbättrad koncentration och minskad stress över tid.</p>'
+        title: 'Medveten Andning',
+        introduction: 'En grundläggande mindfulnessövning med fokus på andningsmedvetenhet. <audio controls src="/assets/exercises/audio/zen-meditation.mp3"></audio><br/><img src="/assets/exercises/images/peaceful-meditation.jpg" alt="Fridfull Meditationshållning" />',
+        duration: '10-15 minuter',
+        benefits: 'Minskar stress och ångest, förbättrar fokus och känsloreglering',
+        instructions: 'Hitta en bekväm position, blunda och rikta uppmärksamheten mot din andning...',
+        tips: 'Börja med korta sessioner och öka gradvis längden',
+        accessibility: 'Kan utövas sittande, liggande eller stående',
+        prerequisites: 'Inga',
+        progressIndicators: 'Ökad förmåga att behålla fokus på andningen, minskat tankevandrande'
       }
     },
+    category: ExerciseCategoryEnum.NARVARO,
     difficulty: DifficultyLevel.BEGINNER,
     recommendedTime: [TimeOfDay.MORNING, TimeOfDay.EVENING],
-    relatedExerciseIds: [
-      ...Array.from({ length: 3 }, (_, j) => {
-        const relatedOrder = ((order - 1 + j + 1) % 33) + 1 + (order <= 33 ? 0 : order <= 66 ? 33 : 66)
-        return `ex_${relatedOrder}`
-      })
-    ],
-    userId: '1',
+    relatedExerciseIds: ['ex_2', 'ex_3'],
+    userId: 'admin',
     createdAt: '2024-01-01T12:00:00Z',
     updatedAt: '2024-01-01T12:00:00Z',
-    mediaIds: order === 1 ? ['media_1']  // Breathing meditation audio
-          : order === 2 ? ['media_2']    // Body scan audio
-          : order === 3 ? ['media_3']    // Walking meditation image
-          : order === 35 ? ['media_4']   // Loving-kindness meditation audio
-          : order === 36 ? ['media_5']   // Mind visualization image
-          : order === 67 ? ['media_6']   // Mindful action image
-          : []
+    mediaIds: ['media_1'],
+    order: 1
+  },
+  {
+    id: 'ex_2',
+    translations: {
+      en: {
+        title: 'Body Scan Meditation',
+        introduction: 'A systematic practice of bringing attention to different parts of your body. <audio controls src="/assets/exercises/audio/calm-meditation.mp3"></audio><br/><img src="/assets/exercises/images/mindful-yoga.jpg" alt="Relaxed Body Position" />',
+        duration: '20-30 minutes',
+        benefits: 'Improves body awareness, reduces physical tension, promotes relaxation',
+        instructions: 'Lie down comfortably, close your eyes, and systematically bring attention to each part of your body...',
+        tips: 'Use a mat or blanket for comfort',
+        accessibility: 'Best practiced lying down, but can be adapted for sitting',
+        prerequisites: 'None',
+        progressIndicators: 'Increased body awareness, ability to release tension'
+      },
+      sv: {
+        title: 'Kroppsskanning',
+        introduction: 'En systematisk övning i att uppmärksamma olika delar av din kropp. <audio controls src="/assets/exercises/audio/calm-meditation.mp3"></audio><br/><img src="/assets/exercises/images/mindful-yoga.jpg" alt="Avslappnad Kroppsposition" />',
+        duration: '20-30 minuter',
+        benefits: 'Förbättrar kroppsmedvetenhet, minskar fysisk spänning, främjar avslappning',
+        instructions: 'Lägg dig bekvämt, blunda och för systematiskt uppmärksamheten till varje del av din kropp...',
+        tips: 'Använd en matta eller filt för bekvämlighet',
+        accessibility: 'Bäst att utöva liggande, men kan anpassas för sittande',
+        prerequisites: 'Inga',
+        progressIndicators: 'Ökad kroppsmedvetenhet, förmåga att släppa spänningar'
+      }
+    },
+    category: ExerciseCategoryEnum.NARVARO,
+    difficulty: DifficultyLevel.BEGINNER,
+    recommendedTime: [TimeOfDay.MORNING, TimeOfDay.EVENING],
+    relatedExerciseIds: ['ex_1', 'ex_3'],
+    userId: 'admin',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z',
+    mediaIds: ['media_2'],
+    order: 2
+  },
+  {
+    id: 'ex_3',
+    translations: {
+      en: {
+        title: 'Mindful Walking',
+        introduction: 'Practice mindfulness while walking. <img src="/assets/exercises/images/mindful-yoga.jpg" alt="Walking Meditation Posture" /><br/><audio controls src="/assets/exercises/audio/calm-meditation.mp3"></audio>',
+        duration: '15-20 minutes',
+        benefits: 'Combines physical activity with mindfulness, improves balance and coordination',
+        instructions: 'Find a quiet path or space, walk slowly and deliberately...',
+        tips: 'Focus on the sensation of each step',
+        accessibility: 'Requires ability to walk, can be modified for different mobility levels',
+        prerequisites: 'None',
+        progressIndicators: 'Increased awareness of walking movements, better balance'
+      },
+      sv: {
+        title: 'Medveten Gång',
+        introduction: 'Öva mindfulness medan du går. <img src="/assets/exercises/images/mindful-yoga.jpg" alt="Gångmeditation Hållning" /><br/><audio controls src="/assets/exercises/audio/calm-meditation.mp3"></audio>',
+        duration: '15-20 minuter',
+        benefits: 'Kombinerar fysisk aktivitet med mindfulness, förbättrar balans och koordination',
+        instructions: 'Hitta en lugn stig eller plats, gå långsamt och medvetet...',
+        tips: 'Fokusera på känslan av varje steg',
+        accessibility: 'Kräver förmåga att gå, kan modifieras för olika mobilitetsnivåer',
+        prerequisites: 'Inga',
+        progressIndicators: 'Ökad medvetenhet om gångrörelser, bättre balans'
+      }
+    },
+    category: ExerciseCategoryEnum.NARVARO,
+    difficulty: DifficultyLevel.BEGINNER,
+    recommendedTime: [TimeOfDay.ANY],
+    relatedExerciseIds: ['ex_1', 'ex_2'],
+    userId: 'admin',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z',
+    mediaIds: ['media_3'],
+    order: 3
+  },
+  {
+    id: 'ex_35',
+    translations: {
+      en: {
+        title: 'Loving-Kindness Meditation',
+        introduction: 'Develop compassion and kindness towards yourself and others. <audio controls src="/assets/exercises/audio/zen-meditation.mp3"></audio><br/><img src="/assets/exercises/images/peaceful-meditation.jpg" alt="Peaceful Meditation Practice" />',
+        duration: '15-20 minutes',
+        benefits: 'Increases empathy, reduces negative self-talk, improves relationships',
+        instructions: 'Sit comfortably, bring to mind someone you care about...',
+        tips: 'Start with yourself, then extend to others',
+        accessibility: 'Can be practiced in any position',
+        prerequisites: 'Basic mindfulness experience helpful',
+        progressIndicators: 'Increased feelings of warmth and connection'
+      },
+      sv: {
+        title: 'Kärleksfull Vänlighet Meditation',
+        introduction: 'Utveckla medkänsla och vänlighet mot dig själv och andra. <audio controls src="/assets/exercises/audio/zen-meditation.mp3"></audio><br/><img src="/assets/exercises/images/peaceful-meditation.jpg" alt="Fridfull Meditationsövning" />',
+        duration: '15-20 minuter',
+        benefits: 'Ökar empati, minskar negativt självprat, förbättrar relationer',
+        instructions: 'Sitt bekvämt, tänk på någon du bryr dig om...',
+        tips: 'Börja med dig själv, utvidga sedan till andra',
+        accessibility: 'Kan utövas i valfri position',
+        prerequisites: 'Grundläggande mindfulnesserfarenhet hjälpsam',
+        progressIndicators: 'Ökade känslor av värme och samhörighet'
+      }
+    },
+    category: ExerciseCategoryEnum.OPPENHET,
+    difficulty: DifficultyLevel.INTERMEDIATE,
+    recommendedTime: [TimeOfDay.MORNING, TimeOfDay.EVENING],
+    relatedExerciseIds: ['ex_36'],
+    userId: 'admin',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z',
+    mediaIds: ['media_4'],
+    order: 35
+  },
+  {
+    id: 'ex_36',
+    translations: {
+      en: {
+        title: 'Open Mind Visualization',
+        introduction: 'Visualize your mind as an open, expansive space. <img src="/assets/exercises/images/peaceful-meditation.jpg" alt="Mind Visualization Aid" /><br/><audio controls src="/assets/exercises/audio/zen-meditation.mp3"></audio>',
+        duration: '10-15 minutes',
+        benefits: 'Reduces thought fixation, increases mental flexibility',
+        instructions: 'Find a quiet space, close your eyes...',
+        tips: 'Use imagery that resonates with you',
+        accessibility: 'Suitable for all levels',
+        prerequisites: 'None',
+        progressIndicators: 'Greater ease in letting go of thoughts'
+      },
+      sv: {
+        title: 'Öppet Sinne Visualisering',
+        introduction: 'Visualisera ditt sinne som ett öppet, vidsträckt rum. <img src="/assets/exercises/images/peaceful-meditation.jpg" alt="Sinnesvisualisering Hjälpmedel" /><br/><audio controls src="/assets/exercises/audio/zen-meditation.mp3"></audio>',
+        duration: '10-15 minuter',
+        benefits: 'Minskar tankefixering, ökar mental flexibilitet',
+        instructions: 'Hitta en lugn plats, blunda...',
+        tips: 'Använd bilder som resonerar med dig',
+        accessibility: 'Lämplig för alla nivåer',
+        prerequisites: 'Inga',
+        progressIndicators: 'Större lätthet i att släppa taget om tankar'
+      }
+    },
+    category: ExerciseCategoryEnum.OPPENHET,
+    difficulty: DifficultyLevel.INTERMEDIATE,
+    recommendedTime: [TimeOfDay.ANY],
+    relatedExerciseIds: ['ex_35'],
+    userId: 'admin',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z',
+    mediaIds: ['media_5'],
+    order: 36
+  },
+  {
+    id: 'ex_67',
+    translations: {
+      en: {
+        title: 'Mindful Action Planning',
+        introduction: 'Learn to align your actions with your values. <img src="/assets/exercises/images/mindful-yoga.jpg" alt="Mindful Action Example" /><br/><audio controls src="/assets/exercises/audio/calm-meditation.mp3"></audio>',
+        duration: '20-30 minutes',
+        benefits: 'Increases goal clarity, improves decision-making',
+        instructions: 'Identify a value-aligned goal...',
+        tips: 'Start with small, achievable actions',
+        accessibility: 'Can be adapted for any situation',
+        prerequisites: 'Basic understanding of personal values',
+        progressIndicators: 'More consistent value-aligned actions'
+      },
+      sv: {
+        title: 'Medveten Handlingsplanering',
+        introduction: 'Lär dig att anpassa dina handlingar efter dina värderingar. <img src="/assets/exercises/images/mindful-yoga.jpg" alt="Medveten Handling Exempel" /><br/><audio controls src="/assets/exercises/audio/calm-meditation.mp3"></audio>',
+        duration: '20-30 minuter',
+        benefits: 'Ökar målklarhet, förbättrar beslutsfattande',
+        instructions: 'Identifiera ett värderingsanpassat mål...',
+        tips: 'Börja med små, uppnåbara handlingar',
+        accessibility: 'Kan anpassas för alla situationer',
+        prerequisites: 'Grundläggande förståelse för personliga värderingar',
+        progressIndicators: 'Mer konsekventa värderingsanpassade handlingar'
+      }
+    },
+    category: ExerciseCategoryEnum.ENGAGEMANG,
+    difficulty: DifficultyLevel.ADVANCED,
+    recommendedTime: [TimeOfDay.MORNING],
+    relatedExerciseIds: [],
+    userId: 'admin',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z',
+    mediaIds: ['media_6'],
+    order: 67
   }
-})
+];
 
 export const findExerciseById = (id: string) => {
   return exercises.find(exercise => exercise.id === id)

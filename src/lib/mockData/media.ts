@@ -5,63 +5,117 @@ import { MediaSchema, MediaInputSchema } from '../validation';
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:3000'
 
 export const media: Media[] = [
-  // Mindful Breathing audio
+  // Mindful Breathing - audio and image
   {
     id: 'media_1',
     exerciseId: 'ex_1',
     type: MediaType.AUDIO,
     name: 'Guided Breathing Meditation',
-    url: '/media/audio/guided-breathing.mp3',
+    url: '/assets/exercises/audio/zen-meditation.mp3',
     createdAt: '2024-01-01T12:00:00Z',
     updatedAt: '2024-01-01T12:00:00Z'
   },
-  // Body Scan audio
+  {
+    id: 'media_1b',
+    exerciseId: 'ex_1',
+    type: MediaType.IMAGE,
+    name: 'Peaceful Meditation Posture',
+    url: '/assets/exercises/images/peaceful-meditation.jpg',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z'
+  },
+  // Body Scan - audio and image
   {
     id: 'media_2',
     exerciseId: 'ex_2',
     type: MediaType.AUDIO,
     name: 'Body Scan Meditation',
-    url: '/media/audio/body-scan.mp3',
+    url: '/assets/exercises/audio/calm-meditation.mp3',
     createdAt: '2024-01-01T12:00:00Z',
     updatedAt: '2024-01-01T12:00:00Z'
   },
-  // Mindful Walking image
+  {
+    id: 'media_2b',
+    exerciseId: 'ex_2',
+    type: MediaType.IMAGE,
+    name: 'Relaxed Body Position',
+    url: '/assets/exercises/images/mindful-yoga.jpg',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z'
+  },
+  // Mindful Walking - image and audio
   {
     id: 'media_3',
     exerciseId: 'ex_3',
     type: MediaType.IMAGE,
     name: 'Walking Meditation Posture',
-    url: '/media/images/mindful-walking.jpg',
+    url: '/assets/exercises/images/mindful-yoga.jpg',
     createdAt: '2024-01-01T12:00:00Z',
     updatedAt: '2024-01-01T12:00:00Z'
   },
-  // Open Heart meditation audio
+  {
+    id: 'media_3b',
+    exerciseId: 'ex_3',
+    type: MediaType.AUDIO,
+    name: 'Walking Meditation Guide',
+    url: '/assets/exercises/audio/calm-meditation.mp3',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z'
+  },
+  // Loving-Kindness - audio and image
   {
     id: 'media_4',
     exerciseId: 'ex_35',
     type: MediaType.AUDIO,
     name: 'Loving-Kindness Meditation',
-    url: '/media/audio/loving-kindness.mp3',
+    url: '/assets/exercises/audio/zen-meditation.mp3',
     createdAt: '2024-01-01T12:00:00Z',
     updatedAt: '2024-01-01T12:00:00Z'
   },
-  // Open Mind visualization image
+  {
+    id: 'media_4b',
+    exerciseId: 'ex_35',
+    type: MediaType.IMAGE,
+    name: 'Peaceful Meditation Practice',
+    url: '/assets/exercises/images/peaceful-meditation.jpg',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z'
+  },
+  // Open Mind - image and audio
   {
     id: 'media_5',
     exerciseId: 'ex_36',
     type: MediaType.IMAGE,
     name: 'Mind Visualization Aid',
-    url: '/media/images/mind-visualization.jpg',
+    url: '/assets/exercises/images/peaceful-meditation.jpg',
     createdAt: '2024-01-01T12:00:00Z',
     updatedAt: '2024-01-01T12:00:00Z'
   },
-  // Engaged Action image
+  {
+    id: 'media_5b',
+    exerciseId: 'ex_36',
+    type: MediaType.AUDIO,
+    name: 'Visualization Guidance',
+    url: '/assets/exercises/audio/zen-meditation.mp3',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z'
+  },
+  // Mindful Action - image and audio
   {
     id: 'media_6',
     exerciseId: 'ex_67',
     type: MediaType.IMAGE,
     name: 'Mindful Action Example',
-    url: '/media/images/mindful-action.jpg',
+    url: '/assets/exercises/images/mindful-yoga.jpg',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z'
+  },
+  {
+    id: 'media_6b',
+    exerciseId: 'ex_67',
+    type: MediaType.AUDIO,
+    name: 'Action Planning Guide',
+    url: '/assets/exercises/audio/calm-meditation.mp3',
     createdAt: '2024-01-01T12:00:00Z',
     updatedAt: '2024-01-01T12:00:00Z'
   }

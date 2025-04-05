@@ -93,7 +93,7 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
     }
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setSaving(true)
     setError(null)
@@ -143,7 +143,7 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
         onEditorChange={(content: string) => updateTranslation(field, content)}
         init={{
           height: 300,
-          menubar: false,
+          menubar: true,
           plugins: [
             'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
             'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
@@ -152,7 +152,7 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
           toolbar: 'undo redo | blocks | ' +
             'bold italic forecolor | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat | help',
+            'image media | removeformat | help',
           content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
           file_picker_callback: (callback: FilePickerCallback, value: string, meta: FilePickerMeta) => {
             if (meta.filetype === 'image') {
@@ -161,8 +161,29 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
                   callback(media.url, { alt: media.name })
                 }
               })
+            } else if (meta.filetype === 'media') {
+              handleUpload('AUDIO').then((media) => {
+                if (media) {
+                  callback(media.url, { alt: media.name, source2: media.name })
+                }
+              })
             }
-          }
+          },
+          media_live_embeds: true,
+          media_alt_source: false,
+          media_poster: false,
+          media_dimensions: false,
+          image_title: true,
+          automatic_uploads: true,
+          images_upload_handler: (blobInfo: any, progress: any) => new Promise((resolve, reject) => {
+            handleUpload('IMAGE').then((media) => {
+              if (media) {
+                resolve(media.url)
+              } else {
+                reject('Upload failed')
+              }
+            })
+          })
         }}
       />
     </div>
@@ -248,28 +269,28 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
             required
           />
         </div>
+      </div>
 
-        {error && (
-          <div className="text-warmth-600 text-sm">{error}</div>
-        )}
+      {error && (
+        <div className="text-warmth-600 text-sm">{error}</div>
+      )}
 
-        <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 sm:gap-4 mt-8">
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={() => router.push('/admin/exercises')}
-            className="w-full sm:w-auto"
-          >
-            {t.common('cancel')}
-          </Button>
-          <Button
-            type="submit"
-            disabled={saving}
-            className="w-full sm:w-auto"
-          >
-            {saving ? t.common('saving') : t.common('save')}
-          </Button>
-        </div>
+      <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 sm:gap-4 mt-8">
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={() => router.push('/admin/exercises')}
+          className="w-full sm:w-auto"
+        >
+          {t.common('cancel')}
+        </Button>
+        <Button
+          type="submit"
+          disabled={saving}
+          className="w-full sm:w-auto"
+        >
+          {saving ? t.common('saving') : t.common('save')}
+        </Button>
       </div>
     </form>
   )

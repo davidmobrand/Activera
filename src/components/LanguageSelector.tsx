@@ -9,16 +9,20 @@ export function LanguageSelector() {
   return (
     <div className="flex items-center gap-2">
       <Button
-        variant={language === 'en' ? 'primary' : 'outline'}
+        size="sm"
         onClick={() => setLanguage('en')}
-        className="w-12"
+        className={`border-mindful-200 text-mindful-700 hover:bg-mindful-50 ${
+          language === 'en' ? 'bg-mindful-50' : ''
+        }`}
       >
         EN
       </Button>
       <Button
-        variant={language === 'sv' ? 'primary' : 'outline'}
+        size="sm"
         onClick={() => setLanguage('sv')}
-        className="w-12"
+        className={`border-mindful-200 text-mindful-700 hover:bg-mindful-50 ${
+          language === 'sv' ? 'bg-mindful-50' : ''
+        }`}
       >
         SV
       </Button>

@@ -35,6 +35,9 @@ export const common = {
     email: 'Email',
     role: 'Role',
     joined: 'Joined',
+    relatedExercises: 'Related Exercises',
+    media: 'Media',
+    to: 'to',
   },
   sv: {
     dashboard: 'Dashboard',
@@ -72,5 +75,8 @@ export const common = {
     email: 'E-post',
     role: 'Roll',
     joined: 'Registrerad',
+    relatedExercises: 'Relaterade övningar',
+    media: 'Media',
+    to: 'till',
   },
 } as const; 

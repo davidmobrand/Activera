@@ -14,30 +14,39 @@ export function ExerciseList({ exercises, category }: ExerciseListProps) {
   const { language } = useLanguage()
 
   return (
-    <div className="space-y-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {exercises.map((exercise) => (
         <Link
           key={exercise.id}
           href={`/exercises/${category.toLowerCase()}/${exercise.id}`}
-          className="block"
+          className="block group"
         >
-          <div className="bg-white shadow rounded-lg p-6 hover:shadow-lg transition-shadow">
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">
-              {exercise.translations[language].title}
-            </h2>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-500">
-                Exercise #{exercise.order}
-              </span>
+          <div className="bg-white rounded-xl p-6 shadow-soft hover:shadow-lg transition-all duration-300 border border-mindful-100 hover:border-mindful-200 transform hover:-translate-y-1">
+            <div className="flex flex-col h-full">
+              <h2 className="text-xl font-display text-mindful-800 mb-3 group-hover:text-mindful-600 transition-colors">
+                {exercise.translations[language].title}
+              </h2>
+              <div className="mt-auto flex items-center justify-between pt-4 border-t border-mindful-100">
+                <span className="text-sm text-mindful-500 font-medium">
+                  #{exercise.order}
+                </span>
+                <div className="bg-mindful-50 text-mindful-600 px-3 py-1 rounded-full text-sm font-medium">
+                  {exercise.difficulty}
+                </div>
+              </div>
             </div>
           </div>
         </Link>
       ))}
 
       {exercises.length === 0 && (
-        <p className="text-gray-600 text-center py-8">
-          No exercises found in this category.
-        </p>
+        <div className="col-span-full">
+          <div className="text-center py-12 bg-mindful-50 rounded-xl border border-mindful-100">
+            <p className="text-mindful-600 text-lg">
+              No exercises found in this category.
+            </p>
+          </div>
+        </div>
       )}
     </div>
   )

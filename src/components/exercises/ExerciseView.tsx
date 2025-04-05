@@ -7,6 +7,7 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Exercise, Media, MediaType } from '@/lib/types'
 import { mockDb } from '@/lib/mockData'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { useTranslation } from '@/lib/i18n/useTranslation'
 
 interface ExerciseViewProps {
   exercise: Exercise
@@ -16,6 +17,7 @@ interface ExerciseViewProps {
 export function ExerciseView({ exercise, onComplete }: ExerciseViewProps) {
   const router = useRouter()
   const { language } = useLanguage()
+  const { t } = useTranslation()
   const [media, setMedia] = useState<Media[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -53,7 +55,7 @@ export function ExerciseView({ exercise, onComplete }: ExerciseViewProps) {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <LoadingSpinner className="h-8 w-8" />
+        <LoadingSpinner className="h-8 w-8 text-mindful-500" />
       </div>
     )
   }
@@ -61,22 +63,42 @@ export function ExerciseView({ exercise, onComplete }: ExerciseViewProps) {
   const translation = exercise.translations[language]
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-gray-900">
-        {translation.title}
-      </h1>
+    <div className="space-y-8">
+      <div className="bg-gradient-mindful rounded-2xl p-8 shadow-soft">
+        <div className="max-w-3xl mx-auto">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center space-x-4">
+              <div className="bg-white/80 backdrop-blur-sm px-4 py-1 rounded-full text-mindful-600 text-sm font-medium">
+                {t.category(exercise.category).name}
+              </div>
+              <div className="bg-white/80 backdrop-blur-sm px-4 py-1 rounded-full text-mindful-600 text-sm font-medium">
+                {exercise.difficulty}
+              </div>
+            </div>
+            <span className="text-mindful-600 font-medium">#{exercise.order}</span>
+          </div>
 
-      <div 
-        className="prose prose-lg max-w-none"
-        dangerouslySetInnerHTML={{ __html: translation.content }}
-      />
+          <h1 className="font-display text-4xl text-mindful-800 mb-8">
+            {translation.title}
+          </h1>
+
+          <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 shadow-inner-lg">
+            <div 
+              className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-mindful-700
+                prose-p:text-gray-700 prose-strong:text-mindful-700 prose-ul:text-gray-700 prose-ol:text-gray-700
+                prose-li:marker:text-mindful-400"
+              dangerouslySetInnerHTML={{ __html: translation.content }}
+            />
+          </div>
+        </div>
+      </div>
 
       {media.length > 0 && (
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-gray-900">Media</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 shadow-soft">
+          <h2 className="font-display text-2xl text-mindful-700 mb-6">{t.common('media')}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {media.map((item) => (
-              <div key={item.id} className="rounded-lg overflow-hidden">
+              <div key={item.id} className="rounded-lg overflow-hidden bg-mindful-50 border border-mindful-100">
                 {item.type === MediaType.IMAGE ? (
                   <img
                     src={item.url}
@@ -84,13 +106,15 @@ export function ExerciseView({ exercise, onComplete }: ExerciseViewProps) {
                     className="w-full h-auto"
                   />
                 ) : (
-                  <audio
-                    controls
-                    src={item.url}
-                    className="w-full"
-                  >
-                    Your browser does not support the audio element.
-                  </audio>
+                  <div className="p-4">
+                    <audio
+                      controls
+                      src={item.url}
+                      className="w-full"
+                    >
+                      Your browser does not support the audio element.
+                    </audio>
+                  </div>
                 )}
               </div>
             ))}
@@ -99,24 +123,26 @@ export function ExerciseView({ exercise, onComplete }: ExerciseViewProps) {
       )}
 
       {error && (
-        <div className="text-red-600 text-sm">
+        <div className="bg-warmth-50 text-warmth-700 px-4 py-3 rounded-lg border border-warmth-200">
           {error}
         </div>
       )}
 
       <div className="flex justify-end gap-4">
         <Button
-          variant="secondary"
+          variant="outline"
           onClick={() => router.back()}
+          className="border-mindful-200 text-mindful-700 hover:bg-mindful-50"
         >
-          Back
+          {t.common('back')}
         </Button>
         <Button
           variant="primary"
           onClick={handleComplete}
           disabled={completed}
+          className="bg-mindful-600 hover:bg-mindful-700 text-white"
         >
-          {completed ? 'Completed' : 'Mark as Complete'}
+          {completed ? t.common('completed') : t.common('complete')}
         </Button>
       </div>
     </div>

@@ -35,7 +35,7 @@ const Navigation = () => {
   ]
 
   return (
-    <nav className="bg-gradient-mindful backdrop-blur-sm shadow-soft">
+    <nav className="bg-white/90 border-b border-mindful-100 backdrop-blur-sm shadow-soft">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
@@ -61,17 +61,17 @@ const Navigation = () => {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <span className="text-sm text-mindful-600 font-medium">
+            <span className="text-sm text-mindful-700 font-medium">
               {session.user?.name || session.user?.email}
               {isAdmin && (
-                <span className="ml-2 bg-mindful-100 text-mindful-600 px-2 py-0.5 rounded-full text-xs">
+                <span className="ml-2 bg-mindful-100 text-mindful-700 px-2 py-0.5 rounded-full text-xs">
                   {t.common('admin')}
                 </span>
               )}
             </span>
             <LanguageSelector />
             <Button
-              variant="outline"
+              variant="primary"
               size="sm"
               onClick={() => signOut({ callbackUrl: '/login' })}
             >

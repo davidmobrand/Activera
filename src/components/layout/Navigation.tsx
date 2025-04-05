@@ -110,24 +110,30 @@ const Navigation = () => {
             isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
           }`}
         >
-          <div className="pt-2 pb-3 space-y-1">
-            {menuItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`block px-4 py-2.5 rounded-md text-base font-medium ${
-                  isActive(item.href)
-                    ? 'bg-mindful-50 text-mindful-700'
-                    : 'text-stone-600 hover:text-stone-900 hover:bg-stone-50 active:bg-stone-100'
-                }`}
-                onClick={() => setIsOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <div className="px-4 py-3 space-y-3">
-              <div className="flex items-center">
-                <span className="text-sm text-stone-600 font-medium">
+          <div className="py-2 divide-y divide-stone-200">
+            {/* Navigation Links */}
+            <div className="pb-2 space-y-1">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`block px-4 py-2.5 rounded-md text-base font-medium ${
+                    isActive(item.href)
+                      ? 'bg-mindful-50 text-mindful-700'
+                      : 'text-stone-600 hover:text-stone-900 hover:bg-stone-50 active:bg-stone-100'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+
+            {/* User Info and Actions */}
+            <div className="pt-2 px-4">
+              {/* User Info Row */}
+              <div className="flex items-center justify-between py-2">
+                <span className="text-sm text-stone-600 font-medium flex items-center">
                   {session.user?.name || session.user?.email}
                   {isAdmin && (
                     <span className="ml-2 bg-stone-100 text-stone-700 px-2 py-0.5 rounded-full text-xs">
@@ -135,9 +141,11 @@ const Navigation = () => {
                     </span>
                   )}
                 </span>
-              </div>
-              <div className="flex flex-col space-y-2">
                 <LanguageSelector />
+              </div>
+
+              {/* Sign Out Button */}
+              <div className="py-2">
                 <Button
                   variant="primary"
                   size="sm"

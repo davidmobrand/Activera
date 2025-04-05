@@ -38,6 +38,9 @@ export const common = {
     relatedExercises: 'Related Exercises',
     media: 'Media',
     to: 'to',
+    notLoggedIn: 'Not Logged In',
+    pleaseSignIn: 'Please sign in to continue',
+    signIn: 'Sign In',
   },
   sv: {
     dashboard: 'Dashboard',
@@ -78,5 +81,8 @@ export const common = {
     relatedExercises: 'Relaterade övningar',
     media: 'Media',
     to: 'till',
+    notLoggedIn: 'Inte Inloggad',
+    pleaseSignIn: 'Vänligen logga in för att fortsätta',
+    signIn: 'Logga In',
   },
 } as const; 

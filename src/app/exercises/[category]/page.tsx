@@ -73,7 +73,7 @@ export default function ExerciseCategoryPage({ params }: Props) {
           </p>
         </div>
 
-        <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-soft border border-act-100 overflow-hidden">
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-soft border border-act-100 overflow-hidden p-6">
           <ExerciseList exercises={exercises} category={category} />
         </div>
       </div>

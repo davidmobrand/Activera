@@ -88,13 +88,14 @@ export default function AdminUsers() {
   return (
     <div className="p-6 bg-gradient-to-b from-act-50 to-white min-h-screen">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-display text-act-800">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0 mb-8">
+          <h1 className="text-2xl sm:text-3xl font-display text-act-800">
             {t.common('manageUsers')}
           </h1>
           <Button 
             onClick={() => router.push('/admin/users/new')}
             variant="primary"
+            className="w-full sm:w-auto"
           >
             {t.common('createNewUser')}
           </Button>
@@ -105,19 +106,19 @@ export default function AdminUsers() {
             <table className="min-w-full divide-y divide-act-200">
               <thead className="bg-act-50">
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-act-700">
+                  <th className="px-6 py-4 text-left text-xs sm:text-sm font-medium text-act-700">
                     {t.common('name')}
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-act-700">
+                  <th className="px-6 py-4 text-left text-xs sm:text-sm font-medium text-act-700">
                     {t.common('email')}
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-act-700">
+                  <th className="px-6 py-4 text-left text-xs sm:text-sm font-medium text-act-700">
                     {t.common('role')}
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-act-700">
+                  <th className="px-6 py-4 text-left text-xs sm:text-sm font-medium text-act-700">
                     {t.common('joined')}
                   </th>
-                  <th className="px-6 py-4 text-right text-sm font-medium text-act-700">
+                  <th className="px-6 py-4 text-right text-xs sm:text-sm font-medium text-act-700">
                     {t.common('actions')}
                   </th>
                 </tr>
@@ -125,44 +126,47 @@ export default function AdminUsers() {
               <tbody className="divide-y divide-act-200 bg-white">
                 {users.map((user) => (
                   <tr key={user.id} className="hover:bg-act-50/50 transition-colors">
-                    <td className="px-6 py-4 text-sm text-act-800">
-                      <div className="text-sm font-medium">
+                    <td className="px-6 py-4">
+                      <div className="text-xs sm:text-sm font-medium text-act-800">
                         {user.name || '-'}
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-act-600">
-                      <div className="text-sm">
+                    <td className="px-6 py-4">
+                      <div className="text-xs sm:text-sm text-act-600">
                         {user.email}
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-act-600">
-                      <div className={`text-sm ${
+                    <td className="px-6 py-4">
+                      <div className={`text-xs sm:text-sm ${
                         user.role === UserRole.ADMIN ? 'text-warmth-600' : 'text-sage-600'
                       }`}>
                         {user.role}
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-act-600">
-                      <div className="text-sm">
+                    <td className="px-6 py-4">
+                      <div className="text-xs sm:text-sm text-act-600">
                         {new Date(user.createdAt).toLocaleDateString(
                           language === 'sv' ? 'sv-SE' : 'en-US'
                         )}
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-right text-sm font-medium space-x-2">
-                      <Button
-                        onClick={() => router.push(`/admin/users/${user.id}`)}
-                        variant="secondary"
-                      >
-                        {t.common('edit')}
-                      </Button>
-                      <Button
-                        onClick={() => deleteUser(user.id)}
-                        variant="outline"
-                        className="text-warmth-600 hover:bg-warmth-50 hover:text-warmth-700 hover:border-warmth-300"
-                      >
-                        {t.common('delete')}
-                      </Button>
+                    <td className="px-6 py-4 text-right text-sm font-medium">
+                      <div className="flex flex-col sm:flex-row gap-2 sm:gap-2 justify-end">
+                        <Button
+                          onClick={() => router.push(`/admin/users/${user.id}`)}
+                          variant="secondary"
+                          className="text-xs sm:text-sm"
+                        >
+                          {t.common('edit')}
+                        </Button>
+                        <Button
+                          onClick={() => deleteUser(user.id)}
+                          variant="outline"
+                          className="text-xs sm:text-sm text-warmth-600 hover:bg-warmth-50 hover:text-warmth-700 hover:border-warmth-300"
+                        >
+                          {t.common('delete')}
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 ))}

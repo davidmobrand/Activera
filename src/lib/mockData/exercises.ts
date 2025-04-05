@@ -18,8 +18,16 @@ export const exercises: Exercise[] = Array.from({ length: 100 }, (_, i) => {
     category,
     translations: {
       en: {
-        title: `Exercise ${order}`,
-        introduction: `<p>Welcome to Exercise ${order}. This exercise will help you develop mindfulness skills.</p>`,
+        title: category === ExerciseCategoryEnum.NARVARO
+          ? `Mindful ${['Breathing', 'Body Scan', 'Walking', 'Eating', 'Listening', 'Observation', 'Movement', 'Rest', 'Gratitude', 'Nature Connection'][order % 10]}`
+          : category === ExerciseCategoryEnum.OPPENHET
+          ? `Open ${['Awareness', 'Heart', 'Mind', 'Acceptance', 'Curiosity', 'Perspective', 'Reflection', 'Understanding', 'Compassion', 'Presence'][order % 10]}`
+          : `Engaged ${['Action', 'Purpose', 'Connection', 'Learning', 'Growth', 'Service', 'Creativity', 'Expression', 'Collaboration', 'Leadership'][order % 10]}`,
+        introduction: category === ExerciseCategoryEnum.NARVARO
+          ? `<p>Welcome to a mindfulness exercise focusing on ${['conscious breathing techniques', 'deep body awareness', 'mindful movement', 'conscious eating practices', 'active listening skills', 'detailed observation', 'gentle movement awareness', 'restorative rest', 'gratitude practice', 'nature connection'][order % 10]}.</p>`
+          : category === ExerciseCategoryEnum.OPPENHET
+          ? `<p>Welcome to an openness exercise exploring ${['present moment awareness', 'heart-centered practice', 'mind expansion techniques', 'radical acceptance', 'cultivating curiosity', 'shifting perspectives', 'deep reflection', 'building understanding', 'developing compassion', 'deepening presence'][order % 10]}.</p>`
+          : `<p>Welcome to an engagement exercise developing ${['purposeful action', 'life purpose exploration', 'meaningful connections', 'continuous learning', 'personal growth', 'service to others', 'creative expression', 'authentic expression', 'effective collaboration', 'mindful leadership'][order % 10]}.</p>`,
         duration: '<p>10-15 minutes</p>',
         benefits: '<ul><li>Reduced stress</li><li>Improved focus</li><li>Better emotional regulation</li></ul>',
         instructions: `<p>Follow these steps:</p><ol><li>Find a comfortable position</li><li>Close your eyes</li><li>Focus on your breath</li></ol>`,
@@ -29,8 +37,12 @@ export const exercises: Exercise[] = Array.from({ length: 100 }, (_, i) => {
         progressIndicators: '<p>You may notice improved concentration and reduced stress over time.</p>'
       },
       sv: {
-        title: `Övning ${order}`,
-        introduction: `<p>Välkommen till Övning ${order}. Denna övning hjälper dig att utveckla mindfulness-färdigheter.</p>`,
+        title: category === ExerciseCategoryEnum.NARVARO
+          ? `Medveten ${['Andning', 'Kroppsskanning', 'Promenad', 'Ätande', 'Lyssnande', 'Observation', 'Rörelse', 'Vila', 'Tacksamhet', 'Naturkontakt'][order % 10]}`
+          : category === ExerciseCategoryEnum.OPPENHET
+          ? `Öppen ${['Medvetenhet', 'Hjärta', 'Sinne', 'Acceptans', 'Nyfikenhet', 'Perspektiv', 'Reflektion', 'Förståelse', 'Medkänsla', 'Närvaro'][order % 10]}`
+          : `Engagerad ${['Handling', 'Syfte', 'Kontakt', 'Lärande', 'Utveckling', 'Tjänst', 'Kreativitet', 'Uttryck', 'Samarbete', 'Ledarskap'][order % 10]}`,
+        introduction: `<p>Välkommen till ${category === ExerciseCategoryEnum.NARVARO ? 'en mindfulness' : category === ExerciseCategoryEnum.OPPENHET ? 'en öppenhets' : 'en engagemangs'}övning som hjälper dig att utveckla din praktik.</p>`,
         duration: '<p>10-15 minuter</p>',
         benefits: '<ul><li>Minskad stress</li><li>Förbättrat fokus</li><li>Bättre emotionell reglering</li></ul>',
         instructions: `<p>Följ dessa steg:</p><ol><li>Hitta en bekväm position</li><li>Blunda</li><li>Fokusera på din andning</li></ol>`,
@@ -42,11 +54,22 @@ export const exercises: Exercise[] = Array.from({ length: 100 }, (_, i) => {
     },
     difficulty: DifficultyLevel.BEGINNER,
     recommendedTime: [TimeOfDay.MORNING, TimeOfDay.EVENING],
-    relatedExerciseIds: [],
+    relatedExerciseIds: [
+      ...Array.from({ length: 3 }, (_, j) => {
+        const relatedOrder = ((order - 1 + j + 1) % 33) + 1 + (order <= 33 ? 0 : order <= 66 ? 33 : 66)
+        return `ex_${relatedOrder}`
+      })
+    ],
     userId: '1',
     createdAt: '2024-01-01T12:00:00Z',
     updatedAt: '2024-01-01T12:00:00Z',
-    mediaIds: []
+    mediaIds: order === 1 ? ['media_1']  // Breathing meditation audio
+          : order === 2 ? ['media_2']    // Body scan audio
+          : order === 3 ? ['media_3']    // Walking meditation image
+          : order === 35 ? ['media_4']   // Loving-kindness meditation audio
+          : order === 36 ? ['media_5']   // Mind visualization image
+          : order === 67 ? ['media_6']   // Mindful action image
+          : []
   }
 })
 

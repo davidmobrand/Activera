@@ -26,10 +26,13 @@ export function ExerciseList({ exercises, category }: ExerciseListProps) {
               <h2 className="text-xl font-display text-mindful-800 mb-3 group-hover:text-mindful-600 transition-colors">
                 {exercise.translations[language].title}
               </h2>
-              <div className="mt-auto flex items-center justify-between pt-4 border-t border-mindful-100">
-                <span className="text-sm text-mindful-500 font-medium">
-                  #{exercise.order}
-                </span>
+              <p 
+                className="text-mindful-600 text-sm mb-4 line-clamp-3"
+                dangerouslySetInnerHTML={{ 
+                  __html: exercise.translations[language].introduction
+                }}
+              />
+              <div className="mt-auto flex items-center justify-end pt-4 border-t border-mindful-100">
                 <div className="bg-mindful-50 text-mindful-600 px-3 py-1 rounded-full text-sm font-medium">
                   {exercise.difficulty}
                 </div>

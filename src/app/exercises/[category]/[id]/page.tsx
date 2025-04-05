@@ -24,11 +24,9 @@ export default async function ExercisePage({ params }: Props) {
   }
 
   return (
-    <div className="p-6 bg-gradient-to-b from-act-50 to-white min-h-screen">
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-soft border border-act-100 p-8">
-          <ExerciseDetail exercise={exercise} />
-        </div>
+    <div className="min-h-screen bg-gradient-to-b from-act-50 to-white">
+      <div className="max-w-4xl mx-auto p-4 sm:p-6">
+        <ExerciseDetail exercise={exercise} />
       </div>
     </div>
   )

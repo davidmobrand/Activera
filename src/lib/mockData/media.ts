@@ -4,85 +4,104 @@ import { MediaSchema, MediaInputSchema } from '../validation';
 // Default to localhost in development
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:3000'
 
-// Mock Media Files with realistic URLs and consistent timestamps
-export const mediaFiles: Media[] = [
+export const media: Media[] = [
+  // Mindful Breathing audio
   {
-    id: '1',
-    exerciseId: '1',
-    type: MediaType.IMAGE,
-    url: `${STORAGE_URL}/exercises/1/images/peaceful-meditation.jpg`,
-    name: 'Peaceful Meditation at Sunrise',
-    createdAt: new Date('2024-01-01T00:00:00Z').toISOString(),
-    updatedAt: new Date('2024-01-01T00:00:00Z').toISOString()
-  },
-  {
-    id: '2',
-    exerciseId: '1',
+    id: 'media_1',
+    exerciseId: 'ex_1',
     type: MediaType.AUDIO,
-    url: `${STORAGE_URL}/exercises/1/audio/calm-meditation.mp3`,
-    name: 'Calming Meditation Music',
-    createdAt: new Date('2024-01-15T00:00:00Z').toISOString(),
-    updatedAt: new Date('2024-01-15T00:00:00Z').toISOString()
+    name: 'Guided Breathing Meditation',
+    url: '/media/audio/guided-breathing.mp3',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z'
+  },
+  // Body Scan audio
+  {
+    id: 'media_2',
+    exerciseId: 'ex_2',
+    type: MediaType.AUDIO,
+    name: 'Body Scan Meditation',
+    url: '/media/audio/body-scan.mp3',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z'
+  },
+  // Mindful Walking image
+  {
+    id: 'media_3',
+    exerciseId: 'ex_3',
+    type: MediaType.IMAGE,
+    name: 'Walking Meditation Posture',
+    url: '/media/images/mindful-walking.jpg',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z'
+  },
+  // Open Heart meditation audio
+  {
+    id: 'media_4',
+    exerciseId: 'ex_35',
+    type: MediaType.AUDIO,
+    name: 'Loving-Kindness Meditation',
+    url: '/media/audio/loving-kindness.mp3',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z'
+  },
+  // Open Mind visualization image
+  {
+    id: 'media_5',
+    exerciseId: 'ex_36',
+    type: MediaType.IMAGE,
+    name: 'Mind Visualization Aid',
+    url: '/media/images/mind-visualization.jpg',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z'
+  },
+  // Engaged Action image
+  {
+    id: 'media_6',
+    exerciseId: 'ex_67',
+    type: MediaType.IMAGE,
+    name: 'Mindful Action Example',
+    url: '/media/images/mindful-action.jpg',
+    createdAt: '2024-01-01T12:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z'
   }
-].map(media => MediaSchema.parse(media));
+]
 
-export const findMediaByExerciseId = (exerciseId: string | string[]): Media[] => {
-  if (Array.isArray(exerciseId)) {
-    return mediaFiles
-      .filter(media => exerciseId.includes(media.exerciseId))
-      .map(media => MediaSchema.parse(media));
-  }
-  return mediaFiles
-    .filter(media => media.exerciseId === exerciseId)
-    .map(media => MediaSchema.parse(media));
-};
+export const findMediaByExerciseId = (exerciseId: string) => {
+  return media.filter(item => item.exerciseId === exerciseId)
+}
 
-export const createMedia = (input: Omit<Media, "id" | "createdAt">): Media => {
-  // Validate input first
-  const validatedInput = MediaInputSchema.parse(input);
-  
-  const urlPath = validatedInput.type === MediaType.IMAGE ? 'images' : 'audio';
-  const fileName = validatedInput.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  const url = `${STORAGE_URL}/exercises/${validatedInput.exerciseId}/${urlPath}/${fileName}`;
-  
-  const now = new Date().toISOString();
+export const createMedia = (data: Omit<Media, 'id' | 'createdAt' | 'updatedAt'>): Media => {
   const newMedia: Media = {
-    ...validatedInput,
-    url,
-    id: String(mediaFiles.length + 1),
-    createdAt: now,
-    updatedAt: now
-  };
-  
-  const validatedMedia = MediaSchema.parse(newMedia);
-  mediaFiles.push(validatedMedia);
-  return validatedMedia;
-};
-
-export const updateMedia = (id: string, data: Partial<Media>): Media | null => {
-  const index = mediaFiles.findIndex(media => media.id === id);
-  if (index !== -1) {
-    const updatedMedia = {
-      ...mediaFiles[index],
-      ...data,
-      updatedAt: new Date().toISOString()
-    };
-    const validatedMedia = MediaSchema.parse(updatedMedia);
-    mediaFiles[index] = validatedMedia;
-    return validatedMedia;
+    ...data,
+    id: `media_${media.length + 1}`,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   }
-  return null;
-};
+  media.push(newMedia)
+  return newMedia
+}
+
+export const updateMedia = (id: string, data: Partial<Media>): Media => {
+  const index = media.findIndex(item => item.id === id)
+  if (index === -1) throw new Error('Media not found')
+  
+  media[index] = {
+    ...media[index],
+    ...data,
+    updatedAt: new Date().toISOString()
+  }
+  return media[index]
+}
 
 export const deleteMedia = (id: string): boolean => {
-  const index = mediaFiles.findIndex(media => media.id === id);
-  if (index !== -1) {
-    mediaFiles.splice(index, 1);
-    return true;
-  }
-  return false;
-};
+  const index = media.findIndex(item => item.id === id)
+  if (index === -1) return false
+  
+  media.splice(index, 1)
+  return true
+}
 
-export const getExerciseMedia = (exerciseId: string | string[]): Media[] => {
-  return findMediaByExerciseId(exerciseId);
-}; 
+export const getExerciseMedia = (exerciseId: string): Media[] => {
+  return media.filter(item => item.exerciseId === exerciseId)
+} 

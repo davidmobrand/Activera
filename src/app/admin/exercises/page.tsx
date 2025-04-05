@@ -89,13 +89,14 @@ export default function AdminExercises() {
   return (
     <div className="p-6 bg-gradient-to-b from-act-50 to-white min-h-screen">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-display text-act-800">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0 mb-8">
+          <h1 className="text-2xl sm:text-3xl font-display text-act-800">
             {t.common('manageExercises')}
           </h1>
           <Button 
             onClick={() => router.push('/admin/exercises/new')}
             variant="primary"
+            className="w-full sm:w-auto"
           >
             {t.common('createNewExercise')}
           </Button>
@@ -106,19 +107,19 @@ export default function AdminExercises() {
             <table className="min-w-full divide-y divide-act-200">
               <thead className="bg-act-50">
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-act-700">
+                  <th className="px-6 py-4 text-left text-xs sm:text-sm font-medium text-act-700">
                     {t.common('title')}
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-act-700">
+                  <th className="px-6 py-4 text-left text-xs sm:text-sm font-medium text-act-700">
                     {t.common('category')}
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-act-700">
+                  <th className="px-6 py-4 text-left text-xs sm:text-sm font-medium text-act-700">
                     {t.common('order')}
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-act-700">
+                  <th className="px-6 py-4 text-left text-xs sm:text-sm font-medium text-act-700">
                     {t.common('lastUpdated')}
                   </th>
-                  <th className="px-6 py-4 text-right text-sm font-medium text-act-700">
+                  <th className="px-6 py-4 text-right text-xs sm:text-sm font-medium text-act-700">
                     {t.common('actions')}
                   </th>
                 </tr>
@@ -128,41 +129,45 @@ export default function AdminExercises() {
                   <tr key={exercise.id} className="hover:bg-act-50/50 transition-colors">
                     <td className="px-6 py-4">
                       <Link href={`/exercises/${exercise.category.toLowerCase()}/${exercise.id}`}>
-                        <div className="text-sm font-medium text-mindful-800 hover:text-act-600 hover:underline">
+                        <div className="text-xs sm:text-sm font-medium text-mindful-800 hover:text-act-600 hover:underline">
                           {exercise.translations[language].title}
                         </div>
                       </Link>
                     </td>
                     <td className="px-6 py-4">
                       <Link href={`/exercises/${exercise.category.toLowerCase()}`}>
-                        <div className="text-sm text-mindful-600 hover:text-act-700 hover:underline">
+                        <div className="text-xs sm:text-sm text-mindful-600 hover:text-act-700 hover:underline">
                           {t.category(exercise.category).name}
                         </div>
                       </Link>
                     </td>
-                    <td className="px-6 py-4 text-sm text-act-600">
-                      <div className="text-sm">{exercise.order}</div>
+                    <td className="px-6 py-4 text-xs sm:text-sm text-act-600">
+                      <div className="text-xs sm:text-sm">{exercise.order}</div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-act-600">
-                      <div className="text-sm">
+                    <td className="px-6 py-4 text-xs sm:text-sm text-act-600">
+                      <div className="text-xs sm:text-sm">
                         {new Date(exercise.updatedAt).toLocaleDateString(
                           language === 'sv' ? 'sv-SE' : 'en-US'
                         )}
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-right text-sm font-medium space-x-2">
-                      <Button
-                        onClick={() => router.push(`/admin/exercises/${exercise.id}`)}
-                        variant="secondary"
-                      >
-                        {t.common('edit')}
-                      </Button>
-                      <Button
-                        onClick={() => deleteExercise(exercise.id)}
-                        variant="outline"
-                      >
-                        {t.common('delete')}
-                      </Button>
+                    <td className="px-6 py-4 text-right text-sm font-medium">
+                      <div className="flex flex-col sm:flex-row gap-2 sm:gap-2 justify-end">
+                        <Button
+                          onClick={() => router.push(`/admin/exercises/${exercise.id}`)}
+                          variant="secondary"
+                          className="text-xs sm:text-sm"
+                        >
+                          {t.common('edit')}
+                        </Button>
+                        <Button
+                          onClick={() => deleteExercise(exercise.id)}
+                          variant="outline"
+                          className="text-xs sm:text-sm"
+                        >
+                          {t.common('delete')}
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 ))}

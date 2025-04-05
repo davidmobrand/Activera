@@ -1,31 +1,31 @@
 import type { User, Exercise, Media, ExerciseProgress, UserRole, ExerciseCategory, MediaType } from './types';
 import { exercises } from './mockData/exercises';
 import { users } from './mockData/users';
-import { mediaFiles } from './mockData/media';
+import { media } from './mockData/media';
 import { exerciseProgress } from './mockData/exerciseProgress';
 
 // Mock Database Functions
 export const findMediaByExerciseId = (exerciseId: string | string[]) => {
   if (Array.isArray(exerciseId)) {
-    return mediaFiles.filter(media => exerciseId.includes(media.exerciseId));
+    return media.filter((item: Media) => exerciseId.includes(item.exerciseId));
   }
-  return mediaFiles.filter(media => media.exerciseId === exerciseId);
+  return media.filter((item: Media) => item.exerciseId === exerciseId);
 };
 
-export const createMedia = (media: Omit<Media, 'id' | 'createdAt'>) => {
+export const createMedia = (mediaInput: Omit<Media, 'id' | 'createdAt'>) => {
   const newMedia = {
-    ...media,
-    id: String(mediaFiles.length + 1),
+    ...mediaInput,
+    id: String(media.length + 1),
     createdAt: new Date().toISOString()
   };
-  mediaFiles.push(newMedia);
+  media.push(newMedia);
   return newMedia;
 };
 
 export const deleteMedia = (id: string) => {
-  const index = mediaFiles.findIndex(media => media.id === id);
+  const index = media.findIndex((item: Media) => item.id === id);
   if (index !== -1) {
-    mediaFiles.splice(index, 1);
+    media.splice(index, 1);
     return true;
   }
   return false;
@@ -100,9 +100,9 @@ export const deleteUser = (id: string) => {
 
 export const getExerciseMedia = (exerciseId: string | string[]) => {
   if (Array.isArray(exerciseId)) {
-    return mediaFiles.filter(media => exerciseId.includes(media.exerciseId));
+    return media.filter((item: Media) => exerciseId.includes(item.exerciseId));
   }
-  return mediaFiles.filter(media => media.exerciseId === exerciseId);
+  return media.filter((item: Media) => item.exerciseId === exerciseId);
 };
 
 // Mock Database Interface
@@ -212,38 +212,38 @@ export const mockDb: MockDb = {
   },
   media: {
     findById: async (id) => {
-      const media = mediaFiles.find(m => m.id === id);
-      return media ? { ...media } : null;
+      const mediaItem = media.find(m => m.id === id);
+      return mediaItem ? { ...mediaItem } : null;
     },
     findByExerciseId: async (exerciseId) => {
-      return mediaFiles
+      return media
         .filter(m => m.exerciseId === exerciseId)
         .map(m => ({ ...m }));
     },
     create: async (mediaData) => {
       const newMedia: Media = {
         ...mediaData,
-        id: String(mediaFiles.length + 1),
+        id: String(media.length + 1),
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       };
-      mediaFiles.push(newMedia);
+      media.push(newMedia);
       return { ...newMedia };
     },
     update: async (id, data) => {
-      const index = mediaFiles.findIndex(m => m.id === id);
+      const index = media.findIndex(m => m.id === id);
       if (index === -1) throw new Error('Media not found');
-      mediaFiles[index] = {
-        ...mediaFiles[index],
+      media[index] = {
+        ...media[index],
         ...data,
         updatedAt: new Date().toISOString()
       };
-      return { ...mediaFiles[index] };
+      return { ...media[index] };
     },
     delete: async (id) => {
-      const index = mediaFiles.findIndex(m => m.id === id);
+      const index = media.findIndex(m => m.id === id);
       if (index === -1) throw new Error('Media not found');
-      mediaFiles.splice(index, 1);
+      media.splice(index, 1);
     }
   },
   exerciseProgress: {

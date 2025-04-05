@@ -4,7 +4,6 @@ import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Editor } from '@tinymce/tinymce-react'
 import { Button } from '@/components/ui/Button'
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Exercise, Media, Translation } from '@/lib/types'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { useTranslation } from '@/lib/i18n/useTranslation'
@@ -129,66 +128,6 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
     })
   }
 
-  const EditorSection = ({ title, field }: { title: string, field: keyof Translation }) => (
-    <div className="space-y-2">
-      <label className="block text-sm font-medium text-stone-700">
-        {title}
-      </label>
-      <Editor
-        apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
-        onInit={(evt: any, editor: TinyMCEEditor) => {
-          if (field === 'introduction') editorRef.current = editor
-        }}
-        value={exercise.translations[language][field]}
-        onEditorChange={(content: string) => updateTranslation(field, content)}
-        init={{
-          height: 300,
-          menubar: true,
-          plugins: [
-            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-          ],
-          toolbar: 'undo redo | blocks | ' +
-            'bold italic forecolor | alignleft aligncenter ' +
-            'alignright alignjustify | bullist numlist outdent indent | ' +
-            'image media | removeformat | help',
-          content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-          file_picker_callback: (callback: FilePickerCallback, value: string, meta: FilePickerMeta) => {
-            if (meta.filetype === 'image') {
-              handleUpload('IMAGE').then((media) => {
-                if (media) {
-                  callback(media.url, { alt: media.name })
-                }
-              })
-            } else if (meta.filetype === 'media') {
-              handleUpload('AUDIO').then((media) => {
-                if (media) {
-                  callback(media.url, { alt: media.name, source2: media.name })
-                }
-              })
-            }
-          },
-          media_live_embeds: true,
-          media_alt_source: false,
-          media_poster: false,
-          media_dimensions: false,
-          image_title: true,
-          automatic_uploads: true,
-          images_upload_handler: (blobInfo: any, progress: any) => new Promise((resolve, reject) => {
-            handleUpload('IMAGE').then((media) => {
-              if (media) {
-                resolve(media.url)
-              } else {
-                reject('Upload failed')
-              }
-            })
-          })
-        }}
-      />
-    </div>
-  )
-
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8">
@@ -232,15 +171,6 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
           />
         </div>
 
-        <EditorSection title={t.common('introduction')} field="introduction" />
-        <EditorSection title={t.common('duration')} field="duration" />
-        <EditorSection title={t.common('benefits')} field="benefits" />
-        <EditorSection title={t.common('instructions')} field="instructions" />
-        <EditorSection title={t.common('tips')} field="tips" />
-        <EditorSection title={t.common('accessibility')} field="accessibility" />
-        <EditorSection title={t.common('prerequisites')} field="prerequisites" />
-        <EditorSection title={t.common('progressIndicators')} field="progressIndicators" />
-
         <div className="space-y-2">
           <label className="block text-sm font-medium text-stone-700">
             {t.common('category')}
@@ -268,6 +198,50 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
             className="w-full rounded-md border border-stone-200 px-4 py-2 bg-white focus:border-ocean-300 focus:ring focus:ring-ocean-200 focus:ring-opacity-50"
             required
           />
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-stone-700">
+            {t.common('introduction')}
+          </label>
+          <div className="h-[50vh] sm:h-96">
+            <Editor
+              apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
+              onInit={(_evt: unknown, editor: TinyMCEEditor) => {
+                editorRef.current = editor
+              }}
+              value={exercise.translations[language].introduction}
+              onEditorChange={(content: string) => updateTranslation('introduction', content)}
+              init={{
+                height: '100%',
+                menubar: false,
+                plugins: [
+                  'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                  'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                  'insertdatetime', 'media', 'table', 'help', 'wordcount'
+                ],
+                toolbar: 'undo redo | blocks | ' +
+                  'bold italic forecolor | alignleft aligncenter ' +
+                  'alignright alignjustify | bullist numlist outdent indent | ' +
+                  'removeformat | help',
+                content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; line-height: 1.5; }',
+                mobile: {
+                  menubar: false,
+                  toolbar: 'undo redo | bold italic | bullist numlist',
+                  height: '100%'
+                },
+                file_picker_callback: (callback: FilePickerCallback, value: string, meta: FilePickerMeta) => {
+                  if (meta.filetype === 'image') {
+                    handleUpload('IMAGE').then((media) => {
+                      if (media) {
+                        callback(media.url, { alt: media.name })
+                      }
+                    })
+                  }
+                }
+              }}
+            />
+          </div>
         </div>
       </div>
 

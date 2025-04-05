@@ -1,13 +1,13 @@
+import type { Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { mockDb } from '@/lib/mockData'
 import { ExerciseForm } from '@/components/admin/ExerciseForm'
+import NotLoggedIn from '@/components/NotLoggedIn'
 
-interface Props {
-  params: {
-    id: string
-  }
+type Props = {
+  params: { id: string }
 }
 
 export default async function EditExercisePage({ params }: Props) {

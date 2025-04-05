@@ -75,7 +75,7 @@ export function ExerciseView({ exercise, onComplete }: ExerciseViewProps) {
                 {t.category(exercise.category).name}
               </div>
               <div className="bg-white/80 backdrop-blur-sm px-4 py-1 rounded-full text-mindful-600 text-sm font-medium">
-                {exercise.difficulty}
+                {t.difficulty(exercise.difficulty)}
               </div>
             </div>
             <span className="text-mindful-600 font-medium">#{exercise.order}</span>

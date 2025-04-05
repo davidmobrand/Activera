@@ -190,6 +190,22 @@ export function ExerciseForm({ exercise: initialExercise }: ExerciseFormProps) {
 
         <div className="space-y-2">
           <label className="block text-sm font-medium text-stone-700">
+            {t.common('difficulty')}
+          </label>
+          <select
+            value={exercise.difficulty}
+            onChange={(e) => setExercise({ ...exercise, difficulty: e.target.value as Exercise['difficulty'] })}
+            className="w-full rounded-md border border-stone-200 px-4 py-2 bg-white focus:border-ocean-300 focus:ring focus:ring-ocean-200 focus:ring-opacity-50"
+            required
+          >
+            <option value="BEGINNER">{t.difficulty('BEGINNER')}</option>
+            <option value="INTERMEDIATE">{t.difficulty('INTERMEDIATE')}</option>
+            <option value="ADVANCED">{t.difficulty('ADVANCED')}</option>
+          </select>
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-stone-700">
             {t.common('order')}
           </label>
           <input

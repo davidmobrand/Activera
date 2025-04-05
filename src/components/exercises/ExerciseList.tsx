@@ -3,7 +3,9 @@
 import Link from 'next/link'
 import { Exercise, ExerciseCategoryEnum } from '@/lib/types'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { useTranslation } from '@/lib/i18n/useTranslation'
 import type { Language } from '@/lib/i18n/types'
+import { stripHtml } from '@/lib/utils'
 
 // Helper function to strip HTML tags and decode entities
 function stripHtml(html: string): string {
@@ -18,6 +20,7 @@ interface ExerciseListProps {
 
 export function ExerciseList({ exercises, category }: ExerciseListProps) {
   const { language } = useLanguage()
+  const { t } = useTranslation()
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -37,7 +40,7 @@ export function ExerciseList({ exercises, category }: ExerciseListProps) {
               </p>
               <div className="mt-auto flex items-center justify-end pt-4 border-t border-mindful-100">
                 <div className="bg-mindful-50 text-mindful-600 px-3 py-1 rounded-full text-sm font-medium">
-                  {exercise.difficulty}
+                  {t.difficulty(exercise.difficulty)}
                 </div>
               </div>
             </div>

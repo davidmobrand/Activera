@@ -8,10 +8,10 @@
     "build": "next build",
     "start": "next start -p 8989",
     "lint": "next lint",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "prepare": "husky install"
+    "test": "jest --config jest.config.cjs",
+    "test:watch": "jest --config jest.config.cjs --watch",
+    "test:coverage": "jest --config jest.config.cjs --coverage",
+    "prepare": "husky"
   },
   "dependencies": {
     "@braintree/sanitize-url": "^7.1.1",

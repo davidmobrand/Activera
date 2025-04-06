@@ -69,7 +69,7 @@ export function ExerciseDetail({ exercise }: ExerciseDetailProps) {
             {t.category(exercise.category).name}
           </div>
           <div className="bg-white/80 backdrop-blur-sm py-1 rounded-full text-mindful-600 text-xs sm:text-sm font-medium pr-0">
-            {exercise.difficulty}
+            {t.difficulty(exercise.difficulty)}
           </div>
         </div>
 

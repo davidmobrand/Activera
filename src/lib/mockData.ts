@@ -1,7 +1,4 @@
-import type { User, Exercise, Media, ExerciseProgress } from './types';
-import { UserRole } from './constants/users';
-import { ExerciseCategoryEnum } from './constants/categories';
-import { MediaType } from './constants/exercises';
+import type { User, Exercise, Media, ExerciseProgress, UserRole, ExerciseCategoryEnum, MediaType } from './types';
 import { exercises } from './mockData/exercises';
 import { users } from './mockData/users';
 import { media } from './mockData/media';

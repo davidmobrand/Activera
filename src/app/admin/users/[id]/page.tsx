@@ -4,19 +4,23 @@ import { authOptions } from '@/lib/auth'
 import { mockDb } from '@/lib/mockData'
 import { UserForm } from '@/components/admin/UserForm'
 
-type PageParams = {
-  params: {
+type Props = {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default async function EditUserPage({ params }: PageParams) {
-  const session = await getServerSession(authOptions)
+export default async function EditUserPage({ params }: Props) {
+  const [resolvedParams, session] = await Promise.all([
+    params,
+    getServerSession(authOptions)
+  ])
+
   if (!session?.user?.id || session.user.role !== 'ADMIN') {
     redirect('/login')
   }
 
-  const user = await mockDb.users.findById(params.id)
+  const user = await mockDb.users.findById(resolvedParams.id)
   if (!user) {
     return notFound()
   }

@@ -6,19 +6,23 @@ import { mockDb } from '@/lib/mockData'
 import { ExerciseForm } from '@/components/admin/ExerciseForm'
 import NotLoggedIn from '@/components/NotLoggedIn'
 
-type PageParams = {
-  params: {
+type Props = {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default async function EditExercisePage({ params }: PageParams) {
-  const session = await getServerSession(authOptions)
+export default async function EditExercisePage({ params }: Props) {
+  const [resolvedParams, session] = await Promise.all([
+    params,
+    getServerSession(authOptions)
+  ])
+
   if (!session?.user?.id || session.user.role !== 'ADMIN') {
     redirect('/login')
   }
 
-  const exercise = await mockDb.exercises.findById(params.id)
+  const exercise = await mockDb.exercises.findById(resolvedParams.id)
   if (!exercise) {
     return notFound()
   }

@@ -1,4 +1,5 @@
-import { User, UserRole } from '../types';
+import type { User } from '../types';
+import { UserRole } from '../constants/users';
 import { CreateUserSchema, UpdateUserSchema, UserSchema } from '../validation';
 import type { CreateUser } from '../validation';
 
@@ -6,10 +7,10 @@ import type { CreateUser } from '../validation';
 export const users: User[] = [
   {
     id: '1',
-    name: 'Admin User',
     email: 'admin@activera.com',
-    password: 'admin123',
+    name: 'Administrator',
     role: UserRole.ADMIN,
+    password: 'admin123',
     createdAt: '2024-01-01T00:00:00Z',
     updatedAt: '2024-01-01T00:00:00Z'
   },

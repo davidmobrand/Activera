@@ -52,9 +52,11 @@ function main() {
                             update: {},
                             create: {
                                 email: 'admin@activera.com',
-                                name: 'Admin User',
+                                name: 'Administrator',
                                 password: adminPassword,
                                 role: 'ADMIN',
+                                createdAt: new Date('2024-01-01'),
+                                updatedAt: new Date('2024-01-01')
                             },
                         })
                         // Create test client user

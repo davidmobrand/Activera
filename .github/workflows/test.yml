@@ -8,6 +8,7 @@ on:
 
 jobs:
   test:
+    name: Run Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +24,9 @@ jobs:
       run: npm ci
     
     - name: Run tests
+      id: run-tests
       run: npm test
     
     - name: Run test coverage
+      id: coverage
       run: npm run test:coverage 

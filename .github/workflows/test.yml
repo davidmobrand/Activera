@@ -25,8 +25,16 @@ jobs:
     
     - name: Run tests
       id: run-tests
-      run: npm test
+      run: NODE_OPTIONS=--experimental-vm-modules npm test
     
     - name: Run test coverage
       id: coverage
-      run: npm run test:coverage 
+      run: NODE_OPTIONS=--experimental-vm-modules npm run test:coverage
+      
+    - name: Upload coverage reports
+      if: always()
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./coverage/lcov.info
+        fail_ci_if_error: true 

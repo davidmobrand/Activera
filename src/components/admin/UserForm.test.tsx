@@ -110,4 +110,26 @@ describe('UserForm', () => {
     fireEvent.click(screen.getByText(/cancel/i))
     expect(mockRouter.push).toHaveBeenCalledWith('/admin/users')
   })
+
+  it('renders user form with initial values', () => {
+    render(<UserForm user={mockUser} onSubmit={() => {}} />)
+    expect(screen.getByDisplayValue('Test User')).toBeInTheDocument()
+    expect(screen.getByDisplayValue('test@example.com')).toBeInTheDocument()
+  })
+
+  it('calls onSubmit with updated values', () => {
+    const mockOnSubmit = jest.fn()
+    render(<UserForm user={mockUser} onSubmit={mockOnSubmit} />)
+
+    const nameInput = screen.getByDisplayValue('Test User')
+    fireEvent.change(nameInput, { target: { value: 'Updated Name' } })
+
+    const submitButton = screen.getByRole('button', { name: /save/i })
+    fireEvent.click(submitButton)
+
+    expect(mockOnSubmit).toHaveBeenCalledWith({
+      ...mockUser,
+      name: 'Updated Name'
+    })
+  })
 }) 

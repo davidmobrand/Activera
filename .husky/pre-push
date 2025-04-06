@@ -2,4 +2,4 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 echo "Running tests before push..."
-NODE_OPTIONS=--experimental-vm-modules npm test || exit 1 
+node --experimental-vm-modules node_modules/.bin/jest || exit 1 

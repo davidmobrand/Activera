@@ -25,11 +25,11 @@ jobs:
     
     - name: Run tests
       id: run-tests
-      run: NODE_OPTIONS=--experimental-vm-modules npm test
+      run: node --experimental-vm-modules node_modules/.bin/jest
     
     - name: Run test coverage
       id: coverage
-      run: NODE_OPTIONS=--experimental-vm-modules npm run test:coverage
+      run: node --experimental-vm-modules node_modules/.bin/jest --coverage
       
     - name: Upload coverage reports
       if: always()

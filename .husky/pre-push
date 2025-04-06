@@ -1,5 +1,5 @@
-#!/usr/bin/env sh
+#!/bin/sh
 . "$(dirname -- "$0")/_/husky.sh"
 
 echo "Running tests before push..."
-npm test || exit 1 
+NODE_OPTIONS=--experimental-vm-modules npm test || exit 1 

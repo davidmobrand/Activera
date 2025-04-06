@@ -7,9 +7,10 @@ import { Button } from '@/components/ui/Button'
 
 interface UserFormProps {
   user: User
+  onSubmit?: (user: User) => void
 }
 
-export function UserForm({ user }: UserFormProps) {
+export function UserForm({ user, onSubmit }: UserFormProps) {
   const router = useRouter()
   const [formData, setFormData] = useState({
     name: user.name || '',
@@ -20,6 +21,14 @@ export function UserForm({ user }: UserFormProps) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     try {
+      if (onSubmit) {
+        onSubmit({
+          ...user,
+          ...formData
+        })
+        return
+      }
+
       const response = await fetch(`/api/users/${user.id}`, {
         method: 'PUT',
         headers: {

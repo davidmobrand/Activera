@@ -4,6 +4,7 @@
 import { render, screen } from '@testing-library/react'
 import { ExerciseDetail } from '../ExerciseDetail'
 import { ExerciseCategoryEnum, DifficultyLevel, TimeOfDay } from '@/lib/types'
+import { LanguageProvider } from '@/lib/i18n/LanguageContext'
 
 // Mock next-auth/react
 jest.mock('next-auth/react', () => ({
@@ -12,6 +13,13 @@ jest.mock('next-auth/react', () => ({
     status: 'authenticated'
   })
 }))
+
+// Mock localStorage
+const mockLocalStorage = {
+  getItem: jest.fn().mockReturnValue('en'),
+  setItem: jest.fn(),
+}
+Object.defineProperty(window, 'localStorage', { value: mockLocalStorage })
 
 const mockExercise = {
   id: 'test-1',
@@ -52,7 +60,11 @@ const mockExercise = {
 
 describe('ExerciseDetail', () => {
   it('renders exercise details', () => {
-    render(<ExerciseDetail exercise={mockExercise} />)
+    render(
+      <LanguageProvider>
+        <ExerciseDetail exercise={mockExercise} />
+      </LanguageProvider>
+    )
     expect(screen.getByText('Test Exercise')).toBeInTheDocument()
     expect(screen.getByText('Beginner')).toBeInTheDocument()
   })

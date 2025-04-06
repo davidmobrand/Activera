@@ -8,9 +8,9 @@
     "build": "next build",
     "start": "next start -p 8989",
     "lint": "next lint",
-    "test": "node --experimental-vm-modules node_modules/.bin/jest",
-    "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch",
-    "test:coverage": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "prepare": "husky install"
   },
   "dependencies": {
